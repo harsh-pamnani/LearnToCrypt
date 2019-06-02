@@ -22,4 +22,10 @@ public class StudentTests {
 		Student s2 = new Student("tony", "tony123@dal.ca");
 		assertEquals("getStudentEmailTest", "tony123@dal.ca", s2.getEmail());
 	}
+	
+	@Test
+	public void newTest() {
+		Student s2 = new Student("tony", "tony@dal.ca");
+		assertEquals("getStudentEmailTest", "tony233@dal.ca", s2.getEmail());
+	}
 }
