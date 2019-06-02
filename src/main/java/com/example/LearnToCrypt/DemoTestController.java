@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Controller
-public class DemoController implements WebMvcConfigurer {
+@RestController
+public class DemoTestController implements WebMvcConfigurer {
 	
-	@RequestMapping("/homepage")
+	@RequestMapping("/")
     public String sayHello() {
-        return "homepage.html";
-    }
+        return "Milestone 1 done. 2nd testing";
+        // Dummy commit for Milestone-1 
+	}
 }
