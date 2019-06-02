@@ -13,7 +13,7 @@ public class DemoController implements WebMvcConfigurer {
 	
 	@RequestMapping("/")
     public String sayHello() {
-        return "Hello from Controller";
+        return "Hey Heroku. I have been deployed automatically. ";
         // Dummy commit check Jenkins build - Changed the branch in Jenkins
     }
 }
