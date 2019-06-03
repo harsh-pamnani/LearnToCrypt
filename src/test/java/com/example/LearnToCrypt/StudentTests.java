@@ -28,4 +28,10 @@ public class StudentTests {
 		Student s3 = new Student("aman", "abbbcdd@dal.ca");
 		assertEquals("getStudentEmailTest", "abbbcdd@dal.ca", s3.getEmail());
 	}
+	
+	@Test
+	public void newTest2() {
+		Student s3 = new Student("aman", "fail@dal.ca");
+		assertEquals("getStudentNameTest", "aman", s3.getName());
+	}
 }
