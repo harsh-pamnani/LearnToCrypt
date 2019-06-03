@@ -13,7 +13,7 @@ public class DemoTestController implements WebMvcConfigurer {
 	
 	@RequestMapping("/")
     public String sayHello() {
-        return "Milestone Vismay";
+        return "Milestone Heroku and Jenkkins";
         // Dummy commit for Milestone-1 
 	}
 }
