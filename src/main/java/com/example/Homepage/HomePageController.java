@@ -1,4 +1,4 @@
-package com.example.LearnToCrypt;
+package com.example.Homepage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,10 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Controller
-public class DemoController implements WebMvcConfigurer {
+public class HomePageController implements WebMvcConfigurer {
 	
-	@RequestMapping("/homepage")
-    public String sayHello() {
+	@GetMapping("/homepage")
+    public String displayHomepage() {
+        return "homepage.html";
+    }
+	
+	@GetMapping("/")
+    public String displayDefaultHomepage() {
         return "homepage.html";
     }
 }
