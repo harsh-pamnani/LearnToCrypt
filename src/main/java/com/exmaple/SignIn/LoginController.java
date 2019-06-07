@@ -30,6 +30,8 @@ public class LoginController implements WebMvcConfigurer {
             model.put("invalidLogin", "Invalid Credentials");
             return "login";
         }
+		// This logic will be updated to get the user's name from database.
+        model.put("username", "Harsh Pamnani");
         model.put("email", email);
         model.put("password", password);
         

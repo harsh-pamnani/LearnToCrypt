@@ -34,7 +34,9 @@ public class SignUpController implements WebMvcConfigurer {
             model.put("invalidSignup", isSignUpValidError + ". Registration Failed.");
             return "registration";
         }
-        model.put("email", email);
+		// This logic will be updated to get the user's name from database.
+        model.put("username", "Harsh Pamnani");
+		model.put("email", email);
         model.put("password", password);
         
         return "redirect:/dashboard";
