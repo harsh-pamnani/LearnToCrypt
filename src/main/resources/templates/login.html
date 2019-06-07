@@ -95,12 +95,39 @@
 		.touch-icon {
 			color: #130f40;
         }
-        
-        .dashboard {
+
+        #login-form {
             margin-top: 7rem;
-            margin-bottom: 7rem;
+            margin-bottom: 4rem;
         }
-    </style>
+        
+		.card-header {
+            text-align: center;
+            font-size: 28px;
+        }
+        
+        .form-group {
+        	margin-top: 12px;
+        	margin-left: 24px;
+        	margin-right: 24px;
+        }
+
+        .btn-dark {
+			color: #ffffff;
+            padding-left: 1rem;
+            background: #130f40;
+			border: 2px solid #130f40;
+			border-radius: 25px;	
+        }
+
+        .btn-dark:hover {
+			color: #ffffff;
+            padding-left: 1rem;
+            background: #4834d4;
+			border: 2px solid #4834d4;
+			border-radius: 25px;	
+        }
+        </style>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
@@ -141,16 +168,32 @@
 		</div>
 	</nav>
 
-    
-    <form class="dashboard" method="post" >
-        Name : <input type="text" name="email" />
-        Password : <input type="password" name="password" /> 
-        <input type="submit" />
-    </form>
-    
-    <h1 th:text="${invalidLogin}" class="dashboard" color="red"></h1>
+    <div class="row" id="login-form">
+        <div class="col-md-4 col-sm-6"></div>
+        <div class="col-md-4 col-sm-6">
+            <div id="login-form-style" class="card">
+                <div class="card-header"> LearnToCrypt Login </div>
+                <form method="post" >
+                    <div class="form-group">
+                        <label for="emailid" class="form-label" ><i class="fas fa-envelope"></i> Email: </label> 
+                        <input class="form-control" id="emailid" type="text" placeholder="example@gmail.com" name="email" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="form-label" ><i class="fas fa-unlock-alt"></i> Password: </label> 
+                       <input class="form-control" id="password" type="password" name="password" />
+                    </div>
+                    <div class="form-group">
+                        <h1 th:text="${invalidLogin}" color="red"></h1>
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <button type="submit" class="btn btn-dark"> Login </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6"></div>
+    </div>
 
-    
     <div id="footer" class="footer pt-5">
 	     <div class="container">
 	         <div class="row">
