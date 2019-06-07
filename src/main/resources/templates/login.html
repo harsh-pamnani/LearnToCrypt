@@ -141,12 +141,16 @@
 		</div>
 	</nav>
 
-    <font class="dashboard" color="red">${errorMessage}</font>
-    <form class="dashboard" method="post" action="/dashboard">
+    
+    <form class="dashboard" method="post" >
         Name : <input type="text" name="email" />
         Password : <input type="password" name="password" /> 
         <input type="submit" />
     </form>
+    
+    <h1 th:text="${invalidLogin}" class="dashboard" color="red"></h1>
+
+    
     <div id="footer" class="footer pt-5">
 	     <div class="container">
 	         <div class="row">

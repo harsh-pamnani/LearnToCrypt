@@ -5,11 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.example.Homepage.HomePageController;
+import com.example.dashboard.DashboardController;
 import com.example.services.LoginValidatorService;
 import com.exmaple.SignIn.LoginController;
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {HomePageController.class, LoginController.class, LoginValidatorService.class})
+@ComponentScan(basePackageClasses = {HomePageController.class, LoginController.class, LoginValidatorService.class, DashboardController.class})
 public class LearnToCryptApplication {
 
 	public static void main(String[] args) {

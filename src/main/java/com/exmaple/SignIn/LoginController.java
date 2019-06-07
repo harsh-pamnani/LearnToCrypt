@@ -33,6 +33,6 @@ public class LoginController implements WebMvcConfigurer {
         model.put("email", email);
         model.put("password", password);
         
-        return "dashboard.html";
+        return "redirect:/dashboard";
     }
 }
