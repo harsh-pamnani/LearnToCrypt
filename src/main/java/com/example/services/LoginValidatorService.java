@@ -8,7 +8,7 @@ public class LoginValidatorService {
 	
 	public boolean validateLoginCredentials(String email, String password) {
 		// Password validations goes here
-		if (email.equals("harsh@gmail.com") && password.equals("Hars@123")) {
+		if (email.equals("harsh") && password.equals("harsh")) {
 			return true;
 		} else {
 			return false;
