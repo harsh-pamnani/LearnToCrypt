@@ -1,4 +1,4 @@
-package com.example.LearnToCrypt;
+package com.LearnToCrypt.app;
 
 public class Student {
 	private String name;

@@ -1,4 +1,4 @@
-package com.exmaple.SignIn;
+package com.LearnToCrypt.signin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.services.LoginValidatorService;
+import com.LearnToCrypt.services.LoginValidatorService;
 
 @Controller
 public class LoginController implements WebMvcConfigurer {

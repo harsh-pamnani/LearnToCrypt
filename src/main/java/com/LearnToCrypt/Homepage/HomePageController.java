@@ -1,4 +1,4 @@
-package com.example.Homepage;
+package com.LearnToCrypt.Homepage;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

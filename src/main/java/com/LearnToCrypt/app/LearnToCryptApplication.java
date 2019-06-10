@@ -1,15 +1,15 @@
-package com.example.LearnToCrypt;
+package com.LearnToCrypt.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.example.Homepage.HomePageController;
-import com.example.SignUp.SignUpController;
-import com.example.dashboard.DashboardController;
-import com.example.services.LoginValidatorService;
-import com.example.services.SignUpValidatorService;
-import com.exmaple.SignIn.LoginController;
+import com.LearnToCrypt.Homepage.HomePageController;
+import com.LearnToCrypt.SignUp.SignUpController;
+import com.LearnToCrypt.dashboard.DashboardController;
+import com.LearnToCrypt.services.LoginValidatorService;
+import com.LearnToCrypt.services.SignUpValidatorService;
+import com.LearnToCrypt.signin.LoginController;
 
 @SpringBootApplication
 @ComponentScan(basePackageClasses = {HomePageController.class, LoginController.class, LoginValidatorService.class, DashboardController.class, SignUpController.class, SignUpValidatorService.class})

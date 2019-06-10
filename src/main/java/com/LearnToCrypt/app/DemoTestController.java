@@ -1,4 +1,4 @@
-package com.example.LearnToCrypt;
+package com.LearnToCrypt.app;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

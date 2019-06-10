@@ -1,4 +1,4 @@
-package com.example.dashboard;
+package com.LearnToCrypt.dashboard;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

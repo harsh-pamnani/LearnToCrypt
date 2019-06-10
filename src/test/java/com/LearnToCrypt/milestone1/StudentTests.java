@@ -1,4 +1,4 @@
-package com.example.LearnToCrypt;
+package com.LearnToCrypt.milestone1;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.example.LearnToCrypt.Student;
+import com.LearnToCrypt.app.Student;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
