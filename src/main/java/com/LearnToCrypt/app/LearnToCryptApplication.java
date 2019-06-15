@@ -9,7 +9,7 @@ import com.LearnToCrypt.SignUp.SignUpController;
 import com.LearnToCrypt.dashboard.DashboardController;
 import com.LearnToCrypt.services.LoginValidatorService;
 import com.LearnToCrypt.services.SignUpValidatorService;
-import com.LearnToCrypt.signin.LoginController;
+import com.LearnToCrypt.SignIn.LoginController;
 
 @SpringBootApplication
 @ComponentScan(basePackageClasses = {HomePageController.class, LoginController.class, LoginValidatorService.class, DashboardController.class, SignUpController.class, SignUpValidatorService.class})

@@ -1,4 +1,4 @@
-package com.LearnToCrypt.signin;
+package com.LearnToCrypt.SignIn;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
