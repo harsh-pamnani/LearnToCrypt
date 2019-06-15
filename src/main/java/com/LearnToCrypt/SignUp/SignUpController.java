@@ -1,6 +1,5 @@
 package com.LearnToCrypt.SignUp;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,18 +12,16 @@ import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IDAOAbstractFactory;
 import com.LearnToCrypt.DAO.IUserDAO;
-import com.LearnToCrypt.services.SignUpValidatorService;
 
 @Controller
 public class SignUpController implements WebMvcConfigurer {
 	
-	@Autowired
-    SignUpValidatorService singUpService;
-	
+	SignUpValidatorService signUpService;
 	IDAOAbstractFactory abstractFactory;
 	
 	public SignUpController() {
 		 abstractFactory = new DAOAbstractFactory();
+		 signUpService = new SignUpValidatorService();
 	}
 	
 	@GetMapping("/signup")

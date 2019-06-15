@@ -1,4 +1,4 @@
-package com.LearnToCrypt.services;
+package com.LearnToCrypt.SignUp;
 
 import org.springframework.stereotype.Service;
 
