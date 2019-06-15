@@ -10,12 +10,14 @@ import com.LearnToCrypt.DatabaseConnection.DBConnection;
 
 public class UserDAO implements IUserDAO {
 
+	DBConnection dbConnectionInstance = null;
 	Connection dbConnection = null;
 	private PreparedStatement preparedStatement;
 	ResultSet resultSet;
 	
 	public UserDAO() {
-		dbConnection = DBConnection.instance().getConnection();
+		dbConnectionInstance = DBConnection.instance();
+		dbConnection = dbConnectionInstance.getConnection();
 	}
 	
 	@Override
@@ -26,7 +28,10 @@ public class UserDAO implements IUserDAO {
 			resultSet = preparedStatement.executeQuery();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("Error in creating a new user.");
+			System.out.println("Error : " + e.getMessage()); 
+		} finally {
+			dbConnectionInstance.closeConnection();
 		}
 	}
 }
