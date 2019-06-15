@@ -56,16 +56,26 @@ public class DBConnection {
 		return this.dbConnection;
 	}
 
-	public boolean closeConnection() {
+	public void closeConnection() {
 		try {
 			if (!dbConnection.isClosed()) {
 				dbConnection.close();
-				return true;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Some error occured in closing the connection");
+			System.out.println("Error : " + e.getMessage());
 		}
-		return false;
+	}
+	
+	public boolean isConnectionClosed() {
+		boolean isClosed = false;
+		try {
+			isClosed = dbConnection.isClosed();
+		} catch (SQLException e) {
+			System.out.println("Some error occured in checking the connection closed.");
+			System.out.println("Error : " + e.getMessage());
+		}
+		
+		return isClosed;
 	}
 }
