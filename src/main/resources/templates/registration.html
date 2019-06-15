@@ -201,6 +201,20 @@
                        <input class="form-control" th:value="${confirmPassword}" id="confirmPassword" type="password" name="confirmPassword" />
                     </div>
                     
+                    <div class="form-group input-group">
+				    	<div> Role: </div>
+				    	<br/>
+				    	<div class="custom-control custom-radio ml-3">
+							<input id="student" type="radio" class="custom-control-input" name="role" value="Student" th:field="${user.role}">
+							<label class="custom-control-label" for="student"> Student </label>
+						</div>
+				        
+				        <div class="custom-control custom-radio ml-3">
+							<input id="instructor" type="radio" class="custom-control-input" name="role" value="Instructor" th:field="${user.role}">
+							<label class="custom-control-label" for="instructor"> Instructor </label>
+						</div>
+				    </div>
+
                     <div class="form-group">
                         <div id="formError" th:text="${invalidSignup}"></div>
                     </div>

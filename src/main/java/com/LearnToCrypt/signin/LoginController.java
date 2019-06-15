@@ -11,28 +11,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class LoginController implements WebMvcConfigurer {
 	
-    LoginValidatorService loginService;
-	
     public LoginController() {
-		loginService = new LoginValidatorService();
-	}
+    	
+    }
     
 	@GetMapping("/login")
     public String displayLogin(ModelMap model) {
-		
-		String email = "";
-		String password = "";
-		
-		model.addAttribute("email",email);		
-		model.addAttribute("password",password);
-		
 		return "login.html";
     }
 	
 	@PostMapping("/login")
     public String showDashboard(ModelMap model, @RequestParam String email, @RequestParam String password, RedirectAttributes redirectAttributes) {
 		
-		boolean isUserValid = loginService.validateLoginCredentials(email, password);
+		// logic for credential validation will go here.
+		boolean isUserValid = true;
         
 		if (!isUserValid) {
             model.put("invalidLogin", "Invalid Credentials");

@@ -22,7 +22,10 @@ public class UserDAO implements IUserDAO {
 	
 	@Override
 	public void createUser(User user) {
-		String query = "CALL create_user(\""+user.getEmail()+"\", \""+ user.getName() + "\", \"" + user.getPassword() + "\", 1);";
+		
+		int role = ( user.getRole().equals("Student") ) ? 1 : 2;
+				
+		String query = "CALL create_user(\""+user.getEmail()+"\", \""+ user.getName() + "\", \"" + user.getPassword() + "\", "+ role + ");";
 		try {
 			preparedStatement = dbConnection.prepareStatement(query);		
 			resultSet = preparedStatement.executeQuery();

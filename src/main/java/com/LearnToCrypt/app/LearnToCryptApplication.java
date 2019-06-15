@@ -6,13 +6,11 @@ import org.springframework.context.annotation.ComponentScan;
 
 import com.LearnToCrypt.Homepage.HomePageController;
 import com.LearnToCrypt.SignUp.SignUpController;
-import com.LearnToCrypt.SignUp.SignUpValidatorService;
 import com.LearnToCrypt.dashboard.DashboardController;
 import com.LearnToCrypt.SignIn.LoginController;
-import com.LearnToCrypt.SignIn.LoginValidatorService;
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {HomePageController.class, LoginController.class, LoginValidatorService.class, DashboardController.class, SignUpController.class, SignUpValidatorService.class})
+@ComponentScan(basePackageClasses = {HomePageController.class, LoginController.class, DashboardController.class, SignUpController.class})
 public class LearnToCryptApplication {
 
 	public static void main(String[] args) {
