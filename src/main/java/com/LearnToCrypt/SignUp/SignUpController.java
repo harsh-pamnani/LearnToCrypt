@@ -53,6 +53,12 @@ public class SignUpController implements WebMvcConfigurer {
 			return "registration.html";
 		}
 		
+		IUserDAO userDAOName = abstractFactory.createUserDAO();
+		String userName = userDAOName.getUserName(user.getEmail());
+		
+		// This logic will be updated to get the user's name from database.
+		redirectAttributes.addFlashAttribute("username", userName);
+		
         return "redirect:/dashboard";
     }
 }

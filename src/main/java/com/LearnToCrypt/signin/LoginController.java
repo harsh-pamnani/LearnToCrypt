@@ -8,14 +8,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.LearnToCrypt.BusinessModels.User;
+import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.DAO.IUserDAO;
 
 @Controller
 public class LoginController implements WebMvcConfigurer {
 	
 	ValidateUserCredentials validateUserCredentials;
-
+	DAOAbstractFactory abstractFactory;
+	
     public LoginController() {
     	validateUserCredentials = new ValidateUserCredentials();
+    	abstractFactory = new DAOAbstractFactory();
     }
     
 	@GetMapping("/login")
@@ -37,8 +41,10 @@ public class LoginController implements WebMvcConfigurer {
             return "login";
         }
 		
-		// This logic will be updated to get the user's name from database.
-		redirectAttributes.addFlashAttribute("name", "Harsh Pamnani");
+		IUserDAO userDAOName = abstractFactory.createUserDAO();
+		String userName = userDAOName.getUserName(user.getEmail());
+		
+		redirectAttributes.addFlashAttribute("username", userName);
 		
         return "redirect:/dashboard";
     }

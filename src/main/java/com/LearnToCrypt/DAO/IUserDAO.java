@@ -9,4 +9,6 @@ public interface IUserDAO {
 	public boolean isUserValid(User user);
 	
 	public boolean isUserRegistered(User user);
+	
+	public String getUserName(String email);
 }

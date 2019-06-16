@@ -98,4 +98,29 @@ public class UserDAO implements IUserDAO {
 		
 		return isRegistered;
 	}
+	
+	@Override
+	public String getUserName(String email) {
+		String userName = "";
+		
+		String query = "CALL get_user_name(\""+ email + "\");";
+		
+		try {
+			dbConnection = dbConnectionInstance.getConnection();
+			
+			statement = dbConnection.prepareStatement(query);
+			resultSet = statement.executeQuery();
+						
+			while (resultSet.next()) {
+				userName = resultSet.getString(1);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error in fetching the user registration details");
+			System.out.println("Error : " + e.getMessage()); 
+		} finally {
+			dbConnectionInstance.closeConnection();
+		}	
+		
+		return userName;
+	}
 }
