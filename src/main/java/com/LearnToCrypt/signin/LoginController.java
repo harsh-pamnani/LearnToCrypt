@@ -1,4 +1,4 @@
-package com.LearnToCrypt.SignIn;
+package com.LearnToCrypt.signin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
