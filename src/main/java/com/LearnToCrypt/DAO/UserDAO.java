@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.LearnToCrypt.Algorithms.MD5;
 import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DatabaseConnection.DBConnection;
 
@@ -14,17 +15,20 @@ public class UserDAO implements IUserDAO {
 	Connection dbConnection = null;
 	private PreparedStatement statement;
 	ResultSet resultSet;
+	MD5 md5Algorithm;
 	
 	public UserDAO() {
 		dbConnectionInstance = DBConnection.instance();
+		md5Algorithm = new MD5();
 	}
 	
 	@Override
 	public void createUser(User user) {
-		
 		int role = ( user.getRole().equals("Student") ) ? 1 : 2;
-				
-		String query = "CALL create_user(\""+user.getEmail()+"\", \""+ user.getName() + "\", \"" + user.getPassword() + "\", "+ role + ");";
+		
+		String hashedPassword = md5Algorithm.generateMD5HashValue(user.getPassword());
+		String query = "CALL create_user(\""+user.getEmail()+"\", \""+ user.getName() + "\", \"" + hashedPassword + "\", "+ role + ");";
+		
 		try {
 			dbConnection = dbConnectionInstance.getConnection();
 			
@@ -41,9 +45,11 @@ public class UserDAO implements IUserDAO {
 	
 	@Override
 	public boolean isUserValid(User user) {
+		
 		boolean isValid = false;
 		
-		String query = "CALL count_user(\""+ user.getEmail() + "\",\"" + user.getPassword() + "\");";
+		String hashedPassword = md5Algorithm.generateMD5HashValue(user.getPassword());
+		String query = "CALL count_user(\""+ user.getEmail() + "\",\"" + hashedPassword + "\");";
 		
 		try {
 			dbConnection = dbConnectionInstance.getConnection();
@@ -70,7 +76,7 @@ public class UserDAO implements IUserDAO {
 	}
 	
 	@Override
-	public boolean isUserRegistered(User user) {
+	public boolean isUserRegistered(User user) {		
 		boolean isRegistered = false;
 		
 		String query = "CALL count_registered_user(\""+ user.getEmail() + "\");";
