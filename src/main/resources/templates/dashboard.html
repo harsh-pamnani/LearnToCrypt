@@ -94,7 +94,12 @@
 
 		.touch-icon {
 			color: #130f40;
-		}
+        }
+        
+        .dashboard {
+            margin-top: 7rem;
+            margin-bottom: 7rem;
+        }
     </style>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
@@ -126,25 +131,22 @@
 				
 		    </ul>
 		  	<ul class="navbar-nav ml-auto">
-		  		<li class="nav-item mr-3">
-					<a class="btn btn-outline-primary nav-link-btn my-sm-0" href="/login"> Login </a>
-				</li>
-		      	<li class="nav-item mr-5">
-		        	<a class="btn btn-outline-primary nav-link-btn my-sm-0" href="/signup"> Registration </a>
-		      	</li>
+		  		<li class="btn-group">
+                    <button th:text="${username}" type="button" class="btn btn-dark dropdown-toggle mr-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" > Some Name </button>
+			        <div class="dropdown-menu">
+			        	<a class="dropdown-item" href="#"> My Progress </a>
+			            <a class="dropdown-item" href="#"> Edit Profile </a>
+			            <a class="dropdown-item" href="/"> Logout </a>  
+			        </div>
+			    </li>
 		  	</ul>
 		</div>
 	</nav>
-
-	<header class="jumbotron jumbotron-fluid backgroundBody my-5 firstJumbotron">
-	    <div class="container-fluid text-center"> 
-	       <h1 class="display-3 pb-3 landing-title">The Best Place to Learn Cryptography</h1>
-	       <p class="display-5 pb-4">We help students to learn cryptography. This series of tutorials will prepare you for your upcoming cryptography challenge!</p>
-	       <p><a class="btn btn-lg" role="button" href="#"> Start Learning </a></p>
-	    </div>
-	</header>
-
-	<div id="footer" class="footer pt-5">
+    
+    <h1 class="dashboard"> This will be the dashboard page. </h1>
+    <h1 class="dashboard"> Please come back later to check. </h1>
+    
+    <div id="footer" class="footer pt-5">
 	     <div class="container">
 	         <div class="row">
 	             <div class="col-md-4 mt-sm-1">
@@ -173,8 +175,8 @@
 	         </div>
 	     </div>
 	 </div>
-
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     
