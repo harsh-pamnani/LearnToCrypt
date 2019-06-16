@@ -1,6 +1,9 @@
 package com.LearnToCrypt.Algorithm.Cipher;
 
 public interface ICipher {
-    void encode();
-    void decode();
+
+    String encode(String key,String plaintext);
+    String getResult();
+    String getSteps();
+
 }

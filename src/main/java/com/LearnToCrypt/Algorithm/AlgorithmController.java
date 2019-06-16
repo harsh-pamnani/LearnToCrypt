@@ -1,5 +1,6 @@
 package com.LearnToCrypt.Algorithm;
 
+import com.LearnToCrypt.Algorithm.Cipher.CaesarCipher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,12 +23,20 @@ public class AlgorithmController implements WebMvcConfigurer {
     }
 
     @PostMapping("/algorithm")
-    public String submit(@ModelAttribute UserInput userInput) {
-
+    public String submit(@ModelAttribute UserInput userInput, Model model) {
 
 
         System.out.println(userInput.getKey());
         System.out.println(userInput.getPlaintext());
+
+        CaesarCipher caesarCipher = new CaesarCipher();
+        caesarCipher.encode(userInput.getKey()+"",userInput.getPlaintext());
+
+        String result = caesarCipher.getResult();
+        model.addAttribute("result",result);
+
+        String steps = caesarCipher.getSteps();
+        model.addAttribute("steps",steps);
 
         return "algorithm";
     }
