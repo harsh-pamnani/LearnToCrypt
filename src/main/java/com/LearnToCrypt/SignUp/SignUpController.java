@@ -25,7 +25,7 @@ public class SignUpController implements WebMvcConfigurer {
 	}
 	
 	@GetMapping("/signup")
-    public String displayLogin(ModelMap model) {
+    public String displaySignUp(ModelMap model) {
 		
 		model.addAttribute("user", new User());
 
@@ -37,9 +37,17 @@ public class SignUpController implements WebMvcConfigurer {
 		
 		String formError = validateSignUpForm.validateFormDetails(user, confirmPassword);
 		
-		if( formError.equals("") ) {
-			IUserDAO userDAO = abstractFactory.createUserDAO();
-			userDAO.createUser(user);
+		if( formError.equals("") ) {		
+			IUserDAO userDAOValidation = abstractFactory.createUserDAO();
+			boolean isUserRegistered = userDAOValidation.isUserRegistered(user);
+			
+			if (isUserRegistered) {
+				model.put("invalidSignup", "Email id is already registered. Registration Failed.");
+				return "registration.html";
+			} else {
+				IUserDAO userDAORegistration = abstractFactory.createUserDAO();
+				userDAORegistration.createUser(user);
+			}
 		} else {
 			model.put("invalidSignup", formError + " Registration Failed.");
 			return "registration.html";
