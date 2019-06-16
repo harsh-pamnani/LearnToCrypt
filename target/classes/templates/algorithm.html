@@ -100,6 +100,12 @@
             margin-top: 7rem;
             margin-bottom: 7rem;
         }
+
+        .img {
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
     </style>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
@@ -146,7 +152,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-2"></div>
-                <div class="col-md-4 img"></div>
+                <div class="col-md-4 img" th:style="'background-image:url(' + @{${url}} + ');'"></div>
                 <div class="col-md-4">
                     <p>The action of a Caesar cipher is to replace each plaintext letter with a different one a fixed number of places down the alphabet. The cipher illustrated here uses a left shift of three, so that (for example) each occurrence of E in the plaintext
                         becomes B in the ciphertext.</p>

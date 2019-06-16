@@ -17,11 +17,14 @@ public class AlgorithmController implements WebMvcConfigurer {
                                                String alg, Model model){
         model.addAttribute("userInput", new UserInput());
         model.addAttribute("alg", alg);
+        model.addAttribute("url", "images/Caesar_cipher.png");
         return "algorithm";
     }
 
     @PostMapping("/algorithm")
     public String submit(@ModelAttribute UserInput userInput) {
+
+
 
         System.out.println(userInput.getKey());
         System.out.println(userInput.getPlaintext());
