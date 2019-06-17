@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style type="text/css">
+        body {
+            background: #FFEFBA;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #FFFFFF, #FFEFBA);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #FFFFFF, #FFEFBA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        .homepage-title {
+            font-size: 5vw !important;
+        }
+
+        .navbar {
+            background: #2ed573;
+            font-size: 1.25rem;
+        }
+
+        .nav-link , .navbar-brand {
+            color: #130f40 !important;
+            cursor: pointer;
+            margin-right: 1em !important;
+        }
+
+        .nav-link:hover {
+            background: #130f40;
+            color: #2ed573 !important;
+            border-color: #130f40;
+            padding-left: 1rem;
+        }
+
+        .nav-link-btn {
+            color: #130f40;
+            padding-left: 1rem;
+            border: 2px solid #130f40;
+            border-radius: 25px;
+        }
+
+        .nav-link-btn:hover {
+            background: #130f40 !important;
+            color: #2ed573 !important;
+            border-color: #130f40 !important;
+            padding-left: 1rem !important;
+            border-radius: 25px !important;
+        }
+
+        .btn {
+            background: #2ed573;
+            color: #130f40;
+        }
+
+        .btn:hover {
+            background: #130f40;
+            color: #2ed573;
+        }
+
+        .ml-auto {
+            margin-left: 2rem;
+        }
+
+        .navbar-toggler{
+            background: #c7ecee;
+        }
+
+        .navbar-collapse{
+            justify-content: flex-end;
+        }
+
+        .firstJumbotron {
+            padding-top: 10rem;
+            background: transparent;
+        }
+
+        .display-3 {
+            font-size: 6vw;
+        }
+
+        .footer {
+            background: #2ed573;
+            color: #130f40;
+        }
+
+        hr {
+            border-color: #130f40 !important;
+        }
+
+        .social-media {
+            font-size: 28px;
+            border: 1px solid #130f40;
+        }
+
+        .touch-icon {
+            color: #130f40;
+        }
+
+        .dashboard {
+            margin-top: 7rem;
+            margin-bottom: 7rem;
+        }
+
+        .img {
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .card {
+            width: 100%;
+            height: 350px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            -webkit-box-shadow: inset 0px 0px 3px 2px rgba(0, 0, 0, 0.44);
+            -moz-box-shadow: inset 0px 0px 3px 2px rgba(0, 0, 0, 0.44);
+            box-shadow: inset 0px 0px 3px 2px rgba(0, 0, 0, 0.44);
+            padding: 15px;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <title> LearnToCrypt Home </title>
+</head>
+<body>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light mb-2" id="navigationHome">
+
+        <a class="navbar-brand" href="/homepage">LearnToCrypt</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#optionsCollapsed" aria-controls="optionsCollapsed" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+    <!--- code snippet for collapsible feature of navbar with responsiveness by using bootstrap classes -->
+        <div class="collapse navbar-collapse" id="optionsCollapsed">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard"> Dashboard </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> Playground </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> Contact Us </a>
+                </li>
+
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item mr-3">
+                    <a class="btn btn-outline-primary nav-link-btn my-sm-0" href="/login"> Login </a>
+                </li>
+                <li class="nav-item mr-5">
+                    <a class="btn btn-outline-primary nav-link-btn my-sm-0" href="/signup"> Registration </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container dashboard">
+        <h2 class="text-center">Algorithm</h2>
+        <hr>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4 img" th:style="'background-image:url(' + @{${url}} + ');'"></div>
+                <div class="col-md-4">
+                    <p>The action of a Caesar cipher is to replace each plaintext letter with a different one a fixed number of places down the alphabet. The cipher illustrated here uses a left shift of three, so that (for example) each occurrence of E in the plaintext
+                        becomes B in the ciphertext.</p>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <form action="#" th:action="@{/algorithm}" th:object="${userInput}" method="post">
+                        <div class="form-group">
+                            <label for="key">Key</label>
+                            <input type="text" id="key" name="key" class="key form-control" th:field="*{key}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="plaintext">Plaintext</label>
+                            <input type="text" id="plaintext" name="plaintext" class="plaintext form-control" th:field="*{plaintext}" />
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Submit" />
+                    </form>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <br>
+                    <div class="container card">
+                        <p>Resault:</p>
+                        <P style="white-space: pre;" th:text="${result}"></P>
+                        <P style="white-space: pre;" th:text="${steps}"></P>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>

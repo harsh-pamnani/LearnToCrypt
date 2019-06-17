@@ -1,4 +1,4 @@
-package com.LearnToCrypt.signin;
+package com.LearnToCrypt.SignIn;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,7 +13,7 @@ import com.LearnToCrypt.DAO.IUserDAO;
 
 @Controller
 public class LoginController implements WebMvcConfigurer {
-	
+
 	ValidateUserCredentials validateUserCredentials;
 	DAOAbstractFactory abstractFactory;
 	
