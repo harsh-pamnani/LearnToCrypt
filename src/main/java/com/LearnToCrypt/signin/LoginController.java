@@ -1,49 +1,51 @@
-package com.LearnToCrypt.SignIn;
+package com.LearnToCrypt.signin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.LearnToCrypt.BusinessModels.User;
+import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.DAO.IUserDAO;
 
 @Controller
 public class LoginController implements WebMvcConfigurer {
 	
-    LoginValidatorService loginService;
+	ValidateUserCredentials validateUserCredentials;
+	DAOAbstractFactory abstractFactory;
 	
     public LoginController() {
-		loginService = new LoginValidatorService();
-	}
+    	validateUserCredentials = new ValidateUserCredentials();
+    	abstractFactory = new DAOAbstractFactory();
+    }
     
 	@GetMapping("/login")
     public String displayLogin(ModelMap model) {
 		
-		String email = "";
-		String password = "";
-		
-		model.addAttribute("email",email);		
-		model.addAttribute("password",password);
+		model.addAttribute("user", new User());
 		
 		return "login.html";
     }
 	
 	@PostMapping("/login")
-    public String showDashboard(ModelMap model, @RequestParam String email, @RequestParam String password, RedirectAttributes redirectAttributes) {
+    public String showDashboard(ModelMap model, User user, RedirectAttributes redirectAttributes) {
 		
-		boolean isUserValid = loginService.validateLoginCredentials(email, password);
+		// Credential validations will go here.
+		boolean isUserValid = validateUserCredentials.validateCredentials(user);
         
 		if (!isUserValid) {
             model.put("invalidLogin", "Invalid Credentials");
             return "login";
         }
 		
-		// This logic will be updated to get the user's name from database.
-		redirectAttributes.addFlashAttribute("username", "Harsh Pamnani");
-		model.put("email", email);
-        model.put("password", password);
-        
+		IUserDAO userDAOName = abstractFactory.createUserDAO();
+		String userName = userDAOName.getUserName(user.getEmail());
+		
+		redirectAttributes.addFlashAttribute("username", userName);
+		
         return "redirect:/dashboard";
     }
 }

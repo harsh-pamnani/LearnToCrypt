@@ -7,10 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 import com.LearnToCrypt.Homepage.HomePageController;
 import com.LearnToCrypt.SignUp.SignUpController;
-import com.LearnToCrypt.SignUp.SignUpValidatorService;
 import com.LearnToCrypt.dashboard.DashboardController;
-import com.LearnToCrypt.SignIn.LoginController;
-import com.LearnToCrypt.SignIn.LoginValidatorService;
+import com.LearnToCrypt.signin.LoginController;
 
 
 @SpringBootApplication
@@ -23,6 +21,7 @@ import com.LearnToCrypt.SignIn.LoginValidatorService;
 		SignUpValidatorService.class,
 		AlgorithmController.class
 })
+//@ComponentScan(basePackageClasses = {HomePageController.class, LoginController.class, DashboardController.class, SignUpController.class})
 public class LearnToCryptApplication {
 
 	public static void main(String[] args) {
