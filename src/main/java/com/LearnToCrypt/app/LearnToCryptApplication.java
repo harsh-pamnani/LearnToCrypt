@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.LearnToCrypt.Homepage.HomePageController;
+import com.LearnToCrypt.SignInUser.LoginController;
 import com.LearnToCrypt.SignUp.SignUpController;
 import com.LearnToCrypt.Dashboard.DashboardController;
-import com.LearnToCrypt.SignIn.LoginController;
 
 
 @SpringBootApplication
