@@ -1,4 +1,4 @@
-package com.LearnToCrypt.Algorithms;
+package com.LearnToCrypt.HashingAlgorithm;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

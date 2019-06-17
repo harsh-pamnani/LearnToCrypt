@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.LearnToCrypt.Algorithms.MD5;
+import com.LearnToCrypt.HashingAlgorithm.MD5;
 import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DatabaseConnection.DBConnection;
 
