@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import com.LearnToCrypt.Homepage.HomePageController;
 import com.LearnToCrypt.SignUp.SignUpController;
 import com.LearnToCrypt.dashboard.DashboardController;
-import com.LearnToCrypt.signin.LoginController;
+import com.LearnToCrypt.SignIn.LoginController;
 
 @SpringBootApplication
 @ComponentScan(basePackageClasses = {HomePageController.class, LoginController.class, DashboardController.class, SignUpController.class})
