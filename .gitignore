@@ -1,6 +1,6 @@
 
 HELP.md
-
+/target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -13,7 +13,7 @@ HELP.md
 .sts4-cache
 
 ### IntelliJ IDEA ###
-
+.idea
 *.iws
 *.iml
 *.ipr
