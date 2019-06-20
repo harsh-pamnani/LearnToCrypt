@@ -1,192 +1,81 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
-    <style type="text/css">
-		body {
-			background: #FFEFBA;  /* fallback for old browsers */
-			background: -webkit-linear-gradient(to right, #FFFFFF, #FFEFBA);  /* Chrome 10-25, Safari 5.1-6 */
-			background: linear-gradient(to right, #FFFFFF, #FFEFBA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-		}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-		.homepage-title {
-			font-size: 5vw !important;
-		}
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="login.css">
 
-		.navbar { 
-			background: #2ed573;
-			font-size: 1.25rem;
-		}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
 
-		.nav-link , .navbar-brand { 
-			color: #130f40 !important; 
-			cursor: pointer;
-			margin-right: 1em !important;
-		}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
 
-		.nav-link:hover { 
-			background: #130f40; 
-			color: #2ed573 !important; 
-			border-color: #130f40; 
-			padding-left: 1rem;
-		}
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
-		.nav-link-btn {
-			color: #130f40;
-			padding-left: 1rem;
-			border: 2px solid #130f40;
-			border-radius: 25px;	
-		}
-
-		.nav-link-btn:hover {
-			background: #130f40 !important; 
-			color: #2ed573 !important;
-			border-color: #130f40 !important; 
-			padding-left: 1rem !important;
-			border-radius: 25px !important;
-		}
-
-		.btn {
-			background: #2ed573;
-			color: #130f40;
-		}
-
-		.btn:hover {
-			background: #130f40;
-			color: #2ed573;
-		}
-
-		.ml-auto {
-			margin-left: 2rem;
-		}
-
-		.navbar-toggler{
-			background: #c7ecee;
-		}
-
-		.navbar-collapse{
-			justify-content: flex-end;
-		}
-
-		.firstJumbotron {
-			padding-top: 10rem;
-			background: transparent;
-		}
-
-		.display-3 {
-			font-size: 6vw;
-		}
-
-		.footer {
-			background: #2ed573;
-			color: #130f40;
-		}
-
-		hr {
-			border-color: #130f40 !important;
-		}
-
-		.social-media {
-			font-size: 28px;
-			border: 1px solid #130f40;
-		}
-
-		.touch-icon {
-			color: #130f40;
-        }
-
-        #login-form {
-            margin-top: 7rem;
-            margin-bottom: 4rem;
-        }
-        
-		.card-header {
-            text-align: center;
-            font-size: 28px;
-        }
-        
-        .form-group {
-        	margin-top: 12px;
-        	margin-left: 24px;
-        	margin-right: 24px;
-        }
-
-        .btn-dark {
-			color: #ffffff;
-            padding-left: 1rem;
-            background: #130f40;
-			border: 2px solid #130f40;
-			border-radius: 25px;	
-        }
-
-        .btn-dark:hover {
-			color: #ffffff;
-            padding-left: 1rem;
-            background: #4834d4;
-			border: 2px solid #4834d4;
-			border-radius: 25px;	
-        }
-
-        #formError {
-            color: red;
-            font-size: 15px;
-            font-family: cursive;
-        }
-        </style>
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-
-	<title> LearnToCrypt Home </title>
+    <title> LearnToCrypt Home </title>
 </head>
+
 <body>
-	<!--- This navigation bar  is the conde snippet from Bootstrap Documentation -->
-	<nav class="navbar fixed-top navbar-expand-lg navbar-light mb-2" id="navigationHome">
-	  
-		<a class="navbar-brand" href="/homepage">LearnToCrypt</a>
+    <!--- This navigation bar  is the conde snippet from Bootstrap Documentation -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light mb-2" id="navigationHome">
 
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#optionsCollapsed" aria-controls="optionsCollapsed" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-	 	</button>
+        <a class="navbar-brand" href="/homepage">LearnToCrypt</a>
 
-	    <!--- code snippet for collapsible feature of navbar with responsiveness by using bootstrap classes -->
-		<div class="collapse navbar-collapse" id="optionsCollapsed">
-		  	<ul class="navbar-nav mr-auto">
-		      	<li class="nav-item">
-		       		<a class="nav-link" href="#"> Dashboard </a>
-		      	</li>
-		      	<li class="nav-item">
-		        	<a class="nav-link" href="#"> Playground </a>
-		      	</li>
-		      	<li class="nav-item">
-		       		<a class="nav-link" href="#"> Contact Us </a>
-		    	</li>
-				
-		    </ul>
-		  	<ul class="navbar-nav ml-auto">
-		  		<li class="nav-item mr-3">
-					<a class="btn btn-outline-primary nav-link-btn my-sm-0" href="/login"> Login </a>
-				</li>
-		      	<li class="nav-item mr-5">
-		        	<a class="btn btn-outline-primary nav-link-btn my-sm-0" href="/signup"> Registration </a>
-		      	</li>
-		  	</ul>
-		</div>
-	</nav>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#optionsCollapsed"
+            aria-controls="optionsCollapsed" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!--- code snippet for collapsible feature of navbar with responsiveness by using bootstrap classes -->
+        <div class="collapse navbar-collapse" id="optionsCollapsed">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> Dashboard </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> Playground </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> Contact Us </a>
+                </li>
+
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item mr-3">
+                    <a class="btn btn-outline-primary nav-link-btn my-sm-0" href="/login"> Login </a>
+                </li>
+                <li class="nav-item mr-5">
+                    <a class="btn btn-outline-primary nav-link-btn my-sm-0" href="/signup"> Registration </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
     <div class="row" id="login-form">
         <div class="col-md-4 col-sm-6"></div>
         <div class="col-md-4 col-sm-6">
             <div id="login-form-style" class="card">
                 <div class="card-header"> LearnToCrypt Login </div>
-                <form method="post" >
+                <form method="post">
                     <div class="form-group">
-                        <label for="emailid" class="form-label" ><i class="fas fa-envelope"></i> Email: </label> 
-                        <input class="form-control" id="emailid" th:field="${user.email}" type="text" placeholder="example@gmail.com" name="email" />
+                        <label for="emailid" class="form-label"><i class="fas fa-envelope"></i> Email: </label>
+                        <input class="form-control" id="emailid" th:field="${user.email}" type="text"
+                            placeholder="example@gmail.com" name="email" />
                     </div>
                     <div class="form-group">
-                        <label for="password" class="form-label" ><i class="fas fa-unlock-alt"></i> Password: </label> 
-                       <input class="form-control" id="password" th:field="${user.password}" type="password" name="password" />
+                        <label for="password" class="form-label"><i class="fas fa-unlock-alt"></i> Password: </label>
+                        <input class="form-control" id="password" th:field="${user.password}" type="password"
+                            name="password" />
                     </div>
                     <div class="form-group">
                         <div id="formError" th:text="${invalidLogin}"></div>
@@ -201,40 +90,37 @@
     </div>
 
     <div id="footer" class="footer pt-5">
-	     <div class="container">
-	         <div class="row">
-	             <div class="col-md-4 mt-sm-1">
-	                 <h4> Quick Links </h4>
-	                 <hr>
-	                 <a class="touch-icon" href="/"> Home </a> <br/>
-	                 <a class="touch-icon" href="#"> Playground </a> <br/>
-	                 <a class="touch-icon" href="#"> Contact Us </a> <br/>
-	                 <a class="touch-icon" href="#"> About Us </a> <br/>
-	             </div>
-	             <div class="col-md-4 mt-sm-1">
-	                 <h4>Contact Us</h4>
-	                 <hr>
-	                 <p><i class="fa fa-home"></i> 6050, University Avenue </p>
-	                 <p><i class="fa fa-envelope"></i> qagroup7.winter@gmail.com </p>
-	                 <p><i class="fa fa-phone"></i> +1 111-222-3333 </p>
-	                 <p><i class="fa fa-globe"></i> www.learntocrypt.com </p>
-	             </div>
-	             <div class="col-md-4 mt-sm-1 mb-5">
-	                 <h4> Get in touch </h4>
-	                 <hr>
-	                 <a class="touch-icon" href="https://github.com/DalhousieUniversityCSCI5308/Group7/"><i class="social-media fab fa-github p-2 mr-3"></i></a>
-	                 <a class="touch-icon" href="#"><i class="social-media fab fa-facebook p-2 mr-3"></i></a>
-	                 <a class="touch-icon" href="#"><i class="social-media fab fa-twitter-square p-2 mr-3"></i></a> <br>
-	             </div>
-	         </div>
-	     </div>
-	 </div>
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mt-sm-1">
+                    <h4> Quick Links </h4>
+                    <hr>
+                    <a class="touch-icon" href="/"> Home </a> <br />
+                    <a class="touch-icon" href="#"> Playground </a> <br />
+                    <a class="touch-icon" href="#"> Contact Us </a> <br />
+                    <a class="touch-icon" href="#"> About Us </a> <br />
+                </div>
+                <div class="col-md-4 mt-sm-1">
+                    <h4>Contact Us</h4>
+                    <hr>
+                    <p><i class="fa fa-home"></i> 6050, University Avenue </p>
+                    <p><i class="fa fa-envelope"></i> qagroup7.winter@gmail.com </p>
+                    <p><i class="fa fa-phone"></i> +1 111-222-3333 </p>
+                    <p><i class="fa fa-globe"></i> www.learntocrypt.com </p>
+                </div>
+                <div class="col-md-4 mt-sm-1 mb-5">
+                    <h4> Get in touch </h4>
+                    <hr>
+                    <a class="touch-icon" href="https://github.com/DalhousieUniversityCSCI5308/Group7/"><i
+                            class="social-media fab fa-github p-2 mr-3"></i></a>
+                    <a class="touch-icon" href="#"><i class="social-media fab fa-facebook p-2 mr-3"></i></a>
+                    <a class="touch-icon" href="#"><i class="social-media fab fa-twitter-square p-2 mr-3"></i></a> <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
+
 </html>
