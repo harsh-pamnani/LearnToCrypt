@@ -29,8 +29,7 @@ body {
 .nav-link-btn {
     color: #130f40;
     padding-left: 1rem;
-    border: 2px solid #130f40;
-    border-radius: 25px;	
+    border: 2px solid #130f40;	
 }
 
 .nav-link-btn:hover {
@@ -38,7 +37,6 @@ body {
     color: #2ed573 !important;
     border-color: #130f40 !important; 
     padding-left: 1rem !important;
-    border-radius: 25px !important;
 }
 
 .btn {
