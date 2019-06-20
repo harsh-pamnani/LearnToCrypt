@@ -19,7 +19,6 @@ import com.LearnToCrypt.Dashboard.DashboardController;
 		SignUpController.class,
 		AlgorithmController.class
 })
-//@ComponentScan(basePackageClasses = {HomePageController.class, LoginController.class, DashboardController.class, SignUpController.class})
 public class LearnToCryptApplication {
 
 	public static void main(String[] args) {

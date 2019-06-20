@@ -7,25 +7,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.LearnToCrypt.BusinessModels.BusinessModelAbstractFactory;
+import com.LearnToCrypt.BusinessModels.IBusinessModelAbstractFactory;
 import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.DAO.IDAOAbstractFactory;
 import com.LearnToCrypt.DAO.IUserDAO;
 
 @Controller
 public class LoginController implements WebMvcConfigurer {
 
 	ValidateUserCredentials validateUserCredentials;
-	DAOAbstractFactory abstractFactory;
+	IDAOAbstractFactory daoAbstractFactory;
+	IBusinessModelAbstractFactory businessModelAbstractFactory;
 	
     public LoginController() {
     	validateUserCredentials = new ValidateUserCredentials();
-    	abstractFactory = new DAOAbstractFactory();
+    	daoAbstractFactory = new DAOAbstractFactory();
+    	businessModelAbstractFactory = new BusinessModelAbstractFactory();
     }
     
 	@GetMapping("/login")
     public String displayLogin(ModelMap model) {
 		
-		model.addAttribute("user", new User());
+		model.addAttribute("user", businessModelAbstractFactory.createUser());
 		
 		return "login.html";
     }
@@ -41,7 +46,7 @@ public class LoginController implements WebMvcConfigurer {
             return "login";
         }
 		
-		IUserDAO userDAOName = abstractFactory.createUserDAO();
+		IUserDAO userDAOName = daoAbstractFactory.createUserDAO();
 		String userName = userDAOName.getUserName(user.getEmail());
 		
 		redirectAttributes.addFlashAttribute("username", userName);

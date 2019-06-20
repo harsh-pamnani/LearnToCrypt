@@ -1,4 +1,4 @@
-package com.LearnToCrypt.DBConnection;
+package com.LearnToCrypt.DatabaseConnection;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -19,13 +19,19 @@ public class DBConnectionTest {
 	
 	
 	@Test
-	public void getConnectionTest() {
+	public void testGetConnection() {
 		Connection dbConnect = dbConnection.getConnection();
 		assertNotNull(dbConnect);
 	}
 	
 	@Test
-	public void closeConnectionTest() {
+	public void testCloseConnection() {
+		dbConnection.closeConnection();
+		assertTrue(dbConnection.isConnectionClosed());
+	}
+	
+	@Test
+	public void testIsCloseConnection() {
 		dbConnection.closeConnection();
 		assertTrue(dbConnection.isConnectionClosed());
 	}
