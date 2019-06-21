@@ -7,14 +7,16 @@ public class SignUpValidationRules {
 
 	public SignUpValidationRules() {
 		validationRules = new ArrayList<IValidation>();
+		setValidationRules();
 	}
 	
 	public ArrayList<IValidation> getValidationRules() {
 		return validationRules;
 	}
 
-	public void setValidationRules() {
-		validationRules.add(new NameValidation());
+	private void setValidationRules() {
+		validationRules.add(new NameEmptyValidation());
+		validationRules.add(new NameCharactersValidation());
 		
 		validationRules.add(new EmailValidation());
 		

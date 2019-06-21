@@ -7,8 +7,6 @@ import java.sql.Connection;
 
 import org.junit.Test;
 
-import com.LearnToCrypt.DatabaseConnection.DBConnection;
-
 public class DBConnectionTest {
 	
 	DBConnection dbConnection;
@@ -16,7 +14,6 @@ public class DBConnectionTest {
 	public DBConnectionTest() {
 		dbConnection = DBConnection.instance();
 	}
-	
 	
 	@Test
 	public void testGetConnection() {

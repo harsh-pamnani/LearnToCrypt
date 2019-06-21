@@ -12,8 +12,11 @@ import com.LearnToCrypt.BusinessModels.User;
 public class ConfirmPasswordValidationTest {
 
 	User user;
+	IValidation confrimPasswordValidation;
 	
 	public ConfirmPasswordValidationTest() {
+		confrimPasswordValidation = new ConfirmPasswordValidation();
+		
 		user = new User();
 		user.setEmail("Aman@gmail.com");
 		user.setName("Aman Arya");
@@ -23,15 +26,17 @@ public class ConfirmPasswordValidationTest {
 	
 	@Test
 	public void testIsValid() {
-		IValidation confrimPasswordValidation = new ConfirmPasswordValidation();
 		assertTrue(confrimPasswordValidation.isValid(user, "Aman!123"));
 		
 		assertFalse(confrimPasswordValidation.isValid(user, "Qwe#1612"));
+		
+		assertFalse(confrimPasswordValidation.isValid(user, ""));
+		
+		assertFalse(confrimPasswordValidation.isValid(user, null));
 	}
 	
 	@Test
 	public void testGetError() {
-		IValidation confrimPasswordValidation = new ConfirmPasswordValidation();
 		assertEquals("Confirm Password doesn't match.", confrimPasswordValidation.getError());
 		
 		assertNotEquals("XYZ error has occured.", confrimPasswordValidation.getError());

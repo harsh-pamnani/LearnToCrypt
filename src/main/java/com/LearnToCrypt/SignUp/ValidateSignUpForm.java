@@ -17,8 +17,6 @@ public class ValidateSignUpForm {
 	public String validateFormDetails(User user, String confirmPassword) {
 		String formError = "";
 		
-		validationRules.setValidationRules();
-		
 		ArrayList<IValidation> rules = validationRules.getValidationRules();
 		
 		for (IValidation rule: rules) {
