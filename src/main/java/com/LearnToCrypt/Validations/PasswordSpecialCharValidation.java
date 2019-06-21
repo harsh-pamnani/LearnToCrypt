@@ -11,9 +11,9 @@ public class PasswordSpecialCharValidation implements IValidation {
 	
 	@Override
 	public boolean isValid(User user, String confirmPassword) {
-		Matcher upperCaseMatcher = SPECIAL_CHAR_REGEX.matcher(user.getPassword());
+		Matcher specialCharachterMatcher = SPECIAL_CHAR_REGEX.matcher(user.getPassword());
 		
-		return upperCaseMatcher.find();
+		return specialCharachterMatcher.find();
 	}
 
 	@Override
