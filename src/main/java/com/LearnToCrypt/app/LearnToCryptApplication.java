@@ -1,6 +1,7 @@
 package com.LearnToCrypt.app;
 
 import com.LearnToCrypt.Algorithm.AlgorithmController;
+import com.LearnToCrypt.Profile.ProfileController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,7 +18,8 @@ import com.LearnToCrypt.Dashboard.DashboardController;
 		LoginController.class,
 		DashboardController.class,
 		SignUpController.class,
-		AlgorithmController.class
+		AlgorithmController.class,
+		ProfileController.class
 })
 //@ComponentScan(basePackageClasses = {HomePageController.class, LoginController.class, DashboardController.class, SignUpController.class})
 public class LearnToCryptApplication {
