@@ -6,7 +6,11 @@ public class NameEmptyValidation implements IValidation {
 
 	@Override
 	public boolean isValid(User user, String confirmPassword) {
-		return !user.getName().equals("");
+		String username = user.getName();
+		if(username != null) {
+			return !username.equals("");
+		}
+		return false;
 	}
 
 	@Override

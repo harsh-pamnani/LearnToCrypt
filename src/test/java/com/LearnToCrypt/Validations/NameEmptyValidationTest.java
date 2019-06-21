@@ -30,6 +30,9 @@ public class NameEmptyValidationTest {
 		
 		user.setName("");
 		assertFalse(nameEmptyValidation.isValid(user, "Hars@123"));
+		
+		user.setName(null);
+		assertFalse(nameEmptyValidation.isValid(user, "Hars@123"));
 	}
 	
 	@Test

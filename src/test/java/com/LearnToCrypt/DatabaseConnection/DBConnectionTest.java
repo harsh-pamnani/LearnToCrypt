@@ -28,7 +28,7 @@ public class DBConnectionTest {
 	}
 	
 	@Test
-	public void testIsCloseConnection() {
+	public void testIsConnectionClosed() {
 		dbConnection.closeConnection();
 		assertTrue(dbConnection.isConnectionClosed());
 	}
