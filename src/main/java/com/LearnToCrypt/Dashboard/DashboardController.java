@@ -16,7 +16,7 @@ public class DashboardController implements WebMvcConfigurer {
 	@GetMapping("/dashboard")
     public String displayDashboard(ModelMap model, @ModelAttribute("username") final Object username) {
 		model.put("username", username);
-        logger.info("access dashboard!");
+        logger.info("user \""+username+"\" accessed dashboard!");
         return "dashboard";
     }
 }

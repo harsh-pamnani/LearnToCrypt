@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import com.LearnToCrypt.ConfigurationLoader.DBConfigLoader;
+import com.LearnToCrypt.app.LearnToCryptApplication;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class DBConnection {
@@ -17,6 +20,8 @@ public class DBConnection {
 	private String server;
 	private String port;
 	private String dbConnectionURL;
+
+	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
 
 	public static DBConnection instance() {
 		if (null == dbConnectionUniqueInstance) {
