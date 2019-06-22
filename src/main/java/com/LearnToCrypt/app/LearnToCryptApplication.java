@@ -2,6 +2,8 @@ package com.LearnToCrypt.app;
 
 import com.LearnToCrypt.Algorithm.AlgorithmController;
 import com.LearnToCrypt.Profile.ProfileController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,8 +25,11 @@ import com.LearnToCrypt.Dashboard.DashboardController;
 })
 public class LearnToCryptApplication {
 
+	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+
 	public static void main(String[] args) {
 		SpringApplication.run(LearnToCryptApplication.class, args);
+		logger.info("Application Start!");
 	}
 
 }

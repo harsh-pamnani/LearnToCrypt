@@ -5,10 +5,16 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.LearnToCrypt.app.LearnToCryptApplication;
+
 public class DBConfigLoader {
 	private HashMap<String, String> dbCredentialsMap;
 
 	private static DBConfigLoader configurationUniqueInstance = null;
+	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
 
 	public static DBConfigLoader instance() {
 		if (null == configurationUniqueInstance) {
@@ -43,8 +49,7 @@ public class DBConfigLoader {
 			port = DatabaseCredentialsProperties.getProperty("port");
 			
 		} catch (IOException e) {
-			System.out.println("Error occured in accessing the config file");
-			System.out.println("Error : " + e.getMessage());
+			logger.error("Error occured in accessing the config file.", e);
 		}
 		
 		

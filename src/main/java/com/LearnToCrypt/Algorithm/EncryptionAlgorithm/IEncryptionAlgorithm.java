@@ -1,6 +1,6 @@
-package com.LearnToCrypt.Algorithm.Cipher;
+package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
-public interface ICipher {
+public interface IEncryptionAlgorithm {
 
     String encode(String key,String plaintext);
     String getResult();

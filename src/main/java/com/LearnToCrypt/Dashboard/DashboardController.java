@@ -1,5 +1,10 @@
 package com.LearnToCrypt.Dashboard;
 
+
+import com.LearnToCrypt.app.LearnToCryptApplication;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -11,6 +16,7 @@ import com.LearnToCrypt.SignIn.AuthenticationManager;
 
 @Controller
 public class DashboardController implements WebMvcConfigurer {
+    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
 	
 	AuthenticationManager authenticationManager;
 	
@@ -27,7 +33,9 @@ public class DashboardController implements WebMvcConfigurer {
 		
 		String username = authenticationManager.getUsername(httpSession);
 		model.put("username", username);
-		
+
+        logger.info("user \""+username+"\" accessed dashboard!");
+
         return "dashboard";
     }
 }

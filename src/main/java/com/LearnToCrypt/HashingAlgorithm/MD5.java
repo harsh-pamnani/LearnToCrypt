@@ -3,9 +3,14 @@ package com.LearnToCrypt.HashingAlgorithm;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class MD5 {
 
 	private static final String ALGORITHM = "MD5";
+	private static final Logger logger = LogManager.getLogger(MD5.class);
+
 
 	public String generateMD5HashValue(String password) {
 		String hashedPassword = "";
@@ -24,8 +29,7 @@ public class MD5 {
 			hashedPassword = stringBuilder.toString();
 
 		} catch (NoSuchAlgorithmException e) {
-			System.out.println("Error occured in getting the algorithm.");
-			System.out.println("Error : " + e.getMessage());
+			logger.error("Error occurred in getting the algorithm.",e);
 		}
 
 		return hashedPassword;
