@@ -52,19 +52,7 @@ public class UserDAO implements IUserDAO {
 		String query = "CALL count_user(\""+ user.getEmail() + "\",\"" + hashedPassword + "\");";
 		
 		try {
-			dbConnection = dbConnectionInstance.getConnection();
-			
-			statement = dbConnection.prepareStatement(query);
-			resultSet = statement.executeQuery();
-			
-			int userCount = 0;
-			while (resultSet.next()) {
-				userCount = resultSet.getInt(1);
-			}
-			
-			if (userCount != 0) {
-				isValid = true;
-			}
+			isValid = isRegistered(isValid, query);
 		} catch (SQLException e) {
 			System.out.println("Error in fetching the user credentials");
 			System.out.println("Error : " + e.getMessage()); 
@@ -82,19 +70,7 @@ public class UserDAO implements IUserDAO {
 		String query = "CALL count_registered_user(\""+ user.getEmail() + "\");";
 		
 		try {
-			dbConnection = dbConnectionInstance.getConnection();
-			
-			statement = dbConnection.prepareStatement(query);
-			resultSet = statement.executeQuery();
-			
-			int userCount = 0;
-			while (resultSet.next()) {
-				userCount = resultSet.getInt(1);
-			}
-			
-			if (userCount != 0) {
-				isRegistered = true;
-			}
+			isRegistered = isRegistered(isRegistered, query);
 		} catch (SQLException e) {
 			System.out.println("Error in fetching the user registration details");
 			System.out.println("Error : " + e.getMessage()); 
@@ -104,7 +80,24 @@ public class UserDAO implements IUserDAO {
 		
 		return isRegistered;
 	}
-	
+
+	private boolean isRegistered(boolean isRegistered, String query) throws SQLException {
+		dbConnection = dbConnectionInstance.getConnection();
+
+		statement = dbConnection.prepareStatement(query);
+		resultSet = statement.executeQuery();
+
+		int userCount = 0;
+		while (resultSet.next()) {
+			userCount = resultSet.getInt(1);
+		}
+
+		if (userCount != 0) {
+			isRegistered = true;
+		}
+		return isRegistered;
+	}
+
 	@Override
 	public String getUserName(String email) {
 		String userName = "";

@@ -35,7 +35,7 @@ public class DBConnection {
 		dbConnectionURL = "jdbc:mysql://" + server + ":" + port + "/" + database;
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			this.dbConnection = DriverManager.getConnection(dbConnectionURL, username, password);
 		} catch (Exception e) {
 			System.out.println("Some error occured in loading the DB connection");
@@ -46,7 +46,7 @@ public class DBConnection {
 	public Connection getConnection() {
 		try {
 			if (dbConnection.isClosed()) {
-				Class.forName("com.mysql.jdbc.Driver");
+				Class.forName("com.mysql.cj.jdbc.Driver");
 				this.dbConnection = DriverManager.getConnection(dbConnectionURL, username, password);
 			}
 		} catch (Exception e) {
@@ -54,6 +54,23 @@ public class DBConnection {
 			System.out.println("Error : " + e.getMessage());
 		}
 		return this.dbConnection;
+	}
+
+	public static Connection getConnectionForLog() {
+		DBConfigLoader databaseConfigLoader = DBConfigLoader.instance();
+		String database = databaseConfigLoader.value("database");
+		String username = databaseConfigLoader.value("username");
+		String password = databaseConfigLoader.value("password");
+		String server = databaseConfigLoader.value("server");
+		String port = databaseConfigLoader.value("port");
+		String dbConnectionURL = "jdbc:mysql://" + server + ":" + port + "/" + database;
+		try{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			return DriverManager.getConnection(dbConnectionURL, username, password);
+		}catch (Exception e) {
+
+		}
+		return null;
 	}
 
 	public void closeConnection() {
