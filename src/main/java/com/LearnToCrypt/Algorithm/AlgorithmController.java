@@ -16,7 +16,9 @@ public class AlgorithmController implements WebMvcConfigurer {
     @GetMapping("/algorithm")
     public String getAlgorithmPage(
             @RequestParam(name = "alg", required=false, defaultValue="Algorithm")
-                                               String alg, Model model){
+                                               String alg, Model model,@ModelAttribute("username") final Object username){
+
+        model.addAttribute("username", username);
         model.addAttribute("userInput", new UserInput());
         model.addAttribute("alg", alg);
         model.addAttribute("url", "images/Caesar_cipher.png");
