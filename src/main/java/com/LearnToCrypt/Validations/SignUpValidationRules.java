@@ -1,20 +1,23 @@
 package com.LearnToCrypt.Validations;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SignUpValidationRules {
-	private ArrayList<IValidation> validationRules;
+	private List<IValidation> validationRules;
 
 	public SignUpValidationRules() {
 		validationRules = new ArrayList<IValidation>();
+		setValidationRules();
 	}
 	
-	public ArrayList<IValidation> getValidationRules() {
+	public List<IValidation> getValidationRules() {
 		return validationRules;
 	}
 
-	public void setValidationRules() {
-		validationRules.add(new NameValidation());
+	private void setValidationRules() {
+		validationRules.add(new NameEmptyValidation());
+		validationRules.add(new NameCharactersValidation());
 		
 		validationRules.add(new EmailValidation());
 		

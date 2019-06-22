@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.LearnToCrypt.BusinessModels.BusinessModelAbstractFactory;
+import com.LearnToCrypt.BusinessModels.IBusinessModelAbstractFactory;
 import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IDAOAbstractFactory;
@@ -18,16 +20,18 @@ public class SignUpController implements WebMvcConfigurer {
 	
 	IDAOAbstractFactory abstractFactory;
 	ValidateSignUpForm validateSignUpForm;
+	IBusinessModelAbstractFactory businessModelAbstractFactory;
 	
 	public SignUpController() {
 		 abstractFactory = new DAOAbstractFactory();
 		 validateSignUpForm = new ValidateSignUpForm();
+		 businessModelAbstractFactory = new BusinessModelAbstractFactory();
 	}
 	
 	@GetMapping("/signup")
     public String displaySignUp(ModelMap model) {
 		
-		model.addAttribute("user", new User());
+		model.addAttribute("user", businessModelAbstractFactory.createUser());
 
 		return "registration.html";
     }
