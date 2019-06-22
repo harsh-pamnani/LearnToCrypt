@@ -13,10 +13,8 @@ public class ValidateUserCredentials {
 	}
 	
 	public boolean validateCredentials(User user) {
-					
 		IUserDAO userDAO = abstractFactory.createUserDAO();
 		
 		return userDAO.isUserValid(user);
-	}
-	
+	}	
 }
