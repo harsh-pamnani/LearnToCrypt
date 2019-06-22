@@ -55,10 +55,7 @@ public class LoginController implements WebMvcConfigurer {
             return "login";
         }
 		
-		IUserDAO userDAOName = daoAbstractFactory.createUserDAO();
-		String userName = userDAOName.getUserName(user.getEmail());
-		logger.error("User \""+userName+"\" login success");
-		redirectAttributes.addFlashAttribute("username", userName);
+		logger.error("User \""+authenticationManager.getUsername(httpSession)+"\" login success");
 					
 		authenticationManager.addAuthenticatedUser(httpSession, user.getEmail());
     return "redirect:/dashboard";
