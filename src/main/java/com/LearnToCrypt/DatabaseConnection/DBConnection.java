@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import com.LearnToCrypt.ConfigurationLoader.DBConfigLoader;
+import com.LearnToCrypt.app.LearnToCryptApplication;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class DBConnection {
@@ -17,6 +20,8 @@ public class DBConnection {
 	private String server;
 	private String port;
 	private String dbConnectionURL;
+
+	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
 
 	public static DBConnection instance() {
 		if (null == dbConnectionUniqueInstance) {
@@ -35,7 +40,7 @@ public class DBConnection {
 		dbConnectionURL = "jdbc:mysql://" + server + ":" + port + "/" + database;
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			this.dbConnection = DriverManager.getConnection(dbConnectionURL, username, password);
 		} catch (Exception e) {
 			System.out.println("Some error occured in loading the DB connection");
@@ -46,7 +51,7 @@ public class DBConnection {
 	public Connection getConnection() {
 		try {
 			if (dbConnection.isClosed()) {
-				Class.forName("com.mysql.jdbc.Driver");
+				Class.forName("com.mysql.cj.jdbc.Driver");
 				this.dbConnection = DriverManager.getConnection(dbConnectionURL, username, password);
 			}
 		} catch (Exception e) {
@@ -54,6 +59,23 @@ public class DBConnection {
 			System.out.println("Error : " + e.getMessage());
 		}
 		return this.dbConnection;
+	}
+
+	public static Connection getConnectionForLog() {
+		DBConfigLoader databaseConfigLoader = DBConfigLoader.instance();
+		String database = databaseConfigLoader.value("database");
+		String username = databaseConfigLoader.value("username");
+		String password = databaseConfigLoader.value("password");
+		String server = databaseConfigLoader.value("server");
+		String port = databaseConfigLoader.value("port");
+		String dbConnectionURL = "jdbc:mysql://" + server + ":" + port + "/" + database;
+		try{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			return DriverManager.getConnection(dbConnectionURL, username, password);
+		}catch (Exception e) {
+
+		}
+		return null;
 	}
 
 	public void closeConnection() {
