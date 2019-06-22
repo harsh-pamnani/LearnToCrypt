@@ -1,6 +1,11 @@
 package com.LearnToCrypt.SignIn;
 
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpSession;
+
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,7 +22,11 @@ public class LoginController implements WebMvcConfigurer {
 
 	ValidateUserCredentials validateUserCredentials;
 	IBusinessModelAbstractFactory businessModelAbstractFactory;
+
+	private static final Logger logger = LogManager.getLogger(LoginController.class);
+
 	AuthenticationManager authenticationManager;
+
 	
     public LoginController() {
     	validateUserCredentials = new ValidateUserCredentials();
@@ -41,11 +50,17 @@ public class LoginController implements WebMvcConfigurer {
 		boolean isUserValid = validateUserCredentials.validateCredentials(user);
   
 		if (!isUserValid) {
+			logger.error("User \""+user.getEmail()+"\" entered invalid credentials");
             model.put("invalidLogin", "Invalid Credentials");
             return "login";
         }
+		
+		IUserDAO userDAOName = daoAbstractFactory.createUserDAO();
+		String userName = userDAOName.getUserName(user.getEmail());
+		logger.error("User \""+userName+"\" login success");
+		redirectAttributes.addFlashAttribute("username", userName);
 					
 		authenticationManager.addAuthenticatedUser(httpSession, user.getEmail());
-        return "redirect:/dashboard";
+    return "redirect:/dashboard";
     }
 }

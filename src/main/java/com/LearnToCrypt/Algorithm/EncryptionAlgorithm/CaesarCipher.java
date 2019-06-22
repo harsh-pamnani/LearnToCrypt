@@ -1,6 +1,6 @@
-package com.LearnToCrypt.Algorithm.Cipher;
+package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
-public class CaesarCipher implements ICipher {
+public class CaesarCipher implements IEncryptionAlgorithm {
 
     private String result = "";
     private String steps = "";

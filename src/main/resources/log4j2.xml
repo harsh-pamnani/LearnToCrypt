@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="%d{yyyy-MMM-dd hh:mm:ss a } %level %c - %m %n" />
+        </Console>
+        <JDBC name="databaseAppender" tableName="logs">
+            <ConnectionFactory
+                    class="com.LearnToCrypt.DatabaseConnection.DBConnection" method="getConnectionForLog" />
+            <Column name="log_id" pattern="%u" />
+            <Column name="entry_date" isEventTimestamp="true" />
+            <Column name="logger" pattern="%logger" />
+            <Column name="log_level" pattern="%level" />
+            <Column name="message" pattern="%m" />
+            <Column name="exception" pattern="%throwable " />
+        </JDBC>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.LearnToCrypt" level="debug" additivity="false">
+            <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="databaseAppender" />
+        </Logger>
+
+        <Root level="warn">
+            <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="databaseAppender" />
+        </Root>
+    </Loggers>
+
+</Configuration>

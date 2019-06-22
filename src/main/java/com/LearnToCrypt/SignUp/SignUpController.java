@@ -1,5 +1,8 @@
 package com.LearnToCrypt.SignUp;
 
+import com.LearnToCrypt.SignIn.LoginController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +24,10 @@ public class SignUpController implements WebMvcConfigurer {
 	IDAOAbstractFactory abstractFactory;
 	ValidateSignUpForm validateSignUpForm;
 	IBusinessModelAbstractFactory businessModelAbstractFactory;
-	
+
+	private static final Logger logger = LogManager.getLogger(LoginController.class);
+
+
 	public SignUpController() {
 		 abstractFactory = new DAOAbstractFactory();
 		 validateSignUpForm = new ValidateSignUpForm();
@@ -47,13 +53,16 @@ public class SignUpController implements WebMvcConfigurer {
 			
 			if (isUserRegistered) {
 				model.put("invalidSignup", "Email id is already registered. Registration Failed.");
+				logger.error("Email id \""+user.getEmail()+"\" is already registered. Registration Failed.");
 				return "registration.html";
 			} else {
 				IUserDAO userDAORegistration = abstractFactory.createUserDAO();
 				userDAORegistration.createUser(user);
+				logger.info("\""+user.getEmail()+"\" registration success.");
 			}
 		} else {
 			model.put("invalidSignup", formError + " Registration Failed.");
+			logger.error(formError+" Registration Failed.");
 			return "registration.html";
 		}
 		
