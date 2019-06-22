@@ -15,9 +15,4 @@ public class UserProfile implements IProfile {
     public String getRole() {
         return "Student";
     }
-
-    @Override
-    public void changePassword(String password) {
-
-    }
 }

@@ -6,6 +6,4 @@ public interface IProfile {
     String getEmail();
 
     String getRole();
-
-    void changePassword(String password);
 }

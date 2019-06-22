@@ -11,11 +11,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class ProfileController implements WebMvcConfigurer {
 
     private IProfile userProfile;
+    private IPasswordChanger passwordChanger;
     private String username;
     private String email;
 
     ProfileController() {
         userProfile = new UserProfile();
+        passwordChanger = new PasswordChanger();
         username = userProfile.getUserName();
         email = userProfile.getEmail();
     }
@@ -33,7 +35,7 @@ public class ProfileController implements WebMvcConfigurer {
                                  @RequestParam String newPass,
                                  @RequestParam String confirmPass) {
 
-        userProfile.changePassword(newPass);
+        passwordChanger.changePassword(email, newPass);
         return ("profile");
     }
 }
