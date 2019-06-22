@@ -3,6 +3,7 @@ package com.LearnToCrypt.Homepage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -18,7 +19,13 @@ public class HomePageController implements WebMvcConfigurer {
 	}
 	
 	@GetMapping("/homepage")
-    public String displayHomepage() {
+    public String displayHomepage(HttpSession httpSession, ModelMap model) {
+		if(authenticationManager.isUserAuthenticated(httpSession)) {
+			String username = authenticationManager.getUsername(httpSession);
+			model.put("username", username);
+			
+			return "homepageLoggedInUser.html";
+		}
         return "homepage.html";
     }
 	

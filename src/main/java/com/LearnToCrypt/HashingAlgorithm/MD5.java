@@ -1,11 +1,10 @@
 package com.LearnToCrypt.HashingAlgorithm;
 
-import com.LearnToCrypt.app.LearnToCryptApplication;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MD5 {
 
@@ -30,8 +29,6 @@ public class MD5 {
 			hashedPassword = stringBuilder.toString();
 
 		} catch (NoSuchAlgorithmException e) {
-			System.out.println("Error occurred in getting the algorithm.");
-			System.out.println("Error : " + e.getMessage());
 			logger.error("Error occurred in getting the algorithm.",e);
 		}
 
