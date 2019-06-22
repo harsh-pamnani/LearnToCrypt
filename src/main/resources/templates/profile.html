@@ -109,6 +109,12 @@
             text-align: center;
             font-size: 28px;
         }
+
+        .formError {
+            color: red;
+            font-size: 15px;
+            font-family: cursive;
+        }
     </style>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
@@ -132,7 +138,7 @@
     <div class="collapse navbar-collapse" id="optionsCollapsed">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#"> Dashboard </a>
+                <a class="nav-link" href="/dashboard"> Dashboard </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"> Playground </a>
@@ -143,11 +149,14 @@
 
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item mr-3">
-                <a class="btn btn-outline-primary nav-link-btn my-sm-0" href="/login"> Login </a>
-            </li>
-            <li class="nav-item mr-5">
-                <a class="btn btn-outline-primary nav-link-btn my-sm-0" href="/signup"> Registration </a>
+            <li class="btn-group">
+                <button th:text="${username}" type="button" class="btn btn-dark dropdown-toggle mr-5"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Some Name </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#"> My Progress </a>
+                    <a class="dropdown-item" href="/profile"> My Profile </a>
+                    <a class="dropdown-item" href="/logout"> Logout </a>
+                </div>
             </li>
         </ul>
     </div>
@@ -159,10 +168,7 @@
         <div id="profile-form-style" class="card">
             <div class="card-title card-header"> Profile </div>
             <div class="card-body">
-                <div class="card-row">
-                    <label for="name" class="form-label">Name: </label>
-                    <span th:text="${username}" id="name"></span>
-                </div>
+
                 <div class="card-row">
                     <label for="email" class="form-label">Email: </label>
                     <span  th:text="${email}" id="email"></span>
@@ -171,45 +177,32 @@
                     <label for="role" class="form-label">Role: </label>
                     <span th:text="${role}" id="role"></span>
                 </div>
-                <!--<div class="card-row">
-                    <button class="btn btn-dark">Change Password</button>
-                </div>-->
                 <form method="post">
+                    <div class="card-row">
+                        <label for="name" class="form-label">Name: </label>
+                        <!--                    <span th:text="${username}" id="name"></span>-->
+                        <input id="name" th:value = "${username}" type="text" name="username" />
+                        <div class="form-group">
+                            <div class="formError" th:text="${nameerror}"></div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="newpass" class="form-label"><i class="fas fa-unlock-alt"></i> New Password: </label>
-                        <input class="form-control" id="newpass" th:value="${newpass}" type="password" name="newpass" />
+                        <input class="form-control" id="newpass" th:value="${newPass}" type="password" name="newPass" />
                     </div>
                     <div class="form-group">
                         <label for="password" class="form-label"><i class="fas fa-unlock-alt"></i>Confirm Password: </label>
-                        <input class="form-control" id="password" th:value="${confirmpass}" type="password"
-                               name="password" />
+                        <input class="form-control" id="password" th:value="${confirmPass}" type="password"
+                               name="confirmPass" />
                     </div>
-                    <!--<div class="form-group">
-                        <div id="formError" th:text="${invalidLogin}"></div>
-                    </div>-->
+                    <div class="form-group">
+                        <div class="formError" th:text="${passerror}"></div>
+                    </div>
                     <div class="form-group" style="text-align: center">
-                        <button type="submit" class="btn btn-dark"> Login </button>
+                        <button type="submit" class="btn btn-dark"> Update Profile </button>
                     </div>
                 </form>
             </div>
-            <!--<form method="post">
-                <div class="form-group">
-                    <label for="emailid" class="form-label"><i class="fas fa-envelope"></i> Email: </label>
-                    <input class="form-control" id="emailid" th:field="${user.email}" type="text"
-                           placeholder="example@gmail.com" name="email" />
-                </div>
-                <div class="form-group">
-                    <label for="password" class="form-label"><i class="fas fa-unlock-alt"></i> Password: </label>
-                    <input class="form-control" id="password" th:field="${user.password}" type="password"
-                           name="password" />
-                </div>
-                <div class="form-group">
-                    <div id="formError" th:text="${invalidLogin}"></div>
-                </div>
-                <div class="form-group" style="text-align: center">
-                    <button type="submit" class="btn btn-dark"> Login </button>
-                </div>
-            </form>-->
         </div>
     </div>
     <div class="col-md-4 col-sm-6"></div>

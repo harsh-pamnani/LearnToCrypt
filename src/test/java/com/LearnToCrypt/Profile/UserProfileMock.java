@@ -1,5 +1,7 @@
 package com.LearnToCrypt.Profile;
 
+import com.LearnToCrypt.BusinessModels.User;
+
 public class UserProfileMock implements IUserProfileBridge {
 
     private String name;
@@ -25,5 +27,10 @@ public class UserProfileMock implements IUserProfileBridge {
     @Override
     public String getRole() {
         return role;
+    }
+
+    @Override
+    public User getUser() {
+        return null;
     }
 }

@@ -32,4 +32,9 @@ public class UserProfile implements IUserProfileBridge {
     public String getRole() {
         return user.getRole();
     }
+
+    @Override
+    public User getUser() {
+        return user;
+    }
 }
