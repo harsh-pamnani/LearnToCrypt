@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 public class UserProfileTest {
 
-    IProfile profile;
+    IUserProfileBridge profile;
 
     public UserProfileTest() {
         //TODO: Test Setup

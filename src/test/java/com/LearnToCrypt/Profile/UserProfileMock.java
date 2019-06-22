@@ -1,6 +1,6 @@
 package com.LearnToCrypt.Profile;
 
-public class UserProfileMock implements IProfile {
+public class UserProfileMock implements IUserProfileBridge {
 
     private String name;
     private String email;
@@ -25,10 +25,5 @@ public class UserProfileMock implements IProfile {
     @Override
     public String getRole() {
         return role;
-    }
-
-    @Override
-    public void changePassword(String password) {
-
     }
 }

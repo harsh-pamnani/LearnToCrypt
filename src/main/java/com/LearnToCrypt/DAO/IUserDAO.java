@@ -11,4 +11,6 @@ public interface IUserDAO {
 	public boolean isUserRegistered(User user);
 	
 	public String getUserName(String email);
+
+	public User getUser(String email);
 }

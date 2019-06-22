@@ -159,11 +159,21 @@
         <div id="profile-form-style" class="card">
             <div class="card-title card-header"> Profile </div>
             <div class="card-body">
-                <label for="name" class="form-label">Name: </label>
-                <div class="card-row"  th:text="${username}" id="name"></div>
-                <label for="email" class="form-label">Email: </label>
-                <div class="card-row"  th:text="${email}" id="email"></div>
-                <button class="btn btn-dark">Change Password</button>
+                <div class="card-row">
+                    <label for="name" class="form-label">Name: </label>
+                    <span th:text="${username}" id="name"></span>
+                </div>
+                <div class="card-row">
+                    <label for="email" class="form-label">Email: </label>
+                    <span  th:text="${email}" id="email"></span>
+                </div>
+                <div class="card-row">
+                    <label for="role" class="form-label">Role: </label>
+                    <span th:text="${role}" id="role"></span>
+                </div>
+                <!--<div class="card-row">
+                    <button class="btn btn-dark">Change Password</button>
+                </div>-->
                 <form method="post">
                     <div class="form-group">
                         <label for="newpass" class="form-label"><i class="fas fa-unlock-alt"></i> New Password: </label>

@@ -1,6 +1,6 @@
 package com.LearnToCrypt.Profile;
 
-public interface IProfile {
+public interface IUserProfileBridge {
     String getUserName();
 
     String getEmail();
