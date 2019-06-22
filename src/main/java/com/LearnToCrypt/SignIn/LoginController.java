@@ -46,14 +46,14 @@ public class LoginController implements WebMvcConfigurer {
 		boolean isUserValid = validateUserCredentials.validateCredentials(user);
         
 		if (!isUserValid) {
-			logger.error("User \""+user.getName()+"\" entered invalid credentials");
+			logger.error("User \""+user.getEmail()+"\" entered invalid credentials");
             model.put("invalidLogin", "Invalid Credentials");
             return "login";
         }
 		
 		IUserDAO userDAOName = daoAbstractFactory.createUserDAO();
 		String userName = userDAOName.getUserName(user.getEmail());
-		logger.error("User \""+user.getName()+"\" login success");
+		logger.error("User \""+userName+"\" login success");
 		redirectAttributes.addFlashAttribute("username", userName);
 		
         return "redirect:/dashboard";
