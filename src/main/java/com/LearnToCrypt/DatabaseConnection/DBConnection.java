@@ -4,10 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.LearnToCrypt.ConfigurationLoader.DBConfigLoader;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.LearnToCrypt.ConfigurationLoader.DBConfigLoader;
+import com.LearnToCrypt.app.LearnToCryptApplication;
 
 
 public class DBConnection {
@@ -43,8 +44,7 @@ public class DBConnection {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			this.dbConnection = DriverManager.getConnection(dbConnectionURL, username, password);
 		} catch (Exception e) {
-			System.out.println("Some error occured in loading the DB connection");
-			System.out.println("Error : " + e.getMessage());
+			logger.error("Some error occured in loading the DB connection. ",e);
 		}
 	}
 
@@ -55,8 +55,7 @@ public class DBConnection {
 				this.dbConnection = DriverManager.getConnection(dbConnectionURL, username, password);
 			}
 		} catch (Exception e) {
-			System.out.println("Some error occured in getting the connection");
-			System.out.println("Error : " + e.getMessage());
+			logger.error("Some error occured in getting the connection", e);
 		}
 		return this.dbConnection;
 	}
@@ -73,7 +72,7 @@ public class DBConnection {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			return DriverManager.getConnection(dbConnectionURL, username, password);
 		}catch (Exception e) {
-
+			logger.error("Error creating the connection using MySQL JDBC Driver.", e);
 		}
 		return null;
 	}
@@ -84,8 +83,7 @@ public class DBConnection {
 				dbConnection.close();
 			}
 		} catch (SQLException e) {
-			System.out.println("Some error occured in closing the connection");
-			System.out.println("Error : " + e.getMessage());
+			logger.error("Some error occured in closing the connection", e);
 		}
 	}
 	
@@ -94,8 +92,7 @@ public class DBConnection {
 		try {
 			isClosed = dbConnection.isClosed();
 		} catch (SQLException e) {
-			System.out.println("Some error occured in checking the connection closed.");
-			System.out.println("Error : " + e.getMessage());
+			logger.error("Some error occured in checking the connection closed.", e);
 		}
 		
 		return isClosed;

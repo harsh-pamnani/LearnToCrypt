@@ -41,9 +41,7 @@ public class UserDAO implements IUserDAO {
 			resultSet = statement.executeQuery();
 			
 		} catch (SQLException e) {
-			System.out.println("Error in creating a new user.");
-			System.out.println("Error : " + e.getMessage());
-			logger.error("Error in creating a new user.");
+			logger.error("Error in creating a new user.", e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}
@@ -60,9 +58,7 @@ public class UserDAO implements IUserDAO {
 		try {
 			isValid = isRegistered(isValid, query);
 		} catch (SQLException e) {
-			System.out.println("Error in fetching the user credentials");
-			System.out.println("Error : " + e.getMessage());
-			logger.error("Error in fetching the user credentials.");
+			logger.error("Error in fetching the user credentials.", e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}	
@@ -79,9 +75,7 @@ public class UserDAO implements IUserDAO {
 		try {
 			isRegistered = isRegistered(isRegistered, query);
 		} catch (SQLException e) {
-			System.out.println("Error in fetching the user registration details");
-			System.out.println("Error : " + e.getMessage());
-			logger.error("Error in fetching the user registration details.");
+			logger.error("Error in fetching the user registration details.", e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}	
@@ -122,9 +116,7 @@ public class UserDAO implements IUserDAO {
 				userName = resultSet.getString(1);
 			}
 		} catch (SQLException e) {
-			System.out.println("Error in fetching the user registration details");
-			System.out.println("Error : " + e.getMessage());
-			logger.error("Error in fetching the user registration details.");
+			logger.error("Error in fetching the user registration details.", e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}	
