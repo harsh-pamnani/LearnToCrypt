@@ -3,13 +3,13 @@ package com.LearnToCrypt.Profile;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IDAOAbstractFactory;
 import com.LearnToCrypt.DAO.INameSetterDAO;
-import com.LearnToCrypt.DAO.IPasswordUpdaterDAO;
+import com.LearnToCrypt.DAO.IPasswordSetterDAO;
 
 public class ProfileUpdater implements IPasswordChanger, IUserNameChanger {
     @Override
     public void changePassword(String email, String newPassword) {
         IDAOAbstractFactory abstractFactory = new DAOAbstractFactory();
-        IPasswordUpdaterDAO passwordSetterDAO = abstractFactory.createPasswordSetterDAO();
+        IPasswordSetterDAO passwordSetterDAO = abstractFactory.createPasswordSetterDAO();
         passwordSetterDAO.setPassword(email, newPassword);
     }
 

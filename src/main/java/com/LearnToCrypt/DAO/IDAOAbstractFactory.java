@@ -2,6 +2,6 @@ package com.LearnToCrypt.DAO;
 
 public interface IDAOAbstractFactory {
 	public IUserDAO createUserDAO();
-	public IPasswordUpdaterDAO createPasswordSetterDAO();
+	public IPasswordSetterDAO createPasswordSetterDAO();
 	public INameSetterDAO createNameSetterDAO();
 }
