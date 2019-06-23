@@ -1,6 +1,7 @@
 package com.LearnToCrypt.app;
 
 import com.LearnToCrypt.Algorithm.AlgorithmController;
+import com.LearnToCrypt.Profile.ProfileController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
@@ -19,7 +20,8 @@ import com.LearnToCrypt.Dashboard.DashboardController;
 		LoginController.class,
 		DashboardController.class,
 		SignUpController.class,
-		AlgorithmController.class
+		AlgorithmController.class,
+		ProfileController.class
 })
 public class LearnToCryptApplication {
 

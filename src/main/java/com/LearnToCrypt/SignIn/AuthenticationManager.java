@@ -44,4 +44,9 @@ public class AuthenticationManager {
 		
 		return userName;
 	}
+
+	public String getEmail(HttpSession httpSession) {
+		String email = authenticatedUsers.get(httpSession.getId());
+		return email;
+	}
 }
