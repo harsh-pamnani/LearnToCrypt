@@ -7,7 +7,7 @@ public class DAOAbstractFactory implements IDAOAbstractFactory {
 	}
 
 	@Override
-	public IPasswordUpdaterDAO createPasswordSetterDAO() {
+	public IPasswordSetterDAO createPasswordSetterDAO() {
 		return new ProfileUpdateDAO();
 	}
 
