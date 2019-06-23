@@ -123,4 +123,36 @@ public class UserDAO implements IUserDAO {
 		
 		return userName;
 	}
+
+	@Override
+	public User getUser(String email) {
+		User user = new User();
+		int roleNum;
+		String role;
+
+		String query = "CALL get_user(\"" + email + "\");";
+		try {
+			dbConnection = dbConnectionInstance.getConnection();
+			statement = dbConnection.prepareStatement(query);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				user.setEmail(resultSet.getString(1));
+				user.setName(resultSet.getString(2));
+				roleNum = resultSet.getInt(3);
+				if (roleNum == 1) {
+					role = "Student";
+				}
+				else {
+					role = "Instructor";
+				}
+				user.setRole(role);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error : " + e.getMessage());
+		} finally {
+			dbConnectionInstance.closeConnection();
+		}
+		return user;
+	}
 }

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style type="text/css">
+        body {
+            background: #FFEFBA;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #FFFFFF, #FFEFBA);
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #FFFFFF, #FFEFBA);
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        .homepage-title {
+            font-size: 5vw !important;
+        }
+
+        .navbar {
+            background: #2ed573;
+            font-size: 1.25rem;
+        }
+
+        .nav-link,
+        .navbar-brand {
+            color: #130f40 !important;
+            cursor: pointer;
+            margin-right: 1em !important;
+        }
+
+        .nav-link:hover {
+            background: #130f40;
+            color: #2ed573 !important;
+            border-color: #130f40;
+            padding-left: 1rem;
+        }
+
+        .nav-link-btn {
+            color: #130f40;
+            padding-left: 1rem;
+            border: 2px solid #130f40;
+        }
+
+        .nav-link-btn:hover {
+            background: #130f40 !important;
+            color: #2ed573 !important;
+            border-color: #130f40 !important;
+            padding-left: 1rem !important;
+        }
+
+        .btn {
+            background: #2ed573;
+            color: #130f40;
+        }
+
+        .btn:hover {
+            background: #130f40;
+            color: #2ed573;
+        }
+
+        .ml-auto {
+            margin-left: 2rem;
+        }
+
+        .navbar-toggler {
+            background: #c7ecee;
+        }
+
+        .navbar-collapse {
+            justify-content: flex-end;
+        }
+
+        .firstJumbotron {
+            padding-top: 10rem;
+            background: transparent;
+        }
+
+        .display-3 {
+            font-size: 6vw;
+        }
+
+        .footer {
+            background: #2ed573;
+            color: #130f40;
+        }
+
+        hr {
+            border-color: #130f40 !important;
+        }
+
+        .social-media {
+            font-size: 28px;
+            border: 1px solid #130f40;
+        }
+
+        .touch-icon {
+            color: #130f40;
+        }
+
+        .content {
+            margin-top: 7rem;
+            margin-bottom: 7rem;
+        }
+
+        .card-header {
+            text-align: center;
+            font-size: 28px;
+        }
+
+        .formError {
+            color: red;
+            font-size: 15px;
+            font-family: cursive;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <title> LearnToCrypt Home </title>
+</head>
+
+<body>
+<!--- This navigation bar  is the conde snippet from Bootstrap Documentation -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-light mb-2" id="navigationHome">
+
+    <a class="navbar-brand" href="/homepage">LearnToCrypt</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#optionsCollapsed"
+            aria-controls="optionsCollapsed" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!--- code snippet for collapsible feature of navbar with responsiveness by using bootstrap classes -->
+    <div class="collapse navbar-collapse" id="optionsCollapsed">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard"> Dashboard </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"> Playground </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"> Contact Us </a>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="btn-group">
+                <button th:text="${username}" type="button" class="btn btn-dark dropdown-toggle mr-5"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Some Name </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#"> My Progress </a>
+                    <a class="dropdown-item" href="/profile"> My Profile </a>
+                    <a class="dropdown-item" href="/logout"> Logout </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row content" id="">
+    <div class="col-md-4 col-sm-6"></div>
+    <div class="col-md-4 col-sm-6">
+        <div id="profile-form-style" class="card">
+            <div class="card-title card-header"> Profile </div>
+            <div class="card-body">
+
+                <div class="card-row">
+                    <label for="email" class="form-label">Email: </label>
+                    <span  th:text="${email}" id="email"></span>
+                </div>
+                <div class="card-row">
+                    <label for="role" class="form-label">Role: </label>
+                    <span th:text="${role}" id="role"></span>
+                </div>
+                <form method="post">
+                    <div class="card-row">
+                        <label for="name" class="form-label">Name: </label>
+                        <!--                    <span th:text="${username}" id="name"></span>-->
+                        <input id="name" th:value = "${username}" type="text" name="username" />
+                        <div class="form-group">
+                            <div class="formError" th:text="${nameerror}"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newpass" class="form-label"><i class="fas fa-unlock-alt"></i> New Password: </label>
+                        <input class="form-control" id="newpass" th:value="${newPass}" type="password" name="newPass" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="form-label"><i class="fas fa-unlock-alt"></i>Confirm Password: </label>
+                        <input class="form-control" id="password" th:value="${confirmPass}" type="password"
+                               name="confirmPass" />
+                    </div>
+                    <div class="form-group">
+                        <div class="formError" th:text="${passerror}"></div>
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <button type="submit" class="btn btn-dark"> Update Profile </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6"></div>
+</div>
+
+<div id="footer" class="footer pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mt-sm-1">
+                <h4> Quick Links </h4>
+                <hr>
+                <a class="touch-icon" href="/"> Home </a> <br />
+                <a class="touch-icon" href="#"> Playground </a> <br />
+                <a class="touch-icon" href="#"> Contact Us </a> <br />
+                <a class="touch-icon" href="#"> About Us </a> <br />
+            </div>
+            <div class="col-md-4 mt-sm-1">
+                <h4>Contact Us</h4>
+                <hr>
+                <p><i class="fa fa-home"></i> 6050, University Avenue </p>
+                <p><i class="fa fa-envelope"></i> qagroup7.winter@gmail.com </p>
+                <p><i class="fa fa-phone"></i> +1 111-222-3333 </p>
+                <p><i class="fa fa-globe"></i> www.learntocrypt.com </p>
+            </div>
+            <div class="col-md-4 mt-sm-1 mb-5">
+                <h4> Get in touch </h4>
+                <hr>
+                <a class="touch-icon" href="https://github.com/DalhousieUniversityCSCI5308/Group7/"><i
+                        class="social-media fab fa-github p-2 mr-3"></i></a>
+                <a class="touch-icon" href="#"><i class="social-media fab fa-facebook p-2 mr-3"></i></a>
+                <a class="touch-icon" href="#"><i class="social-media fab fa-twitter-square p-2 mr-3"></i></a> <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

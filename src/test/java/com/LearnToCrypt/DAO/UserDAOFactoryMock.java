@@ -85,4 +85,9 @@ public class UserDAOFactoryMock implements IUserDAO {
 		return username;
 	}
 
+	@Override
+	public User getUser(String email) {
+		return null;
+	}
+
 }
