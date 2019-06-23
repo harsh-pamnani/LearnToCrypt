@@ -45,7 +45,14 @@ public class ForgotPasswordController implements WebMvcConfigurer {
 								HttpServletRequest httpServletRequest,
 								@RequestParam String email) {
 		String errorText = null;
-		String serverUrl = httpServletRequest.getScheme() + "://" + httpServletRequest.getServerName() + ":" + httpServletRequest.getServerPort();
+		String server = httpServletRequest.getScheme();
+		String serverUrl;
+		if (server.equals("localhost")) {
+			serverUrl = server + "://" + httpServletRequest.getServerName() + ":" + httpServletRequest.getServerPort();
+		}
+		else {
+			serverUrl = server + "://" + httpServletRequest.getServerName();
+		}
 		String token;
 		user.setEmail(email);
 		if (userDAO.isUserRegistered(user)) {
