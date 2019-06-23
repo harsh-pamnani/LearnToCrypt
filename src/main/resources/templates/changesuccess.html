@@ -100,9 +100,9 @@
             color: #130f40;
         }
 
-        #login-form {
+        .content {
             margin-top: 7rem;
-            margin-bottom: 4rem;
+            margin-bottom: 7rem;
         }
 
         .card-header {
@@ -110,35 +110,13 @@
             font-size: 28px;
         }
 
-        .form-group {
-            margin-top: 12px;
-            margin-left: 24px;
-            margin-right: 24px;
-        }
-
-        .btn-dark {
-            color: #ffffff;
-            padding-left: 1rem;
-            background: #130f40;
-            border: 2px solid #130f40;
-            border-radius: 25px;
-        }
-
-        .btn-dark:hover {
-            color: #ffffff;
-            padding-left: 1rem;
-            background: #4834d4;
-            border: 2px solid #4834d4;
-            border-radius: 25px;
-        }
-
-        #formError {
+        .formError {
             color: red;
             font-size: 15px;
             font-family: cursive;
         }
 
-        #formSuccess {
+        .formSuccess {
             color: green;
             font-size: 15px;
             font-family: cursive;
@@ -148,10 +126,11 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
           integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
-    <title> LearnToCrypt Forgot Password </title>
+    <title> LearnToCrypt Password Change </title>
 </head>
 
 <body>
+<!--- This navigation bar  is the conde snippet from Bootstrap Documentation -->
 <nav class="navbar fixed-top navbar-expand-lg navbar-light mb-2" id="navigationHome">
 
     <a class="navbar-brand" href="/homepage">LearnToCrypt</a>
@@ -161,6 +140,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
+    <!--- code snippet for collapsible feature of navbar with responsiveness by using bootstrap classes -->
     <div class="collapse navbar-collapse" id="optionsCollapsed">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
@@ -185,27 +165,17 @@
     </div>
 </nav>
 
-<div class="row" id="login-form">
+<div class="row content" id="">
     <div class="col-md-4 col-sm-6"></div>
     <div class="col-md-4 col-sm-6">
-        <div id="login-form-style" class="card">
-            <div class="card-header"> Forgot Password? </div>
-            <div class="card-row text-center">Please enter your email to receive a link for resetting your password</div>
-            <form method="post">
+        <div id="profile-form-style" class="card">
+            <div class="card-title card-header"> Password Changed Successfully </div>
+            <div class="card-body">
 
-                <div class="form-group">
-                    <label for="emailid" class="form-label"><i class="fas fa-envelope"></i> Email: </label>
-                    <input class="form-control" id="emailid" th:value="${email}" type="text"
-                           placeholder="example@gmail.com" name="email" />
+                <div class="card-row text-center">
+                    To log into your account click <a class="btn btn-outline-primary nav-link-btn my-sm-0" href="/login"> Login </a>
                 </div>
-                <div class="form-group">
-                    <div id="formError" th:text="${errorText}"></div>
-                    <div id="formSuccess" th:text="${successText}"></div>
-                </div>
-                <div class="form-group" style="text-align: center">
-                    <button type="submit" class="btn btn-dark"> Reset Password </button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
     <div class="col-md-4 col-sm-6"></div>

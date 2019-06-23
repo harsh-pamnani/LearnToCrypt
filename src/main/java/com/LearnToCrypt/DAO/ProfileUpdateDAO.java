@@ -1,5 +1,6 @@
 package com.LearnToCrypt.DAO;
 
+import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DatabaseConnection.DBConnection;
 import com.LearnToCrypt.HashingAlgorithm.MD5;
 
@@ -48,6 +49,26 @@ public class ProfileUpdateDAO implements IPasswordUpdaterDAO, INameSetterDAO {
         } finally {
             dbConnectionInstance.closeConnection();
         }
+    }
+
+    @Override
+    public String getEmailFromToken(String token) {
+        String query = "CALL get_pass_reset(\""+ token + "\");";
+        String email = null;
+        try {
+            dbConnection = dbConnectionInstance.getConnection();
+            statement = dbConnection.prepareStatement(query);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                email = resultSet.getString(1);
+            }
+            return email;
+        } catch (SQLException e) {
+            System.out.println("Error : " + e.getMessage());
+        } finally {
+            dbConnectionInstance.closeConnection();
+        }
+        return email;
     }
 
     @Override
