@@ -13,74 +13,74 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class ProfileController implements WebMvcConfigurer {
 
-    private IUserProfileBridge profile;
-    private IPasswordChanger passwordChanger;
-    private IUserNameChanger userNameChanger;
-    private String username;
-    private String email;
-    private AuthenticationManager authenticationManager;
-    private IProfileValidator profileValidator;
+	private IUserProfileBridge profile;
+	private IPasswordChanger passwordChanger;
+	private IUserNameChanger userNameChanger;
+	private String username;
+	private String email;
+	private AuthenticationManager authenticationManager;
+	private IProfileValidator profileValidator;
 
-    ProfileController() {
-        passwordChanger = new ProfileUpdater();
-        userNameChanger = new ProfileUpdater();
-        authenticationManager = AuthenticationManager.instance();
-    }
+	ProfileController() {
+		passwordChanger = new ProfileUpdater();
+		userNameChanger = new ProfileUpdater();
+		authenticationManager = AuthenticationManager.instance();
+	}
 
-    @GetMapping("/profile")
-    public String displayProfile(ModelMap model,
-                                 HttpSession httpSession,
-                                 @RequestParam (required = false) String errorText,
-                                 @RequestParam (required = false) String successText ) {
-        if (authenticationManager.isUserAuthenticated(httpSession)) {
-            email = authenticationManager.getEmail(httpSession);
-            profile = new UserProfile(email);
-            model.put("username", authenticationManager.getUsername(httpSession));
-            model.put("email", profile.getEmail());
-            model.put("role", profile.getRole());
-            if (null != errorText) {
-                model.put("errorText", errorText);
-            }
-            else if (null != successText) {
-                model.put("successText", successText);
-            }
-            return ("profile");
-        }
-        else {
-            return ("redirect:/login");
-        }
-    }
+	@GetMapping("/profile")
+	public String displayProfile(ModelMap model,
+								 HttpSession httpSession,
+								 @RequestParam (required = false) String errorText,
+								 @RequestParam (required = false) String successText ) {
+		if (authenticationManager.isUserAuthenticated(httpSession)) {
+			email = authenticationManager.getEmail(httpSession);
+			profile = new UserProfile(email);
+			model.put("username", authenticationManager.getUsername(httpSession));
+			model.put("email", profile.getEmail());
+			model.put("role", profile.getRole());
+			if (null != errorText) {
+				model.put("errorText", errorText);
+			}
+			else if (null != successText) {
+				model.put("successText", successText);
+			}
+			return ("profile");
+		}
+		else {
+			return ("redirect:/login");
+		}
+	}
 
-    @PostMapping("/profile")
-    public String updateProfile(ModelMap model,
-                                 HttpSession httpSession,
-                                 @RequestParam String username,
-                                 @RequestParam String newPass,
-                                 @RequestParam String confirmPass) {
+	@PostMapping("/profile")
+	public String updateProfile(ModelMap model,
+								HttpSession httpSession,
+								@RequestParam String username,
+								@RequestParam String newPass,
+								@RequestParam String confirmPass) {
 
-        email = authenticationManager.getEmail(httpSession);
-        profile = new UserProfile(email);
-        profileValidator = new ProfileValidator(profile);
-        if(null != username && !username.equals(profile.getUserName())) {
-            String error = profileValidator.isNameValid(username);
-            if (null == error) {
-                userNameChanger.changeName(email, username);
-            }
-            else {
-                return ("redirect:/profile?errorText=" + error);
-            }
-        }
+		email = authenticationManager.getEmail(httpSession);
+		profile = new UserProfile(email);
+		profileValidator = new ProfileValidator(profile);
+		if(null != username && !username.equals(profile.getUserName())) {
+			String error = profileValidator.isNameValid(username);
+			if (null == error) {
+				userNameChanger.changeName(email, username);
+			}
+			else {
+				return ("redirect:/profile?errorText=" + error);
+			}
+		}
 
-        if(null != newPass && !newPass.equals("")) {
-            String error = profileValidator.isPasswordValid(newPass, confirmPass);
-            if (null == error) {
-                email = authenticationManager.getEmail(httpSession);
-                passwordChanger.changePassword(email, newPass);
-            }
-            else {
-                return ("redirect:/profile?errorText=" + error);
-            }
-        }
-        return ("redirect:/profile?successText=Profile Updated Successfully");
-    }
+		if(null != newPass && !newPass.equals("")) {
+			String error = profileValidator.isPasswordValid(newPass, confirmPass);
+			if (null == error) {
+				email = authenticationManager.getEmail(httpSession);
+				passwordChanger.changePassword(email, newPass);
+			}
+			else {
+				return ("redirect:/profile?errorText=" + error);
+			}
+		}
+		return ("redirect:/profile?successText=Profile Updated Successfully");
+	}
 }
