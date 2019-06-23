@@ -139,7 +139,8 @@ public class UserDAO implements IUserDAO {
 			while (resultSet.next()) {
 				user.setEmail(resultSet.getString(1));
 				user.setName(resultSet.getString(2));
-				roleNum = resultSet.getInt(3);
+				user.setPassword(resultSet.getString(3));
+				roleNum = resultSet.getInt(4);
 				if (roleNum == 1) {
 					role = "Student";
 				}
