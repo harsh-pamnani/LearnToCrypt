@@ -115,6 +115,12 @@
             font-size: 15px;
             font-family: cursive;
         }
+
+        .formSuccess {
+            color: green;
+            font-size: 15px;
+            font-family: cursive;
+        }
     </style>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
@@ -182,9 +188,6 @@
                         <label for="name" class="form-label">Name: </label>
                         <!--                    <span th:text="${username}" id="name"></span>-->
                         <input id="name" th:value = "${username}" type="text" name="username" />
-                        <div class="form-group">
-                            <div class="formError" th:text="${nameerror}"></div>
-                        </div>
                     </div>
                     <div class="form-group">
                         <label for="newpass" class="form-label"><i class="fas fa-unlock-alt"></i> New Password: </label>
@@ -196,7 +199,8 @@
                                name="confirmPass" />
                     </div>
                     <div class="form-group">
-                        <div class="formError" th:text="${passerror}"></div>
+                        <div class="formError" th:text="${errorText}" name="errorText"></div>
+                        <div class="formSuccess" th:text="${successText}" name="successText"></div>
                     </div>
                     <div class="form-group" style="text-align: center">
                         <button type="submit" class="btn btn-dark"> Update Profile </button>
