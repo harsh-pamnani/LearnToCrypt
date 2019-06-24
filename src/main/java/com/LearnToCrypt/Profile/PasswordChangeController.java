@@ -34,7 +34,11 @@ public class PasswordChangeController implements WebMvcConfigurer {
 	}
 
 	@GetMapping("/changesuccess")
-	public String displaySuccessChange(ModelMap model) {
+	public String displaySuccessChange(ModelMap model,
+									   @RequestParam (required = false) String isPasswordChanged) {
+		if(null == isPasswordChanged) {
+			return("redirect:/homepage");
+		}
 		return ("changesuccess");
 	}
 
@@ -53,7 +57,7 @@ public class PasswordChangeController implements WebMvcConfigurer {
 			String error = profileValidator.isPasswordValid(newPass, confirmPass);
 			if (null == error) {
 				passwordChanger.changePassword(email, newPass);
-				return ("redirect:/changesuccess");
+				return ("redirect:/changesuccess?isPasswordChanged=yes");
 			}
 			else {
 				model.put("errorText", error);
