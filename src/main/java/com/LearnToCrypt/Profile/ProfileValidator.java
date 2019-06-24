@@ -26,6 +26,7 @@ public class ProfileValidator implements IProfileValidator {
 	public String isNameValid(String name) {
 		List<IValidation> rules = nameValidationRules.getValidationRules();
 		String formError = null;
+		user.setName(name);
 		for (IValidation rule: rules) {
 			if(!rule.isValid(user, "")) {
 				formError = rule.getError();

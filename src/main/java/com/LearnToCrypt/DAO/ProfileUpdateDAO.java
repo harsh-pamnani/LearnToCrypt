@@ -1,5 +1,6 @@
 package com.LearnToCrypt.DAO;
 
+import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DatabaseConnection.DBConnection;
 import com.LearnToCrypt.HashingAlgorithm.MD5;
 
@@ -8,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ProfileUpdateDAO implements IPasswordSetterDAO, INameSetterDAO {
+public class ProfileUpdateDAO implements IPasswordUpdaterDAO, INameSetterDAO {
 
     DBConnection dbConnectionInstance = null;
     Connection dbConnection = null;
@@ -34,6 +35,40 @@ public class ProfileUpdateDAO implements IPasswordSetterDAO, INameSetterDAO {
         } finally {
             dbConnectionInstance.closeConnection();
         }
+    }
+
+    @Override
+    public void setResetToken(String email, String token) {
+        String query = "CALL set_pass_reset(\""+ email +"\", \""+ token + "\");";
+        try {
+            dbConnection = dbConnectionInstance.getConnection();
+            statement = dbConnection.prepareStatement(query);
+            resultSet = statement.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Error : " + e.getMessage());
+        } finally {
+            dbConnectionInstance.closeConnection();
+        }
+    }
+
+    @Override
+    public String getEmailFromToken(String token) {
+        String query = "CALL get_pass_reset(\""+ token + "\");";
+        String email = null;
+        try {
+            dbConnection = dbConnectionInstance.getConnection();
+            statement = dbConnection.prepareStatement(query);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                email = resultSet.getString(1);
+            }
+            return email;
+        } catch (SQLException e) {
+            System.out.println("Error : " + e.getMessage());
+        } finally {
+            dbConnectionInstance.closeConnection();
+        }
+        return email;
     }
 
     @Override
