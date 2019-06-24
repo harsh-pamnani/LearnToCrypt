@@ -7,6 +7,7 @@ import com.LearnToCrypt.DAO.IPasswordUpdaterDAO;
 import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.EmailService.EmailService;
 import com.LearnToCrypt.EmailService.IEmailService;
+import com.LearnToCrypt.SignIn.AuthenticationManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +22,12 @@ import java.util.UUID;
 @Controller
 public class ForgotPasswordController implements WebMvcConfigurer {
 
-	IDAOAbstractFactory abstractFactory;
-	IUserDAO userDAO;
-	IPasswordUpdaterDAO passwordUpdaterDAO;
-	IEmailService emailService;
-	User user;
+	private IDAOAbstractFactory abstractFactory;
+	private IUserDAO userDAO;
+	private IPasswordUpdaterDAO passwordUpdaterDAO;
+	private IEmailService emailService;
+	private AuthenticationManager authenticationManager;
+	private User user;
 
 	public ForgotPasswordController() {
 		abstractFactory = new DAOAbstractFactory();
@@ -33,6 +35,7 @@ public class ForgotPasswordController implements WebMvcConfigurer {
 		passwordUpdaterDAO = abstractFactory.createPasswordSetterDAO();
 		emailService = new EmailService();
 		user = new User();
+		authenticationManager = AuthenticationManager.instance();
 	}
 
 	@GetMapping("/forgotpassword")
@@ -42,16 +45,20 @@ public class ForgotPasswordController implements WebMvcConfigurer {
 
 	@PostMapping("/forgotpassword")
 	public String resetPassword(ModelMap model,
+								HttpSession httpSession,
 								HttpServletRequest httpServletRequest,
 								@RequestParam String email) {
+		if(authenticationManager.isUserAuthenticated(httpSession)) {
+			return("redirect:/dashboard");
+		}
 		String errorText = null;
-		String server = httpServletRequest.getScheme();
+		String server = httpServletRequest.getServerName();
 		String serverUrl;
 		if (server.equals("localhost")) {
-			serverUrl = server + "://" + httpServletRequest.getServerName() + ":" + httpServletRequest.getServerPort();
+			serverUrl = httpServletRequest.getScheme() + "://" + server + ":" + httpServletRequest.getServerPort();
 		}
 		else {
-			serverUrl = server + "://" + httpServletRequest.getServerName();
+			serverUrl = httpServletRequest.getScheme() + "://" + server;
 		}
 		String token;
 		user.setEmail(email);
