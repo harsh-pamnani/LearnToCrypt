@@ -39,18 +39,18 @@ public class ForgotPasswordController implements WebMvcConfigurer {
 	}
 
 	@GetMapping("/forgotpassword")
-	public String displayForgotPass(ModelMap model) {
+	public String displayForgotPass(ModelMap model,
+									HttpSession httpSession) {
+		if(authenticationManager.isUserAuthenticated(httpSession)) {
+			return("redirect:/dashboard");
+		}
 		return ("forgotpassword");
 	}
 
 	@PostMapping("/forgotpassword")
 	public String resetPassword(ModelMap model,
-								HttpSession httpSession,
 								HttpServletRequest httpServletRequest,
 								@RequestParam String email) {
-		if(authenticationManager.isUserAuthenticated(httpSession)) {
-			return("redirect:/dashboard");
-		}
 		String errorText = null;
 		String server = httpServletRequest.getServerName();
 		String serverUrl;
