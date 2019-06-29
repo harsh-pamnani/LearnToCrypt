@@ -82,7 +82,31 @@ public class UserDAO implements IUserDAO {
 		
 		return isRegistered;
 	}
-
+	
+	@Override
+	public String getUserRole(String email) {
+		String role = "";
+		
+		String query = "CALL get_user_role(\""+ email + "\");";
+		
+		try {
+			dbConnection = dbConnectionInstance.getConnection();
+			
+			statement = dbConnection.prepareStatement(query);
+			resultSet = statement.executeQuery();
+						
+			while (resultSet.next()) {
+				role = resultSet.getString(1);
+			}
+		} catch (SQLException e) {
+			logger.error("Error in fetching the user role.", e);
+		} finally {
+			dbConnectionInstance.closeConnection();
+		}	
+		
+		return role;
+	}
+	
 	private boolean isRegistered(boolean isRegistered, String query) throws SQLException {
 		dbConnection = dbConnectionInstance.getConnection();
 

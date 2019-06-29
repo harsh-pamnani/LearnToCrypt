@@ -66,4 +66,11 @@ public class UserDAOTest {
 	public void testGetUser() {
 		assertTrue(userDAOFactoryMock.getUser("rob@gmail.com") instanceof User);
 	}
+	
+	@Test
+	public void testGetRole() {
+		assertEquals("Instructor", userDAOFactoryMock.getUserRole("rob@gmail.com"));
+		
+		assertNotEquals("Student", userDAOFactoryMock.getUserRole("rob@gmail.com"));
+	}
 }

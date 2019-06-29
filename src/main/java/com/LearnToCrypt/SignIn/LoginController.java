@@ -58,6 +58,6 @@ public class LoginController implements WebMvcConfigurer {
 		logger.error("User \""+authenticationManager.getUsername(httpSession)+"\" login success");
 					
 		authenticationManager.addAuthenticatedUser(httpSession, user.getEmail());
-    return "redirect:/dashboard";
+		return "redirect:/dashboard";
     }
 }
