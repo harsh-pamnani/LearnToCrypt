@@ -76,17 +76,14 @@
     </nav>
 
     <div class="container dashboard">
-        <h2 class="text-center">Algorithm</h2>
+        <h2 class="text-center" th:text="${alg}"></h2>
         <hr>
         <div class="container">
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-4 img" th:style="'background-image:url(' + @{${url}} + ');'"></div>
                 <div class="col-md-4">
-                    <p>The action of a Caesar cipher is to replace each plaintext letter with a different one a fixed
-                        number of places down the alphabet. The cipher illustrated here uses a left shift of three, so
-                        that (for example) each occurrence of E in the plaintext
-                        becomes B in the ciphertext.</p>
+                    <p th:text="${description}"></p>
                 </div>
                 <div class="col-md-2"></div>
             </div>
