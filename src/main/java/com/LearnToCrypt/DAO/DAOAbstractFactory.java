@@ -6,6 +6,10 @@ public class DAOAbstractFactory implements IDAOAbstractFactory {
 		return new UserDAO();
 	}
 
+	public IAlgorithmDAO createAlgorithmDAO() {
+		return new AlgorithmDAO();
+	}
+
 	@Override
 	public IPasswordUpdaterDAO createPasswordSetterDAO() {
 		return new ProfileUpdateDAO();
