@@ -106,7 +106,25 @@ public class UserDAO implements IUserDAO {
 		
 		return role;
 	}
-	
+
+	@Override
+	public String[] getProgress(String email) {
+		//TODO: Connect to the database and get user progress
+		String query = "CALL get_user_progress(\""+ email + "\");";
+
+		try {
+			dbConnection = dbConnectionInstance.getConnection();
+			statement = dbConnection.prepareStatement(query);
+			resultSet = statement.executeQuery();
+		}catch (SQLException e){
+			logger.error("Error in fetching the user progress.", e);
+		}finally {
+			dbConnectionInstance.closeConnection();
+		}
+
+		return new String[0];
+	}
+
 	private boolean isRegistered(boolean isRegistered, String query) throws SQLException {
 		dbConnection = dbConnectionInstance.getConnection();
 

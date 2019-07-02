@@ -39,7 +39,11 @@ public class MyProgressController implements WebMvcConfigurer {
             return "redirect:/login";
         }
 
-        getProgress();
+        String email = authenticationManager.getEmail(httpSession);
+        progress = daoAbstractFactory.createUserDAO().getProgress(email);
+
+        //TODO: link to the view
+
         return null;
     }
 
