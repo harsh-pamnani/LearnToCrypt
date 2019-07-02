@@ -13,4 +13,6 @@ public interface IUserDAO {
 	public String getUserName(String email);
 
 	public User getUser(String email);
+	
+	public String getUserRole(String email);
 }

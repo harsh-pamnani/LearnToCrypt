@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
 
 @Controller
@@ -19,9 +20,11 @@ public class DashboardController implements WebMvcConfigurer {
     private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
 	
 	AuthenticationManager authenticationManager;
+	DAOAbstractFactory daoAbstractFactory;
 	
 	public DashboardController() {
 		authenticationManager = AuthenticationManager.instance();
+		daoAbstractFactory = new DAOAbstractFactory();
 	}
 	
 	@GetMapping("/dashboard")
@@ -29,13 +32,20 @@ public class DashboardController implements WebMvcConfigurer {
 		boolean isUserAuthenticated = authenticationManager.isUserAuthenticated(httpSession);
 		if(!isUserAuthenticated) {
 			return "redirect:/login";
+		} else {
+			String email = authenticationManager.getEmail(httpSession);
+			String role = daoAbstractFactory.createUserDAO().getUserRole(email);
+			
+			String username = authenticationManager.getUsername(httpSession);
+			model.put("username", username);
+
+	        logger.info("user \"" + username + "\" accessed dashboard!");
+
+	        if(role.equals("Instructor")) {
+	        	return "instructorDashboard";
+	        }
+	        
+	        return "dashboard";
 		}
-		
-		String username = authenticationManager.getUsername(httpSession);
-		model.put("username", username);
-
-        logger.info("user \""+username+"\" accessed dashboard!");
-
-        return "dashboard";
     }
 }
