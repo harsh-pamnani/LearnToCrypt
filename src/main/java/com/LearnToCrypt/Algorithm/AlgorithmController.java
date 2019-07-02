@@ -2,7 +2,11 @@ package com.LearnToCrypt.Algorithm;
 
 import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.CaesarCipher;
 import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithm;
+import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
+import com.LearnToCrypt.app.LearnToCryptApplication;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +21,8 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class AlgorithmController implements WebMvcConfigurer {
 
-    AuthenticationManager authenticationManager;
+    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+    private AuthenticationManager authenticationManager;
 
     public AlgorithmController(){
         authenticationManager = AuthenticationManager.instance();
