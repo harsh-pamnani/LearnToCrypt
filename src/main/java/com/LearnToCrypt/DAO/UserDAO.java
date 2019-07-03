@@ -109,20 +109,23 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public String[] getProgress(String email) {
-		//TODO: Connect to the database and get user progress
 		String query = "CALL get_user_progress(\""+ email + "\");";
-
+		String resultArray[] = null;
 		try {
 			dbConnection = dbConnectionInstance.getConnection();
 			statement = dbConnection.prepareStatement(query);
 			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				resultArray =resultSet.getString(1).split(",");
+			}
+
 		}catch (SQLException e){
 			logger.error("Error in fetching the user progress.", e);
 		}finally {
 			dbConnectionInstance.closeConnection();
 		}
 
-		return new String[0];
+		return resultArray;
 	}
 
 	private boolean isRegistered(boolean isRegistered, String query) throws SQLException {

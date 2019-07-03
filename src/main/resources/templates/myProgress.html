@@ -32,6 +32,10 @@
         .myp {
             font-size: 4em;
         }
+
+        .algorithmCard {
+            display: none;
+        }
     </style>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
@@ -78,62 +82,61 @@
 <div class="container dashboard">
     <h2>My Progress</h2>
     <hr>
-    <p class="myp">3/5</p>
+    <p class="myp" th:text="${count}"></p>
     <h3>Completed</h3>
     <div class="container">
         <div class="row">
-            <div class="col-md-4" style="display: block;">
+            <div class="col-md-4 algorithmCard" th:style="'display:' + ${CaesarCipher} + ';'">
                 <div class="card">
-                <div class="card-body ">
-                    <h5 class="card-title">Caesar Cipher</h5>
-                    <h6 class="card-subtitle mb-2 text-muted ">Basic substitution cipher</h6>
-                    <a href="/algorithm?alg=Caesar Cipher " class="card-link ">Test it!</a>
+                    <div class="card-body ">
+                        <h5 class="card-title">Caesar Cipher</h5>
+                        <h6 class="card-subtitle mb-2 text-muted ">Basic substitution cipher</h6>
+                        <a href="/algorithm?alg=Caesar Cipher " class="card-link ">Test it!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 algorithmCard " th:style="'display:' + ${display_2} + ';'">
+                <div class="card">
+                    <div class="card-body ">
+                        <h5 class="card-title">Caesar Cipher B</h5>
+                        <h6 class="card-subtitle mb-2 text-muted ">Basic substitution cipher</h6>
+                        <a href="/algorithm?alg=Caesar Cipher " class="card-link ">Test it!</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4" style="display: block;">
-            <div class="card">
-            <div class="card-body ">
-                <h5 class="card-title">Caesar Cipher B</h5>
-                <h6 class="card-subtitle mb-2 text-muted ">Basic substitution cipher</h6>
-                <a href="/algorithm?alg=Caesar Cipher " class="card-link ">Test it!</a>
+        <br>
+        <div class="row">
+            <div class="col-md-4 algorithmCard" th:style="'display:' + ${MatrixTransportationCipher} + ';'">
+                <div class="card">
+                    <div class="card-body ">
+                        <h5 class="card-title ">Matrix Transportation Cipher</h5>
+                        <h6 class="card-subtitle mb-2 text-muted ">Another substitution cipher</h6>
+                        <a href="/algorithm?alg=Matrix Transportation Cipher" class="card-link ">Test it!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 algorithmCard" th:style="'display:' + ${display_4} + ';'">
+                <div class="card">
+                    <div class="card-body ">
+                        <h5 class="card-title ">Caesar Cipher C</h5>
+                        <h6 class="card-subtitle mb-2 text-muted ">Basic substitution cipher</h6>
+                        <a href="/algorithm?alg=Caesar Cipher " class="card-link ">Test it!</a>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-4 algorithmCard" th:style="'display:' + ${display_5} + ';'">
+                <div class="card">
+                    <div class="card-body ">
+                        <h5 class="card-title ">Caesar Cipher C</h5>
+                        <h6 class="card-subtitle mb-2 text-muted ">Basic substitution cipher</h6>
+                        <a href="/algorithm?alg=Caesar Cipher " class="card-link ">Test it!</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<br>
-<div class="row">
-    <div class="col-md-4" style="display: block;">
-        <div class="card">
-        <div class="card-body ">
-            <h5 class="card-title ">Caesar Cipher C</h5>
-            <h6 class="card-subtitle mb-2 text-muted ">Basic substitution cipher</h6>
-            <a href="/algorithm?alg=Caesar Cipher " class="card-link ">Test it!</a>
-        </div>
-    </div>
-</div>
-<div class="col-md-4" style="display: block;">
-    <div class="card">
-    <div class="card-body ">
-        <h5 class="card-title ">Caesar Cipher C</h5>
-        <h6 class="card-subtitle mb-2 text-muted ">Basic substitution cipher</h6>
-        <a href="/algorithm?alg=Caesar Cipher " class="card-link ">Test it!</a>
-    </div>
-</div>
-</div>
-<div class="col-md-4" style="display: block;">
-    <div class="card">
-    <div class="card-body ">
-        <h5 class="card-title ">Caesar Cipher C</h5>
-        <h6 class="card-subtitle mb-2 text-muted ">Basic substitution cipher</h6>
-        <a href="/algorithm?alg=Caesar Cipher " class="card-link ">Test it!</a>
-    </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js " integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo " crossorigin="anonymous "></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js " integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1 " crossorigin="anonymous "></script>

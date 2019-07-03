@@ -19,10 +19,7 @@ public class MyProgressController implements WebMvcConfigurer {
     private AuthenticationManager authenticationManager;
     private DAOAbstractFactory daoAbstractFactory;
 
-    private String[] progress;
-
-    public MyProgressController(String[] progress) {
-        this.progress = progress;
+    public MyProgressController() {
         this.authenticationManager = AuthenticationManager.instance();
         this.daoAbstractFactory = new DAOAbstractFactory();
     }
@@ -36,8 +33,15 @@ public class MyProgressController implements WebMvcConfigurer {
         }
 
         String email = authenticationManager.getEmail(httpSession);
-        progress = daoAbstractFactory.createUserDAO().getProgress(email);
+        String[] progress = daoAbstractFactory.createUserDAO().getProgress(email);
 
+        model.addAttribute("count",progress.length+" / 5");
+
+        for(int i = 0;i<progress.length;i++){
+            model.addAttribute(progress[i].replaceAll("\\s", ""),"block");
+        }
+
+        System.out.println(progress[0]);
         return "myProgress";
     }
 
