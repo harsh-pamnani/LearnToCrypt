@@ -27,10 +27,6 @@ public class MyProgressController implements WebMvcConfigurer {
         this.daoAbstractFactory = new DAOAbstractFactory();
     }
 
-    public String[] getProgress(){
-        return null;
-    }
-
     @GetMapping("/myProgress")
     public String showProgress(HttpSession httpSession, ModelMap model){
 
@@ -42,9 +38,7 @@ public class MyProgressController implements WebMvcConfigurer {
         String email = authenticationManager.getEmail(httpSession);
         progress = daoAbstractFactory.createUserDAO().getProgress(email);
 
-        //TODO: link to the view
-
-        return null;
+        return "myProgress";
     }
 
 }
