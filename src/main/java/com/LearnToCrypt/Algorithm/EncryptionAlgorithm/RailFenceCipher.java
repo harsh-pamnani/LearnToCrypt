@@ -47,7 +47,7 @@ public class RailFenceCipher implements IEncryptionAlgorithm {
 		}
 
 		result += (ciphertext + "\n\nNOTE: % represents space");
-		return "";
+		return ciphertext;
 	}
 
 	@Override
