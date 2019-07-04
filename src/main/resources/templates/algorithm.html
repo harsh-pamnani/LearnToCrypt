@@ -29,6 +29,12 @@
             box-shadow: inset 0px 0px 3px 2px rgba(0, 0, 0, 0.44);
             padding: 15px;
         }
+        
+        #formError {
+		    color: red;
+		    font-size: 15px;
+		    font-family: cursive;
+		}
     </style>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
@@ -101,6 +107,9 @@
                             <input type="text" id="plaintext" name="plaintext" class="plaintext form-control"
                                 th:field="*{plaintext}" />
                         </div>
+                        <div class="form-group">
+                        	<div id="formError" th:text="${invalidInput}"></div>
+                    	</div>
                         <input type="submit" class="btn btn-primary" value="Submit" />
                     </form>
                 </div>
@@ -110,8 +119,8 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <br>
-                    <div class="container card">
-                        <p>Resault:</p>
+                    <label for="cipherResult"> Result: </label>
+                    <div id="cipherResult" class="container card">
                         <P style="white-space: pre;" th:text="${result}"></P>
                         <P style="white-space: pre;" th:text="${steps}"></P>
                     </div>
