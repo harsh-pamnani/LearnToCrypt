@@ -26,6 +26,7 @@ public class AlgorithmController implements WebMvcConfigurer {
     AuthenticationManager authenticationManager;
     DAOAbstractFactory abstractFactory;
 
+    String username;
     String algorithmName;
     String algorithmDescription;
     String algorithmImage;
@@ -43,20 +44,20 @@ public class AlgorithmController implements WebMvcConfigurer {
         if(!isUserAuthenticated) {
             return "redirect:/login";
         }
-
-        String username = authenticationManager.getUsername(httpSession);
-        model.addAttribute("username", username);
-        model.addAttribute("userInput", new UserInput());
+        username = authenticationManager.getUsername(httpSession);
 
         IAlgorithmDAO algorithmDAO = abstractFactory.createAlgorithmDAO();
         Algorithm algorithm = algorithmDAO.getAlgorithm(alg);
+        if(algorithm.getName() == null) {
+        	setModelAttributes(model);
+        	return "dashboard";
+        }
+
         algorithmName = algorithm.getName();
         algorithmDescription = algorithm.getDescription();
         algorithmImage = algorithm.getImage();
+        setModelAttributes(model);
 
-        model.addAttribute("alg", algorithmName);
-        model.addAttribute("url", "images/"+algorithmImage);
-        model.addAttribute("description",algorithmDescription);
         return "algorithm";
     }
 
@@ -67,25 +68,25 @@ public class AlgorithmController implements WebMvcConfigurer {
         if(!isUserAuthenticated) {
             return "redirect:/login";
         }
-
-        String username = authenticationManager.getUsername(httpSession);
-        model.addAttribute("username", username);
-        model.addAttribute("userInput", new UserInput());
-
-        model.addAttribute("alg", algorithmName);
-        model.addAttribute("url", "images/"+algorithmImage);
-        model.addAttribute("description",algorithmDescription);
+        username = authenticationManager.getUsername(httpSession);
+        setModelAttributes(model);
 
         AlgorithmFactory algorithmFactory = new AlgorithmFactory();
         IEncryptionAlgorithm cipher =  algorithmFactory.createAlgorithm(algorithmName);
 
-        cipher.encode(userInput.getKey()+"",userInput.getPlaintext());
+        String formError = userInput.validateUserInputs();
 
-        String result = cipher.getResult();
-        model.addAttribute("result",result);
+        if(formError == null) {
+        	cipher.encode(userInput.getKey()+"",userInput.getPlaintext());
 
-        String steps = cipher.getSteps();
-        model.addAttribute("steps",steps);
+            String result = cipher.getResult();
+            model.addAttribute("result",result);
+
+            String steps = cipher.getSteps();
+            model.addAttribute("steps",steps);
+        } else {
+        	model.addAttribute("invalidInput", formError);
+        }
 
         IDAOAbstractFactory abstractFactory = new DAOAbstractFactory();
         abstractFactory.createUserDAO().updateProgress(authenticationManager.getEmail(httpSession),algorithmName+",");
@@ -93,4 +94,12 @@ public class AlgorithmController implements WebMvcConfigurer {
         return "algorithm";
     }
 
+    private void setModelAttributes(Model model) {
+    	model.addAttribute("username", username);
+        model.addAttribute("userInput", new UserInput());
+
+        model.addAttribute("alg", algorithmName);
+        model.addAttribute("url", "images/"+algorithmImage);
+        model.addAttribute("description",algorithmDescription);
+    }
 }

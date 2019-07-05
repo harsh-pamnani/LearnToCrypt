@@ -18,7 +18,7 @@ public class CaesarCipherTest {
         IEncryptionAlgorithm cipher = new CaesarCipher();
         cipher.encode("3","AbCd");
         String result = cipher.getResult();
-        assertEquals("DeFg",result);
+        assertEquals("AbCd\nDeFg",result);
     }
 
     @Test
@@ -26,6 +26,6 @@ public class CaesarCipherTest {
         IEncryptionAlgorithm cipher = new CaesarCipher();
         cipher.encode("3","AbCd");
         String result = cipher.getSteps();
-        assertEquals( "A -> D\nb -> e\nC -> F\nd -> g\n",result);
+        assertEquals( "A ----> D\nb ----> e\nC ----> F\nd ----> g\n",result);
     }
 }
