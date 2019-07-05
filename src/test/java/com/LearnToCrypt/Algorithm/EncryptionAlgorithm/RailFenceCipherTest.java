@@ -15,10 +15,10 @@ public class RailFenceCipherTest {
 	
 	@Test
     public void testEncode() {
-        String result = railFenceCipher.encode("4","How are you?");
-        assertEquals("Hayoroweu%%?",result);
+        String cipherText = railFenceCipher.encode("4","How are you?");
+        assertEquals("Hayoroweu%%?",cipherText);
         
-        assertNotEquals("asti%u%",result);
+        assertNotEquals("asti%u%",cipherText);
     }
 
     @Test

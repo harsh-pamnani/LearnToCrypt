@@ -71,7 +71,9 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
     		formError = "Enter only A-Z charachters in key.";
     	} else if(userInput.getPlaintext().isEmpty()) {
     		formError = "Plain text can't be empty";
-    	} 
+    	} else if(!userInput.getPlaintext().matches("[A-Za-z ]+")) {
+    		formError = "Enter only A-Z charachters in plain text.";
+    	}
     	
     	return formError;
 	}
