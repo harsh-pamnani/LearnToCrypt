@@ -15,10 +15,10 @@ public class RailFenceCipherTest {
 	
 	@Test
     public void testEncode() {
-        String result = railFenceCipher.encode("2","this is fun");
-        assertEquals("ti%sfnhsi%u%",result);
+        String result = railFenceCipher.encode("4","How are you?");
+        assertEquals("Hayoroweu%%?",result);
         
-        assertNotEquals("ti%u%",result);
+        assertNotEquals("asti%u%",result);
     }
 
     @Test
@@ -27,8 +27,22 @@ public class RailFenceCipherTest {
         String result = railFenceCipher.getResult();
         assertEquals("Plain Text: this is fun\n" + 
         		"Cipher Text: ti%sfnhsi%u%\n\n" + 
-        		"NOTE: % represents space",result);
+        		"NOTE: % represents space\n",result);
         
         assertNotEquals("Plain Text: Not fun\n", result);
+    }
+    
+    @Test
+    public void testGetSteps() {
+    	railFenceCipher.encode("5","It is very easy to learn.");
+        String result = railFenceCipher.getSteps();
+        assertEquals("Steps:\n" + 
+        		"I%%%e\n" + 
+        		"tveta\n" + 
+        		"%eaor\n" + 
+        		"irs%n\n" + 
+        		"syyl.\n",result);
+        
+        assertNotEquals("Steps: Not at all easy\n", result);
     }
 }

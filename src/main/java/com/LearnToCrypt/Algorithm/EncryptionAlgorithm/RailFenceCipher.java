@@ -3,7 +3,7 @@ package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 public class RailFenceCipher implements IEncryptionAlgorithm {
 
 	private String result = "Cipher Text: ";
-	private String steps = "";
+	private String steps = "Steps:\n";
 	private String plaintext = null;
 
 	@Override
@@ -43,10 +43,12 @@ public class RailFenceCipher implements IEncryptionAlgorithm {
 		for (int i = 0; i < keyToEncrypt; i++) {
 			for (int j = 0; j < matrixWidth; j++) {
 				ciphertext += ciphertextMatrix[i][j];
+				steps += ciphertextMatrix[i][j];
 			}
+			steps += "\n";
 		}
 
-		result += (ciphertext + "\n\nNOTE: % represents space");
+		result += (ciphertext + "\n\nNOTE: % represents space\n");
 		return ciphertext;
 	}
 
