@@ -74,26 +74,54 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 		}
 		
 		for(String twoChars: stringDividedInTwoChars) {
-			System.out.print(twoChars + " ");
+			
 			String firstCharXY = findXY(twoChars.charAt(0));
 			String secondCharXY = findXY(twoChars.charAt(1));
 			
-			System.out.println("First: " + firstCharXY + " & Second: " + secondCharXY);
+//			System.out.println("OLD POINTS = First: " + firstCharXY + " & Second: " + secondCharXY);
 			
 			int firstX = Integer.parseInt(firstCharXY.substring(0, 1));
 			int firstY = Integer.parseInt(firstCharXY.substring(1));
 			int secondX = Integer.parseInt(secondCharXY.substring(0, 1));
 			int secondY = Integer.parseInt(secondCharXY.substring(1));
 			
+			int newFirstX, newFirstY, newSecondX, newSecondY;
+			
 			if(firstX == secondX && firstY == secondY) {
-				System.out.println("do nothing");
+				//System.out.println("do nothing");
+				
+				newFirstX = firstX;
+				newSecondX = secondX;
+				newFirstY = firstY;
+				newSecondY = secondY;
 			} else if (firstX == secondX) {
-				System.out.println("Keep row num same and increase column by one");
+				//System.out.println("Keep row num same and increase column by one");
+				
+				newFirstX = firstX;
+				newSecondX = secondX;
+				newFirstY = increaseAndResetIfMax(firstY);				
+				newSecondY = increaseAndResetIfMax(secondY);
 			} else if (firstY == secondY) {
-				System.out.println("Keep column num same and increase row by one");
+				//System.out.println("Keep column num same and increase row by one");
+				
+				newFirstY = firstY;
+				newSecondY = secondY;
+				newFirstX = increaseAndResetIfMax(firstX);
+				newSecondX = increaseAndResetIfMax(secondX);
 			} else {
-				System.out.println("Exchange columns");
+				newFirstX = firstX;
+				newSecondX = secondX;
+				newFirstY = secondY;
+				newSecondY = firstY;
 			}
+			
+//			System.out.println("OLD POINTS = First: " + newFirstX+ "" + newFirstY + " & Second: " + secondCharXY);
+			
+			char newFirstChar = keyMatrix[newFirstX][newFirstY];
+			char newSecondChar = keyMatrix[newSecondX][newSecondY];
+			
+//			System.out.println("OLD: " + twoChars);
+			System.out.println("NEW: " + newFirstChar + newSecondChar);
 		}
 		
 		System.out.println();
@@ -151,5 +179,13 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 			String replaceRepeatedChar = character + CHARACTER_TO_REPLACE +character;
 			repeatedCharacters.put(repeatedChar, replaceRepeatedChar);
 		}
+	}
+	
+	private int increaseAndResetIfMax(int point) {
+		point++;
+		if(point == 5) {
+			return 0;
+		}
+		return point;
 	}
 }
