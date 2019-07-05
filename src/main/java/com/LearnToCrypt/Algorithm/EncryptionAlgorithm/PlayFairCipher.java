@@ -9,125 +9,43 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 
 	private static final String ALL_CHARS = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
 	private static final String CHARACTER_TO_REPLACE = "X";
+	private static final int MATRIX_SIZE = 5;
 	private String result = "Cipher Text: ";
 	private String steps = "Steps:\nMatrix created from the key is:\n";
-	private String plaintext = null;
+	private String plaintext = "Plain Text: ";
 	private HashMap<String, String> repeatedCharacters;
 	private char[][] keyMatrix;
 	
 	public PlayFairCipher() {
 		repeatedCharacters = new HashMap<String, String>();
-		keyMatrix = new char[5][5];
+		keyMatrix = new char[MATRIX_SIZE][MATRIX_SIZE];
 		setRepeatedCharactersList();
 	}
 	
 	@Override
 	public String encode(String key, String plaintext) {
-		this.plaintext = "Plain Text: " + plaintext;
+		
+		generateKeyMatrixFromKey(key);
+		plaintext = cleanPlainText(plaintext);
+		ArrayList<String> stringDividedInTwoChars = dividePlainTextInTwoCharsPair(plaintext);
+		
 		String ciphertext = "";
-		
-		String combinedKey = key.toUpperCase().replaceAll(" ", "") + ALL_CHARS;
-		combinedKey = combinedKey.replaceAll("J", "I");
-		String finalKey = "";
-		
-		for(int i=0; i < combinedKey.length(); i++) {
-			if(!finalKey.contains(combinedKey.charAt(i)+"")) {
-				finalKey += combinedKey.charAt(i);
-			}
-		}
-		
-		
-		
-		int index = 0;
-		for(int i=0; i < 5; i++) {
-			for(int j=0; j < 5; j++) {
-				keyMatrix[i][j] = finalKey.charAt(index);
-				steps += finalKey.charAt(index);
-				index++;
-			}
-			steps += "\n";
-		}
-		
-		
-		
-		
-		
-		
-		
-		String plainTextString = plaintext.toUpperCase().replaceAll(" ", "");
-		for(String repeatedCharKey: repeatedCharacters.keySet()) {
-			plainTextString = plainTextString.replaceAll(repeatedCharKey, repeatedCharacters.get(repeatedCharKey));
-		}
-		
-		if(plainTextString.length() % 2 != 0) {
-			plainTextString += "Z";
-		}
-				
-		String tempString = "";
-		ArrayList<String> stringDividedInTwoChars = new ArrayList<String>();
-		for(index = 0; index < plainTextString.length(); index++) {
-			tempString += plainTextString.charAt(index);
-			if(index % 2 != 0) {
-				stringDividedInTwoChars.add(tempString);
-				tempString="";
-			}
-		}
-		
 		for(String twoChars: stringDividedInTwoChars) {
+			ArrayList<Integer> newPoints = getNewCoordinates(twoChars);
 			
-			String firstCharXY = findXY(twoChars.charAt(0));
-			String secondCharXY = findXY(twoChars.charAt(1));
-			
-//			System.out.println("OLD POINTS = First: " + firstCharXY + " & Second: " + secondCharXY);
-			
-			int firstX = Integer.parseInt(firstCharXY.substring(0, 1));
-			int firstY = Integer.parseInt(firstCharXY.substring(1));
-			int secondX = Integer.parseInt(secondCharXY.substring(0, 1));
-			int secondY = Integer.parseInt(secondCharXY.substring(1));
-			
-			int newFirstX, newFirstY, newSecondX, newSecondY;
-			
-			if(firstX == secondX && firstY == secondY) {
-				//System.out.println("do nothing");
-				
-				newFirstX = firstX;
-				newSecondX = secondX;
-				newFirstY = firstY;
-				newSecondY = secondY;
-			} else if (firstX == secondX) {
-				//System.out.println("Keep row num same and increase column by one");
-				
-				newFirstX = firstX;
-				newSecondX = secondX;
-				newFirstY = increaseAndResetIfMax(firstY);				
-				newSecondY = increaseAndResetIfMax(secondY);
-			} else if (firstY == secondY) {
-				//System.out.println("Keep column num same and increase row by one");
-				
-				newFirstY = firstY;
-				newSecondY = secondY;
-				newFirstX = increaseAndResetIfMax(firstX);
-				newSecondX = increaseAndResetIfMax(secondX);
-			} else {
-				newFirstX = firstX;
-				newSecondX = secondX;
-				newFirstY = secondY;
-				newSecondY = firstY;
-			}
-			
-//			System.out.println("OLD POINTS = First: " + newFirstX+ "" + newFirstY + " & Second: " + secondCharXY);
-			
+			int newFirstX = newPoints.get(0);
+			int newFirstY = newPoints.get(1);
+			int newSecondX = newPoints.get(2);
+			int newSecondY = newPoints.get(3);
+						
 			char newFirstChar = keyMatrix[newFirstX][newFirstY];
 			char newSecondChar = keyMatrix[newSecondX][newSecondY];
 			
-//			System.out.println("OLD: " + twoChars);
+			System.out.println("OLD: " + twoChars);
 			System.out.println("NEW: " + newFirstChar + newSecondChar);
+			this.plaintext += (twoChars + " ");
+			ciphertext += (newFirstChar + "" + newSecondChar + " ");
 		}
-		
-		System.out.println();
-
-		
-		
 		
 		result += ciphertext;
 		return ciphertext;
@@ -158,11 +76,70 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
     	return formError;
 	}
 	
+	// Method to generate the key matrix from the provided key
+	private void generateKeyMatrixFromKey(String key) {
+		key = key.toUpperCase().replaceAll(" ", "") + ALL_CHARS;
+		key = key.replaceAll("J", "I");
+		
+		String finalKey = "";
+		for(int i=0; i < key.length(); i++) {
+			if(!finalKey.contains(key.charAt(i)+"")) {
+				finalKey += key.charAt(i);
+			}
+		}
+		
+		int index = 0;
+		for(int i=0; i < MATRIX_SIZE; i++) {
+			for(int j=0; j < MATRIX_SIZE; j++) {
+				keyMatrix[i][j] = finalKey.charAt(index);
+				steps += finalKey.charAt(index);
+				index++;
+			}
+			steps += "\n";
+		}
+		
+		steps += ("\nAs shown above, the plain text is divided in two characters pair \n"
+				+ "and new two characters are generated from key matrix.");
+	}
+	
+	// Method to clean the plaintext according to algorithm's requirements
+	private String cleanPlainText(String plaintext) {
+		String cleanedPlainText = plaintext.toUpperCase().replaceAll(" ", "");
+		
+		for(String repeatedCharKey: repeatedCharacters.keySet()) {
+			cleanedPlainText = cleanedPlainText.replaceAll(repeatedCharKey, repeatedCharacters.get(repeatedCharKey));
+		}
+		
+		if(cleanedPlainText.length() % 2 != 0) {
+			cleanedPlainText += "Z";
+		}
+		
+		return cleanedPlainText;
+	}
+
+	// Method to divide the plain text into pair of two characters
+	private ArrayList<String> dividePlainTextInTwoCharsPair(String plaintext) {
+		String tempString = "";
+		
+		ArrayList<String> stringDividedInTwoChars = new ArrayList<String>();
+		
+		for(int index = 0; index < plaintext.length(); index++) {
+			tempString += plaintext.charAt(index);
+			if(index % 2 != 0) {
+				stringDividedInTwoChars.add(tempString);
+				tempString="";
+			}
+		}
+		
+		return stringDividedInTwoChars;
+	}
+	
+	// Method to find X and Y coordinates of character
 	private String findXY(char character) {
 		String XY = "";
 		
-		for(int i = 0; i < 5; i++) {
-			for(int j = 0; j < 5; j++) {
+		for(int i = 0; i < MATRIX_SIZE; i++) {
+			for(int j = 0; j < MATRIX_SIZE; j++) {
 				if((keyMatrix[i][j]+"").equals(""+character)) {
 					XY = (i + "" + j);
 				}
@@ -172,6 +149,7 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 		return XY;
 	}
 	
+	// Method to create HashMap for repeated characters and the characters to replace them
 	private void setRepeatedCharactersList() {
 		for(int index = 0; index < ALL_CHARS.length(); index++) {
 			String character = ALL_CHARS.charAt(index) + "";
@@ -181,11 +159,43 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 		}
 	}
 	
-	private int increaseAndResetIfMax(int point) {
-		point++;
-		if(point == 5) {
-			return 0;
+	// Method to get the new coordinates of the given two characters
+	private ArrayList<Integer> getNewCoordinates(String twoChars) {
+		String firstCharXY = findXY(twoChars.charAt(0));
+		String secondCharXY = findXY(twoChars.charAt(1));
+				
+		int oldFirstX = Integer.parseInt(firstCharXY.substring(0, 1));
+		int oldFirstY = Integer.parseInt(firstCharXY.substring(1));
+		int oldSecondX = Integer.parseInt(secondCharXY.substring(0, 1));
+		int oldSecondY = Integer.parseInt(secondCharXY.substring(1));
+
+		ArrayList<Integer> newCoordinates = new ArrayList<Integer>();
+		
+		int newFirstX, newFirstY, newSecondX, newSecondY;
+		
+		newFirstX = oldFirstX;
+		newSecondX = oldSecondX;
+		newFirstY = oldFirstY;
+		newSecondY = oldSecondY;
+		
+		if(oldFirstX == oldSecondX && oldFirstY == oldSecondY) {
+			// Do nothing
+		} else if (oldFirstX == oldSecondX) {
+			newFirstY = ((oldFirstY + 1) % MATRIX_SIZE);				
+			newSecondY = ((oldSecondY + 1) % MATRIX_SIZE);
+		} else if (oldFirstY == oldSecondY) {
+			newFirstX = ((oldFirstX + 1) % MATRIX_SIZE);
+			newSecondX = ((oldSecondX + 1) % MATRIX_SIZE);
+		} else {
+			newFirstY = oldSecondY;
+			newSecondY = oldFirstY;
 		}
-		return point;
+		
+		newCoordinates.add(newFirstX);
+		newCoordinates.add(newFirstY);
+		newCoordinates.add(newSecondX);
+		newCoordinates.add(newSecondY);
+		
+		return newCoordinates;
 	}
 }
