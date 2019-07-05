@@ -44,21 +44,4 @@ public class UserInputTest {
 		
 		assertNotEquals("This is hell", userInput.getPlaintext());
 	}
-	
-	@Test
-	public void validateUserInputs() {
-		userInput.setKey("");
-		assertEquals("Key can't be empty", userInput.validateUserInputs());
-		assertNotEquals("Key is empty", userInput.validateUserInputs());
-		
-		userInput.setKey("adsad");
-		assertEquals("Enter only digits in the key", userInput.validateUserInputs());
-		assertNotEquals("Only digits are allowed in key", userInput.validateUserInputs());
-		
-		userInput.setKey("7");
-		userInput.setPlaintext("");
-		assertEquals("Plain text can't be empty", userInput.validateUserInputs());
-		assertNotEquals("Plain text is empty", userInput.validateUserInputs());
-		
-	}
 }
