@@ -6,6 +6,7 @@ import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithm;
 import com.LearnToCrypt.BusinessModels.Algorithm;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IAlgorithmDAO;
+import com.LearnToCrypt.DAO.IDAOAbstractFactory;
 import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
 import org.springframework.stereotype.Controller;
@@ -85,6 +86,9 @@ public class AlgorithmController implements WebMvcConfigurer {
 
         String steps = cipher.getSteps();
         model.addAttribute("steps",steps);
+
+        IDAOAbstractFactory abstractFactory = new DAOAbstractFactory();
+        abstractFactory.createUserDAO().updateProgress(authenticationManager.getEmail(httpSession),algorithmName+",");
 
         return "algorithm";
     }

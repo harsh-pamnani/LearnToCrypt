@@ -17,4 +17,6 @@ public interface IUserDAO {
 	public String getUserRole(String email);
 
 	public String[] getProgress(String email);
+
+	public void updateProgress(String email, String newProgress);
 }

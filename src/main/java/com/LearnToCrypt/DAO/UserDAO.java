@@ -116,9 +116,12 @@ public class UserDAO implements IUserDAO {
 			statement = dbConnection.prepareStatement(query);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				resultArray =resultSet.getString(1).split(",");
+				if(resultSet.getString(1) != null){
+					resultArray =resultSet.getString(1).split(",");
+				}else {
+					return null;
+				}
 			}
-
 		}catch (SQLException e){
 			logger.error("Error in fetching the user progress.", e);
 		}finally {
@@ -126,6 +129,20 @@ public class UserDAO implements IUserDAO {
 		}
 
 		return resultArray;
+	}
+
+	@Override
+	public void updateProgress(String email, String newProgress) {
+		String query = "CALL update_progress(\""+ email + "\",\""+newProgress+"\");";
+		try {
+			dbConnection = dbConnectionInstance.getConnection();
+			statement = dbConnection.prepareStatement(query);
+			statement.executeQuery();
+		}catch (SQLException e){
+			logger.error("Error in updating the user progress.", e);
+		}finally {
+			dbConnectionInstance.closeConnection();
+		}
 	}
 
 	private boolean isRegistered(boolean isRegistered, String query) throws SQLException {

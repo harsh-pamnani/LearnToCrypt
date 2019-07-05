@@ -35,13 +35,18 @@ public class MyProgressController implements WebMvcConfigurer {
         String email = authenticationManager.getEmail(httpSession);
         String[] progress = daoAbstractFactory.createUserDAO().getProgress(email);
 
-        model.addAttribute("count",progress.length+" / 5");
-
-        for(int i = 0;i<progress.length;i++){
-            model.addAttribute(progress[i].replaceAll("\\s", ""),"block");
+        if (progress == null){
+            model.addAttribute("count","0 / 5");
+        }else {
+            model.addAttribute("count",progress.length+" / 5");
+            System.out.println(progress);
+            System.out.println(progress.length);
+            for(int i = 0;i<progress.length;i++){
+                model.addAttribute(progress[i].replaceAll("\\s", ""),"block");
+            }
+            System.out.println(progress[0]);
         }
 
-        System.out.println(progress[0]);
         return "myProgress";
     }
 
