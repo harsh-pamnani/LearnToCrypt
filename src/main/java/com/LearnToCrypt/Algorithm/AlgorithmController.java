@@ -18,22 +18,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 
 @Controller
 public class AlgorithmController implements WebMvcConfigurer {
 
-    AuthenticationManager authenticationManager;
-    DAOAbstractFactory abstractFactory;
+    private AuthenticationManager authenticationManager;
+    private DAOAbstractFactory abstractFactory;
+    private IUserDAO userDAO;
+    private IAlgorithmDAO algorithmDAO;
 
-    String username;
-    String algorithmName;
-    String algorithmDescription;
-    String algorithmImage;
+    private String username;
+    private String useremail;
+    private String algorithmName;
+    private String algorithmDescription;
+    private String algorithmImage;
 
     public AlgorithmController(){
         authenticationManager = AuthenticationManager.instance();
         abstractFactory = new DAOAbstractFactory();
+        userDAO = abstractFactory.createUserDAO();
+        algorithmDAO = abstractFactory.createAlgorithmDAO();
     }
 
     @GetMapping("/algorithm")
@@ -46,7 +52,6 @@ public class AlgorithmController implements WebMvcConfigurer {
         }
         username = authenticationManager.getUsername(httpSession);
 
-        IAlgorithmDAO algorithmDAO = abstractFactory.createAlgorithmDAO();
         Algorithm algorithm = algorithmDAO.getAlgorithm(alg);
         if(algorithm.getName() == null) {
         	setModelAttributes(model);
@@ -69,6 +74,7 @@ public class AlgorithmController implements WebMvcConfigurer {
             return "redirect:/login";
         }
         username = authenticationManager.getUsername(httpSession);
+        useremail = authenticationManager.getEmail(httpSession);
         setModelAttributes(model);
 
         AlgorithmFactory algorithmFactory = new AlgorithmFactory();
@@ -88,10 +94,20 @@ public class AlgorithmController implements WebMvcConfigurer {
         	model.addAttribute("invalidInput", formError);
         }
 
-        IDAOAbstractFactory abstractFactory = new DAOAbstractFactory();
-        abstractFactory.createUserDAO().updateProgress(authenticationManager.getEmail(httpSession),algorithmName+",");
-
+        String[] userProgress = userDAO.getProgress(useremail);
+        if (!isAlreadyTested(userProgress,algorithmName)){
+            userDAO.updateProgress(authenticationManager.getEmail(httpSession),algorithmName+",");
+        }
         return "algorithm";
+    }
+
+    private boolean isAlreadyTested(String[] userProgress, String newProgress){
+        for (String i:userProgress) {
+            if (i.equals(newProgress)){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void setModelAttributes(Model model) {

@@ -1,5 +1,7 @@
 package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
+import com.LearnToCrypt.Algorithm.UserInput;
+
 import java.util.ArrayList;
 
 public class CaesarCipher implements IEncryptionAlgorithm {
@@ -67,5 +69,23 @@ public class CaesarCipher implements IEncryptionAlgorithm {
 
         return stepsString;
     }
+
+    @Override
+    public String keyPlainTextValidation(UserInput userInput) {
+        String formError = null;
+
+        if(userInput.getKey().isEmpty()) {
+            formError ="Key can't be empty";
+        } else if(!userInput.getKey().matches("[A-Za-z ]+")) {
+            formError = "Enter only A-Z charachters in key.";
+        } else if(userInput.getPlaintext().isEmpty()) {
+            formError = "Plain text can't be empty";
+        } else if(!userInput.getPlaintext().matches("[A-Za-z ]+")) {
+            formError = "Enter only A-Z charachters in plain text.";
+        }
+
+        return formError;
+    }
+
 }
 

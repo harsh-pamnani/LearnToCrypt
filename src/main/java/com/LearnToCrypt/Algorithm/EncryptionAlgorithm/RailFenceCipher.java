@@ -1,5 +1,7 @@
 package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
+import com.LearnToCrypt.Algorithm.UserInput;
+
 public class RailFenceCipher implements IEncryptionAlgorithm {
 
 	private String result = "Cipher Text: ";
@@ -58,5 +60,10 @@ public class RailFenceCipher implements IEncryptionAlgorithm {
 	@Override
 	public String getSteps() {
 		return steps;
+	}
+
+	@Override
+	public String keyPlainTextValidation(UserInput userInput) {
+		return null;
 	}
 }
