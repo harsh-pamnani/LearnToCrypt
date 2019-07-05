@@ -1,5 +1,7 @@
 package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
+import com.LearnToCrypt.Algorithm.UserInput;
+
 public class RailFenceCipher implements IEncryptionAlgorithm {
 
 	private String result = "Cipher Text: ";
@@ -60,5 +62,20 @@ public class RailFenceCipher implements IEncryptionAlgorithm {
 	@Override
 	public String getSteps() {
 		return steps;
+	}
+
+	@Override
+	public String keyPlainTextValidation(UserInput userInput) {
+		String formError = null;
+    	
+    	if(userInput.getKey().isEmpty()) {
+    		formError ="Key can't be empty";
+    	} else if(!userInput.getKey().matches("[0-9]+")) {
+    		formError = "Enter only digits in the key";
+    	} else if(userInput.getPlaintext().isEmpty()) {
+    		formError = "Plain text can't be empty";
+    	} 
+    	
+    	return formError;
 	}
 }
