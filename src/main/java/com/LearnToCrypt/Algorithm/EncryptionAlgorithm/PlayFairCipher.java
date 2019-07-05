@@ -41,8 +41,6 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 			char newFirstChar = keyMatrix[newFirstX][newFirstY];
 			char newSecondChar = keyMatrix[newSecondX][newSecondY];
 			
-			System.out.println("OLD: " + twoChars);
-			System.out.println("NEW: " + newFirstChar + newSecondChar);
 			this.plaintext += (twoChars + " ");
 			ciphertext += (newFirstChar + "" + newSecondChar + " ");
 		}

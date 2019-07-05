@@ -58,11 +58,11 @@ public class PlayFairCipherTest {
     public void tesKeyPlainTextValidation() {
     	userInput.setKey("");
     	assertEquals("Key can't be empty", playFairCipher.keyPlainTextValidation(userInput));
-    	assertNotEquals("", playFairCipher.keyPlainTextValidation(userInput));
+    	assertNotEquals("Some other error message", playFairCipher.keyPlainTextValidation(userInput));
     	
     	userInput.setKey("different #!%");
     	assertEquals("Enter only A-Z charachters in key.", playFairCipher.keyPlainTextValidation(userInput));
-    	assertNotEquals("", playFairCipher.keyPlainTextValidation(userInput));
+    	assertNotEquals("Some other error message", playFairCipher.keyPlainTextValidation(userInput));
     	
     	userInput.setKey("123");
     	assertEquals("Enter only A-Z charachters in key.", playFairCipher.keyPlainTextValidation(userInput));
