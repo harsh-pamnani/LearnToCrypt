@@ -6,6 +6,16 @@ public class User {
 	private String password;
 	private String role;
 
+	public String getProgress() {
+		return progress;
+	}
+
+	public void setProgress(String progress) {
+		this.progress = progress;
+	}
+
+	private String progress;
+
 	public String getEmail() {
 		return email;
 	}

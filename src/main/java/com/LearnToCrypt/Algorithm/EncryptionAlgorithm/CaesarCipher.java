@@ -78,12 +78,12 @@ public class CaesarCipher implements IEncryptionAlgorithm {
 
         if(userInput.getKey().isEmpty()) {
             formError ="Key can't be empty";
-        } else if(!userInput.getKey().matches("[A-Za-z ]+")) {
-            formError = "Enter only A-Z charachters in key.";
+        } else if(!userInput.getKey().matches("^[0-9]*$")) {
+            formError = "Enter only numbers in key.";
         } else if(userInput.getPlaintext().isEmpty()) {
             formError = "Plain text can't be empty";
         } else if(!userInput.getPlaintext().matches("[A-Za-z ]+")) {
-            formError = "Enter only A-Z charachters in plain text.";
+            formError = "Enter only A-Z in plain text.";
         }
 
         return formError;

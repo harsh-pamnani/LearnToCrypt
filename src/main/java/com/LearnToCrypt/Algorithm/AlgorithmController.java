@@ -79,8 +79,7 @@ public class AlgorithmController implements WebMvcConfigurer {
         AlgorithmFactory algorithmFactory = new AlgorithmFactory();
         IEncryptionAlgorithm cipher =  algorithmFactory.createAlgorithm(algorithmName);
 
-        String formError = userInput.validateUserInputs();
-        formError = cipher.keyPlainTextValidation(userInput);
+        String formError = cipher.keyPlainTextValidation(userInput);
 
         if(formError == null) {
         	cipher.encode(userInput.getKey()+"",userInput.getPlaintext());
@@ -94,20 +93,7 @@ public class AlgorithmController implements WebMvcConfigurer {
         	model.addAttribute("invalidInput", formError);
         }
 
-        String[] userProgress = userDAO.getProgress(useremail);
-        if (!isAlreadyTested(userProgress,algorithmName)){
-            userDAO.updateProgress(authenticationManager.getEmail(httpSession),algorithmName+",");
-        }
         return "algorithm";
-    }
-
-    private boolean isAlreadyTested(String[] userProgress, String newProgress){
-        for (String i:userProgress) {
-            if (i.equals(newProgress)){
-                return true;
-            }
-        }
-        return false;
     }
 
     private void setModelAttributes(Model model) {

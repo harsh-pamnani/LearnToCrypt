@@ -133,16 +133,28 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public void updateProgress(String email, String newProgress) {
-		String query = "CALL update_progress(\""+ email + "\",\""+newProgress+"\");";
-		try {
-			dbConnection = dbConnectionInstance.getConnection();
-			statement = dbConnection.prepareStatement(query);
-			statement.executeQuery();
-		}catch (SQLException e){
-			logger.error("Error in updating the user progress.", e);
-		}finally {
-			dbConnectionInstance.closeConnection();
+		String[] userProgress = getProgress(email);
+		if (!isAlreadyTested(userProgress,newProgress)) {
+			String query = "CALL update_progress(\"" + email + "\",\"" + newProgress + ",\");";
+			try {
+				dbConnection = dbConnectionInstance.getConnection();
+				statement = dbConnection.prepareStatement(query);
+				statement.executeQuery();
+			} catch (SQLException e) {
+				logger.error("Error in updating the user progress.", e);
+			} finally {
+				dbConnectionInstance.closeConnection();
+			}
 		}
+	}
+
+	private boolean isAlreadyTested(String[] userProgress, String newProgress){
+		for (String i:userProgress) {
+			if (i.equals(newProgress)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean isRegistered(boolean isRegistered, String query) throws SQLException {
