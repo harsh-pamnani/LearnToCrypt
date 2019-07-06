@@ -15,7 +15,7 @@ public class AlgorithmFactory implements IAlgorithmFactory{
                 // TODO: I don't know
                 break;
             case "Playfair Cipher":
-                // TODO: I don't know
+                algorithm = new PlayFairCipher();
                 break;
             case "Rail Fence Cipher":
             	algorithm = new RailFenceCipher();

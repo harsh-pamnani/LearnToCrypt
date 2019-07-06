@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 
 
 @Controller
@@ -81,6 +80,7 @@ public class AlgorithmController implements WebMvcConfigurer {
         IEncryptionAlgorithm cipher =  algorithmFactory.createAlgorithm(algorithmName);
 
         String formError = userInput.validateUserInputs();
+        formError = cipher.keyPlainTextValidation(userInput);
 
         if(formError == null) {
         	cipher.encode(userInput.getKey()+"",userInput.getPlaintext());
