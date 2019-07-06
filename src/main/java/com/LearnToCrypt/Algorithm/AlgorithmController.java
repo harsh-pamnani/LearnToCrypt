@@ -19,7 +19,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpSession;
 
-
 @Controller
 public class AlgorithmController implements WebMvcConfigurer {
 

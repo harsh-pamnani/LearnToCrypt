@@ -7,5 +7,6 @@ public interface IEncryptionAlgorithm {
     String encode(String key,String plaintext);
     String getResult();
     String getSteps();
+
     public String keyPlainTextValidation(UserInput userInput);
 }
