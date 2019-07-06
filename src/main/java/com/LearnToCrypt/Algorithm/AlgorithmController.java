@@ -81,6 +81,7 @@ public class AlgorithmController implements WebMvcConfigurer {
         IEncryptionAlgorithm cipher =  algorithmFactory.createAlgorithm(algorithmName);
 
         String formError = userInput.validateUserInputs();
+        formError = cipher.keyPlainTextValidation(userInput);
 
         if(formError == null) {
         	cipher.encode(userInput.getKey()+"",userInput.getPlaintext());
