@@ -56,6 +56,7 @@ public class AlgorithmController implements WebMvcConfigurer {
         username = authenticationManager.getUsername(httpSession);
 
         Algorithm algorithm = algorithmDAO.getAlgorithm(alg);
+        logger.info("user \""+username+"\" accessed "+algorithm.getName());
         if(algorithm.getName() == null) {
         	setModelAttributes(model);
         	return "dashboard";
@@ -66,7 +67,8 @@ public class AlgorithmController implements WebMvcConfigurer {
         algorithmImage = algorithm.getImage();
         setModelAttributes(model);
 
-        logger.info("user \""+username+"\" accessed "+algorithm.getName());
+
+
         return "algorithm";
     }
 
