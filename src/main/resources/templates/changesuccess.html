@@ -17,39 +17,7 @@
 
 <body>
 <!--- This navigation bar  is the conde snippet from Bootstrap Documentation -->
-<nav class="navbar fixed-top navbar-expand-lg navbar-light mb-2" id="navigationHome">
-
-    <a class="navbar-brand" href="/homepage">LearnToCrypt</a>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#optionsCollapsed"
-            aria-controls="optionsCollapsed" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!--- code snippet for collapsible feature of navbar with responsiveness by using bootstrap classes -->
-    <div class="collapse navbar-collapse" id="optionsCollapsed">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/dashboard"> Dashboard </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"> Playground </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"> Contact Us </a>
-            </li>
-
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item mr-3">
-                <a class="btn btn-outline-primary nav-link-btn my-sm-0" href="/login"> Login </a>
-            </li>
-            <li class="nav-item mr-5">
-                <a class="btn btn-outline-primary nav-link-btn my-sm-0" href="/signup"> Registration </a>
-            </li>
-        </ul>
-    </div>
-</nav>
+<div th:replace="fragments/navbar"></div>
 
 <div class="row content" id="">
     <div class="col-md-4 col-sm-6"></div>
@@ -67,36 +35,7 @@
     <div class="col-md-4 col-sm-6"></div>
 </div>
 
-<div id="footer" class="footer pt-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 mt-sm-1">
-                <h4> Quick Links </h4>
-                <hr>
-                <a class="touch-icon" href="/"> Home </a> <br />
-                <a class="touch-icon" href="#"> Playground </a> <br />
-                <a class="touch-icon" href="#"> Contact Us </a> <br />
-                <a class="touch-icon" href="#"> About Us </a> <br />
-            </div>
-            <div class="col-md-4 mt-sm-1">
-                <h4>Contact Us</h4>
-                <hr>
-                <p><i class="fa fa-home"></i> 6050, University Avenue </p>
-                <p><i class="fa fa-envelope"></i> qagroup7.winter@gmail.com </p>
-                <p><i class="fa fa-phone"></i> +1 111-222-3333 </p>
-                <p><i class="fa fa-globe"></i> www.learntocrypt.com </p>
-            </div>
-            <div class="col-md-4 mt-sm-1 mb-5">
-                <h4> Get in touch </h4>
-                <hr>
-                <a class="touch-icon" href="https://github.com/DalhousieUniversityCSCI5308/Group7/"><i
-                        class="social-media fab fa-github p-2 mr-3"></i></a>
-                <a class="touch-icon" href="#"><i class="social-media fab fa-facebook p-2 mr-3"></i></a>
-                <a class="touch-icon" href="#"><i class="social-media fab fa-twitter-square p-2 mr-3"></i></a> <br>
-            </div>
-        </div>
-    </div>
-</div>
+<div th:replace="fragments/footer"></div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

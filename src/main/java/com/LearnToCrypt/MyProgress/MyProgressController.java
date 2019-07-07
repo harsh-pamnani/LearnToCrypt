@@ -44,7 +44,6 @@ public class MyProgressController implements WebMvcConfigurer {
             model.addAttribute("count",progress.length+" / 5");
             for(int i = 0;i<progress.length;i++){
                 model.addAttribute(progress[i].replaceAll("\\s", ""),"block");
-                System.out.println(progress[i].replaceAll("\\s", ""));
             }
         }
         logger.info("user \""+username+"\" accessed MyProgress page");
