@@ -96,10 +96,12 @@ public class AlgorithmController implements WebMvcConfigurer {
 
             String steps = cipher.getSteps();
             model.addAttribute("steps",steps);
+            
+            userDAO.updateProgress(useremail,algorithmName);
         } else {
         	model.addAttribute("invalidInput", formError);
         }
-        userDAO.updateProgress(useremail,algorithmName);
+        
         logger.info("user \""+username+"\" tested "+algorithmName);
         return "algorithm";
     }

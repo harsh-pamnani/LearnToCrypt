@@ -16,13 +16,11 @@ public class UserDAOTest {
 	UserDAOFactoryMock userDAOFactoryMock;
 	BusinessModelAbstractFactory businessModelAbstractFactory;
 	User user;
-	IUserDAO userDAO;
 	
 	public UserDAOTest() {
 		userDAOFactoryMock = new UserDAOFactoryMock();
 		businessModelAbstractFactory = new BusinessModelAbstractFactory();
 		user = businessModelAbstractFactory.createUser();
-		userDAO = new UserDAO();
 	}
 	
 	@Test
