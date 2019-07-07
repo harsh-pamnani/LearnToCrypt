@@ -11,8 +11,8 @@ public class AlgorithmFactory implements IAlgorithmFactory{
             case "Vigenere Cipher":
                 algorithm = new VigenereCipher();
                 break;
-            case "Matrix Transportation Cipher":
-                // TODO: I don't know
+            case "Matrix Transposition Cipher":
+                algorithm = new MatrixTransposeCipher();
                 break;
             case "Playfair Cipher":
                 algorithm = new PlayFairCipher();

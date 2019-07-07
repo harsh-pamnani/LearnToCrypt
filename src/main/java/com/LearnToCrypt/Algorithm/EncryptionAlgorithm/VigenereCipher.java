@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 public class VigenereCipher implements IEncryptionAlgorithm {
 	private final char startChar = 'A';
 	private final char endChar = 'Z';
-	private String result = "Cipher Text: ";
+	private final String resultTxt = "Cipher Text: ";
 	private String steps = "Steps:\n";
 	private String unencryptedPlaintext = null;
 	private String encryptionKey = null;
@@ -43,13 +43,12 @@ public class VigenereCipher implements IEncryptionAlgorithm {
 		ciphertext = encryptedChars.toString();
 		logger.info("End: encoding " + plaintext + " with key " + key + " to " + ciphertext);
 		encryptedCipherText = ciphertext;
-		result += encryptedCipherText;
 		return ciphertext;
 	}
 
 	@Override
 	public String getResult() {
-		return result;
+		return resultTxt + encryptedCipherText;
 	}
 
 	@Override
