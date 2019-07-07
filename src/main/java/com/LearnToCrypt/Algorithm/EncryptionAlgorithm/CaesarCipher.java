@@ -84,6 +84,8 @@ public class CaesarCipher implements IEncryptionAlgorithm {
             formError = "Plain text can't be empty";
         } else if(!userInput.getPlaintext().matches("[A-Za-z ]+")) {
             formError = "Enter only A-Z in plain text.";
+        } else if(Integer.parseInt(userInput.getKey()) > 26){
+            formError = "The key must smaller than 26.";
         }
 
         return formError;

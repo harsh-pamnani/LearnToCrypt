@@ -79,22 +79,18 @@ public class UserDAOTest {
 
 	@Test
 	public void testGetProgress(){
-		String progressFromDatabase[] = userDAO.getProgress("test@myProgress.com");
-		String expect[] = {"Caesar Cipher","Rail Fence Cipher"};
-		assertEquals(progressFromDatabase.length,expect.length);
-		for(int i=0; i<progressFromDatabase.length; i++){
-			assertEquals(progressFromDatabase[i],expect[i]);
+		String[] expected = {"Rail Fence Cipher","Caesar Cipher"};
+		String[] actual = userDAOFactoryMock.getProgress("rob@gmail.com");
+		assertEquals(expected.length,actual.length);
+		for (int i = 0; i<expected.length; i++){
+			assertEquals(expected[i],actual[i]);
 		}
 	}
 
 	@Test
 	public void testUpdateProgress_ProgressAlreadyExist(){
-		userDAO.updateProgress("test@myProgress.com","Caesar Cipher");
-		String progressFromDatabase[] = userDAO.getProgress("test@myProgress.com");
-		String expect[] = {"Caesar Cipher","Rail Fence Cipher"};
-		assertEquals(progressFromDatabase.length,expect.length);
-		for(int i=0; i<progressFromDatabase.length; i++){
-			assertEquals(progressFromDatabase[i],expect[i]);
-		}
+		User user = userDAOFactoryMock.getUser("milly@gmail.com");
+		userDAOFactoryMock.updateProgress(user.getEmail(),"Caesar Cipher");
+		assertEquals("Rail Fence Cipher,Caesar Cipher,",user.getProgress());
 	}
 }
