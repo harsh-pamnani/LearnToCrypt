@@ -5,6 +5,7 @@ public class User {
 	private String name;
 	private String password;
 	private String role;
+	private String progress;
 
 	public String getProgress() {
 		return progress;
@@ -13,8 +14,6 @@ public class User {
 	public void setProgress(String progress) {
 		this.progress = progress;
 	}
-
-	private String progress;
 
 	public String getEmail() {
 		return email;

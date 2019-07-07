@@ -134,7 +134,16 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public void updateProgress(String email, String newProgress) {
 		String[] userProgress = getProgress(email);
-		if (!isAlreadyTested(userProgress,newProgress)) {
+		boolean isAllowedToUpdate = false;
+		if(userProgress != null){
+			if (!isAlreadyTested(userProgress,newProgress)) {
+				isAllowedToUpdate = true;
+			}
+		}else {
+			isAllowedToUpdate = true;
+		}
+
+		if (isAllowedToUpdate){
 			String query = "CALL update_progress(\"" + email + "\",\"" + newProgress + ",\");";
 			try {
 				dbConnection = dbConnectionInstance.getConnection();
@@ -149,9 +158,11 @@ public class UserDAO implements IUserDAO {
 	}
 
 	private boolean isAlreadyTested(String[] userProgress, String newProgress){
-		for (String i:userProgress) {
-			if (i.equals(newProgress)){
-				return true;
+		if (userProgress != null && newProgress!= null ){
+			for (String i:userProgress) {
+				if (i.equals(newProgress)){
+					return true;
+				}
 			}
 		}
 		return false;

@@ -9,6 +9,9 @@ import com.LearnToCrypt.DAO.IAlgorithmDAO;
 import com.LearnToCrypt.DAO.IDAOAbstractFactory;
 import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
+import com.LearnToCrypt.app.LearnToCryptApplication;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +24,8 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class AlgorithmController implements WebMvcConfigurer {
+
+    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
 
     private AuthenticationManager authenticationManager;
     private DAOAbstractFactory abstractFactory;
@@ -61,6 +66,7 @@ public class AlgorithmController implements WebMvcConfigurer {
         algorithmImage = algorithm.getImage();
         setModelAttributes(model);
 
+        logger.info("user \""+username+"\" accessed "+algorithm.getName());
         return "algorithm";
     }
 
@@ -92,6 +98,7 @@ public class AlgorithmController implements WebMvcConfigurer {
         	model.addAttribute("invalidInput", formError);
         }
         userDAO.updateProgress(useremail,algorithmName);
+        logger.info("user \""+username+"\" tested "+algorithmName);
         return "algorithm";
     }
 

@@ -54,10 +54,10 @@ public class LoginController implements WebMvcConfigurer {
             model.put("invalidLogin", "Invalid Credentials");
             return "login";
         }
-		
-		logger.error("User \""+authenticationManager.getUsername(httpSession)+"\" login success");
-					
 		authenticationManager.addAuthenticatedUser(httpSession, user.getEmail());
+
+		logger.error("User \""+authenticationManager.getUsername(httpSession)+"\" login success");
+
 		return "redirect:/dashboard";
     }
 }
