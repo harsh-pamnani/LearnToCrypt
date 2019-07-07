@@ -3,7 +3,11 @@ package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.LearnToCrypt.Algorithm.UserInput;
+import com.LearnToCrypt.app.LearnToCryptApplication;
 
 public class PlayFairCipher implements IEncryptionAlgorithm {
 
@@ -15,6 +19,7 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 	private String plaintext = "Plain Text: ";
 	private HashMap<String, String> repeatedCharacters;
 	private char[][] keyMatrix;
+	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
 	
 	public PlayFairCipher() {
 		repeatedCharacters = new HashMap<String, String>();
@@ -24,6 +29,8 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 	
 	@Override
 	public String encode(String key, String plaintext) {
+		logger.info("Playfair Cipher encoding starterd with key: " + key 
+				+ "and plaintext: " + plaintext);
 		
 		generateKeyMatrixFromKey(key);
 		plaintext = cleanPlainText(plaintext);
@@ -46,6 +53,9 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 		}
 		
 		result += ciphertext;
+		logger.info("Playfair Cipher: Encoding done. Cipher text: " + ciphertext 
+				+ "and result: " + result);
+		
 		return ciphertext;
 	}
 
@@ -73,6 +83,12 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
     		formError = "Enter only A-Z charachters in plain text.";
     	}
     	
+    	if (formError == null) {
+			logger.info("Playfair Cipher: Key Validated Successfully");
+		} else {
+			logger.error("Playfair Cipher: Key Validation Error: " + formError);
+		}
+    	
     	return formError;
 	}
 	
@@ -98,6 +114,8 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 			steps += "\n";
 		}
 		
+		logger.info("Playfair Cipher: Key matrix and steps generated.");
+		
 		steps += ("\nAs shown above, the plain text is divided in two characters pair \n"
 				+ "and new two characters are generated from key matrix.");
 	}
@@ -113,6 +131,8 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 		if(cleanedPlainText.length() % 2 != 0) {
 			cleanedPlainText += "Z";
 		}
+		
+		logger.info("Playfair Cipher: Cleaning of plain text done.");
 		
 		return cleanedPlainText;
 	}
@@ -131,6 +151,8 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 			}
 		}
 		
+		logger.info("Playfair Cipher: Plain text divided into groups of two characters.");
+		
 		return stringDividedInTwoChars;
 	}
 	
@@ -145,6 +167,7 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 				}
 			}
 		}
+		logger.info("Playfair Cipher: Found out the character coordinates.");
 		
 		return XY;
 	}
@@ -157,6 +180,7 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 			String replaceRepeatedChar = character + CHARACTER_TO_REPLACE +character;
 			repeatedCharacters.put(repeatedChar, replaceRepeatedChar);
 		}
+		logger.info("Playfair Cipher: Repeated characters list set up done.");
 	}
 	
 	// Method to get the new coordinates of the given two characters
@@ -195,6 +219,8 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 		newCoordinates.add(newFirstY);
 		newCoordinates.add(newSecondX);
 		newCoordinates.add(newSecondY);
+		
+		logger.info("Playfair Cipher: Generated new characters' coordinates.");
 		
 		return newCoordinates;
 	}
