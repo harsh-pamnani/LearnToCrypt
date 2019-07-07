@@ -24,11 +24,11 @@ public class VigenereCipher implements IEncryptionAlgorithm {
 		char[] encryptedChars = new char[plaintext.length()];
 		for(int textIndex = 0, keyIndex = 0; textIndex < unencryptedPlaintext.length(); textIndex++, keyIndex++ ) {
 			char textChar = unencryptedPlaintext.charAt(textIndex);
-			if (keyIndex > encryptionKey.length()) {
+			if (keyIndex >= encryptionKey.length()) {
 				keyIndex = keyIndex - encryptionKey.length();
 			}
 			char keyChar = encryptionKey.charAt(keyIndex);
-			int textCharAscii = (int) keyChar;
+			int textCharAscii = (int) textChar;
 			int keyAscii = (int) keyChar;
 			int keyCharFromA = keyAscii - (int)startChar;
 			int encryptedCharAscii = textCharAscii + keyCharFromA;
@@ -38,9 +38,9 @@ public class VigenereCipher implements IEncryptionAlgorithm {
 			char encryptedChar = (char) encryptedCharAscii;
 			encryptedChars[textIndex] = encryptedChar;
 			logger.info("Encoded: " + textChar + " --> " + encryptedChar);
-			steps+= ("\n" + textChar + " --> " + encryptedChar);
+			steps+= ("\nEncoded: " + textChar + " --> " + encryptedChar);
 		}
-		ciphertext = encryptedChars.toString();
+		ciphertext = String.copyValueOf(encryptedChars);
 		logger.info("End: encoding " + plaintext + " with key " + key + " to " + ciphertext);
 		encryptedCipherText = ciphertext;
 		return ciphertext;
