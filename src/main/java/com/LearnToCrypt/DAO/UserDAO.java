@@ -106,7 +106,57 @@ public class UserDAO implements IUserDAO {
 		
 		return role;
 	}
-	
+
+	@Override
+	public String[] getProgress(String email) {
+		String query = "CALL get_user_progress(\""+ email + "\");";
+		String resultArray[] = null;
+		try {
+			dbConnection = dbConnectionInstance.getConnection();
+			statement = dbConnection.prepareStatement(query);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				if(resultSet.getString(1) != null){
+					resultArray =resultSet.getString(1).split(",");
+				}else {
+					return null;
+				}
+			}
+		}catch (SQLException e){
+			logger.error("Error in fetching the user progress.", e);
+		}finally {
+			dbConnectionInstance.closeConnection();
+		}
+
+		return resultArray;
+	}
+
+	@Override
+	public void updateProgress(String email, String newProgress) {
+		String[] userProgress = getProgress(email);
+		if (!isAlreadyTested(userProgress,newProgress)) {
+			String query = "CALL update_progress(\"" + email + "\",\"" + newProgress + ",\");";
+			try {
+				dbConnection = dbConnectionInstance.getConnection();
+				statement = dbConnection.prepareStatement(query);
+				statement.executeQuery();
+			} catch (SQLException e) {
+				logger.error("Error in updating the user progress.", e);
+			} finally {
+				dbConnectionInstance.closeConnection();
+			}
+		}
+	}
+
+	private boolean isAlreadyTested(String[] userProgress, String newProgress){
+		for (String i:userProgress) {
+			if (i.equals(newProgress)){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private boolean isRegistered(boolean isRegistered, String query) throws SQLException {
 		dbConnection = dbConnectionInstance.getConnection();
 

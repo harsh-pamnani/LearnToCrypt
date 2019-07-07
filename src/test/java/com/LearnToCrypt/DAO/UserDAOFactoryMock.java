@@ -103,4 +103,14 @@ public class UserDAOFactoryMock implements IUserDAO {
 		
 		return role;
 	}
+
+	@Override
+	public String[] getProgress(String email) {
+		return new String[0];
+	}
+
+	@Override
+	public void updateProgress(String email, String newProgress) {
+
+	}
 }

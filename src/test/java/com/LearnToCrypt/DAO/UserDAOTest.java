@@ -9,17 +9,20 @@ import org.junit.Test;
 
 import com.LearnToCrypt.BusinessModels.BusinessModelAbstractFactory;
 import com.LearnToCrypt.BusinessModels.User;
+import org.junit.runner.notification.RunListener;
 
 public class UserDAOTest {
 
 	UserDAOFactoryMock userDAOFactoryMock;
 	BusinessModelAbstractFactory businessModelAbstractFactory;
 	User user;
+	IUserDAO userDAO;
 	
 	public UserDAOTest() {
 		userDAOFactoryMock = new UserDAOFactoryMock();
 		businessModelAbstractFactory = new BusinessModelAbstractFactory();
 		user = businessModelAbstractFactory.createUser();
+		userDAO = new UserDAO();
 	}
 	
 	@Test
@@ -72,5 +75,26 @@ public class UserDAOTest {
 		assertEquals("Instructor", userDAOFactoryMock.getUserRole("rob@gmail.com"));
 		
 		assertNotEquals("Student", userDAOFactoryMock.getUserRole("rob@gmail.com"));
+	}
+
+	@Test
+	public void testGetProgress(){
+		String progressFromDatabase[] = userDAO.getProgress("test@myProgress.com");
+		String expect[] = {"Caesar Cipher","Rail Fence Cipher"};
+		assertEquals(progressFromDatabase.length,expect.length);
+		for(int i=0; i<progressFromDatabase.length; i++){
+			assertEquals(progressFromDatabase[i],expect[i]);
+		}
+	}
+
+	@Test
+	public void testUpdateProgress_ProgressAlreadyExist(){
+		userDAO.updateProgress("test@myProgress.com","Caesar Cipher");
+		String progressFromDatabase[] = userDAO.getProgress("test@myProgress.com");
+		String expect[] = {"Caesar Cipher","Rail Fence Cipher"};
+		assertEquals(progressFromDatabase.length,expect.length);
+		for(int i=0; i<progressFromDatabase.length; i++){
+			assertEquals(progressFromDatabase[i],expect[i]);
+		}
 	}
 }
