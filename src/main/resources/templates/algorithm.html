@@ -16,7 +16,7 @@
         .img {
             background-repeat: no-repeat;
             background-position: center;
-            background-size: cover;
+            background-size: contain;
         }
 
         .card {
@@ -29,6 +29,12 @@
             box-shadow: inset 0px 0px 3px 2px rgba(0, 0, 0, 0.44);
             padding: 15px;
         }
+        
+        #formError {
+		    color: red;
+		    font-size: 15px;
+		    font-family: cursive;
+		}
     </style>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
@@ -38,55 +44,17 @@
 </head>
 
 <body>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light mb-2" id="navigationHome">
-
-        <a class="navbar-brand" href="/homepage">LearnToCrypt</a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#optionsCollapsed"
-            aria-controls="optionsCollapsed" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!--- code snippet for collapsible feature of navbar with responsiveness by using bootstrap classes -->
-        <div class="collapse navbar-collapse" id="optionsCollapsed">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/dashboard"> Dashboard </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> Playground </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> Contact Us </a>
-                </li>
-
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="btn-group">
-                    <button th:text="${username}" type="button" class="btn btn-dark dropdown-toggle mr-5"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Some Name </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#"> My Progress </a>
-                        <a class="dropdown-item" href="#"> Edit Profile </a>
-                        <a class="dropdown-item" href="/logout"> Logout </a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
+	<div th:replace="fragments/navbarLoggedIn"></div>
 
     <div class="container dashboard">
-        <h2 class="text-center">Algorithm</h2>
+        <h2 class="text-center" th:text="${alg}"></h2>
         <hr>
         <div class="container">
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-4 img" th:style="'background-image:url(' + @{${url}} + ');'"></div>
                 <div class="col-md-4">
-                    <p>The action of a Caesar cipher is to replace each plaintext letter with a different one a fixed
-                        number of places down the alphabet. The cipher illustrated here uses a left shift of three, so
-                        that (for example) each occurrence of E in the plaintext
-                        becomes B in the ciphertext.</p>
+                    <p th:text="${description}"></p>
                 </div>
                 <div class="col-md-2"></div>
             </div>
@@ -104,6 +72,9 @@
                             <input type="text" id="plaintext" name="plaintext" class="plaintext form-control"
                                 th:field="*{plaintext}" />
                         </div>
+                        <div class="form-group">
+                        	<div id="formError" th:text="${invalidInput}"></div>
+                    	</div>
                         <input type="submit" class="btn btn-primary" value="Submit" />
                     </form>
                 </div>
@@ -113,8 +84,8 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <br>
-                    <div class="container card">
-                        <p>Resault:</p>
+                    <label for="cipherResult"> Result: </label>
+                    <div id="cipherResult" class="container card">
                         <P style="white-space: pre;" th:text="${result}"></P>
                         <P style="white-space: pre;" th:text="${steps}"></P>
                     </div>
@@ -123,6 +94,8 @@
             </div>
         </div>
     </div>
+
+	<div th:replace="fragments/footer"></div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

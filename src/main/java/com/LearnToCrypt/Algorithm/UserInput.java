@@ -1,8 +1,8 @@
 package com.LearnToCrypt.Algorithm;
 
 public class UserInput {
-    private String key;
-    private String plaintext;
+    private String key = "";
+    private String plaintext = "";
 
     public String getKey() {
         return key;

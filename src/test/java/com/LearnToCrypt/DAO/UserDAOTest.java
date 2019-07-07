@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.LearnToCrypt.BusinessModels.BusinessModelAbstractFactory;
 import com.LearnToCrypt.BusinessModels.User;
+import org.junit.runner.notification.RunListener;
 
 public class UserDAOTest {
 
@@ -65,5 +66,29 @@ public class UserDAOTest {
 	@Test
 	public void testGetUser() {
 		assertTrue(userDAOFactoryMock.getUser("rob@gmail.com") instanceof User);
+	}
+	
+	@Test
+	public void testGetRole() {
+		assertEquals("Instructor", userDAOFactoryMock.getUserRole("rob@gmail.com"));
+		
+		assertNotEquals("Student", userDAOFactoryMock.getUserRole("rob@gmail.com"));
+	}
+
+	@Test
+	public void testGetProgress(){
+		String[] expected = {"Rail Fence Cipher","Caesar Cipher"};
+		String[] actual = userDAOFactoryMock.getProgress("rob@gmail.com");
+		assertEquals(expected.length,actual.length);
+		for (int i = 0; i<expected.length; i++){
+			assertEquals(expected[i],actual[i]);
+		}
+	}
+
+	@Test
+	public void testUpdateProgress_ProgressAlreadyExist(){
+		User user = userDAOFactoryMock.getUser("milly@gmail.com");
+		userDAOFactoryMock.updateProgress(user.getEmail(),"Caesar Cipher");
+		assertEquals("Rail Fence Cipher,Caesar Cipher,",user.getProgress());
 	}
 }

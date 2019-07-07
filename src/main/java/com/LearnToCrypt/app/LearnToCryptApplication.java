@@ -2,6 +2,7 @@ package com.LearnToCrypt.app;
 
 import com.LearnToCrypt.Algorithm.AlgorithmController;
 import com.LearnToCrypt.ForgotPassword.ForgotPasswordController;
+import com.LearnToCrypt.MyProgress.MyProgressController;
 import com.LearnToCrypt.Profile.PasswordChangeController;
 import com.LearnToCrypt.Profile.ProfileController;
 import org.apache.logging.log4j.LogManager;
@@ -25,7 +26,8 @@ import com.LearnToCrypt.Dashboard.DashboardController;
 		AlgorithmController.class,
 		ProfileController.class,
 		ForgotPasswordController.class,
-		PasswordChangeController.class
+		PasswordChangeController.class,
+		MyProgressController.class
 })
 public class LearnToCryptApplication {
 

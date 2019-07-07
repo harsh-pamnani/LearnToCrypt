@@ -21,43 +21,7 @@
 </head>
 
 <body>
-    <!--- This navigation bar  is the conde snippet from Bootstrap Documentation -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light mb-2" id="navigationHome">
-
-        <a class="navbar-brand" href="/homepage">LearnToCrypt</a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#optionsCollapsed"
-            aria-controls="optionsCollapsed" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!--- code snippet for collapsible feature of navbar with responsiveness by using bootstrap classes -->
-        <div class="collapse navbar-collapse" id="optionsCollapsed">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> Dashboard </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> Playground </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> Contact Us </a>
-                </li>
-
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="btn-group">
-                    <button th:text="${username}" type="button" class="btn btn-dark dropdown-toggle mr-5"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Some Name </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#"> My Progress </a>
-                        <a class="dropdown-item" href="/profile"> My Profile </a>
-                        <a class="dropdown-item" href="/logout"> Logout </a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
+	<div th:replace="fragments/navbarLoggedIn"></div>
 
     <div class="container dashboard">
         <hr>
@@ -70,19 +34,18 @@
                         <h6 class="card-subtitle mb-2 text-muted">Basic substitution cipher</h6>
                         <p class="card-text">The action of a Caesar cipher is to replace each plaintext letter with a
                             different one a fixed number of places down the alphabet.</p>
-                        <a href="/algorithm" class="card-link">Test it!</a>
+                        <a href="/algorithm?alg=Caesar Cipher" class="card-link">Test it!</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                        <h5 class="card-title"> Rail Fence Cipher </h5>
+                        <h6 class="card-subtitle mb-2 text-muted"> Basic transposition cipher </h6>
+                        <p class="card-text"> The rail fence cipher is a transposition cipher 
+							that jumbles up the order of the letters of a message using a basic algorithm. </p>
+                        <a href="/algorithm?alg=Rail Fence Cipher" class="card-link"> Test it! </a>
                     </div>
                 </div>
             </div>
@@ -94,72 +57,41 @@
             <div class="col-md-4">
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                        <h5 class="card-title"> Playfair Cipher </h5>
+                        <h6 class="card-subtitle mb-2 text-muted"> Polyalphabetic substitution cipher </h6>
+                        <p class="card-text"> The Playfair cipher encrypts pairs of letters (digraphs), 
+                        instead of single letters as is the case with simpler substitution ciphers such 
+                        as the Caesar Cipher.  </p>
+                        <a href="/algorithm?alg=Playfair Cipher" class="card-link"> Test it! </a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                        <h5 class="card-title">Vigenere Cipher</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Poly-alphabetic Substitution Cipher</h6>
+                        <p class="card-text">Vigenere cipher uses a table known as the vigenere table for encryption
+                            by using the plaintext and key as indices in the table.</p>
+                        <a href="/algorithm?alg=Vigenere Cipher" class="card-link"> Test it! </a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                        <h5 class="card-title">Matrix Transposition Cipher</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Transposition Cipher</h6>
+                        <p class="card-text">The Matrix Transposition cipher converts the input text into a matrix and
+                        then reads it column-wise based on the key specified.</p>
+                        <a href="/algorithm?alg=Matrix Transposition Cipher" class="card-link"> Test it! </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="footer" class="footer pt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mt-sm-1">
-                    <h4> Quick Links </h4>
-                    <hr>
-                    <a class="touch-icon" href="/"> Home </a> <br />
-                    <a class="touch-icon" href="#"> Playground </a> <br />
-                    <a class="touch-icon" href="#"> Contact Us </a> <br />
-                    <a class="touch-icon" href="#"> About Us </a> <br />
-                </div>
-                <div class="col-md-4 mt-sm-1">
-                    <h4>Contact Us</h4>
-                    <hr>
-                    <p><i class="fa fa-home"></i> 6050, University Avenue </p>
-                    <p><i class="fa fa-envelope"></i> qagroup7.winter@gmail.com </p>
-                    <p><i class="fa fa-phone"></i> +1 111-222-3333 </p>
-                    <p><i class="fa fa-globe"></i> www.learntocrypt.com </p>
-                </div>
-                <div class="col-md-4 mt-sm-1 mb-5">
-                    <h4> Get in touch </h4>
-                    <hr>
-                    <a class="touch-icon" href="https://github.com/DalhousieUniversityCSCI5308/Group7/"><i
-                            class="social-media fab fa-github p-2 mr-3"></i></a>
-                    <a class="touch-icon" href="#"><i class="social-media fab fa-facebook p-2 mr-3"></i></a>
-                    <a class="touch-icon" href="#"><i class="social-media fab fa-twitter-square p-2 mr-3"></i></a> <br>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div th:replace="fragments/footer"></div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

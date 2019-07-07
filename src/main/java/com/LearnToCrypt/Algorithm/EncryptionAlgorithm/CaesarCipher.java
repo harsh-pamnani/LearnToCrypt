@@ -1,13 +1,20 @@
 package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
+import com.LearnToCrypt.Algorithm.UserInput;
+
+import java.util.ArrayList;
+
+import com.LearnToCrypt.Algorithm.UserInput;
+
 public class CaesarCipher implements IEncryptionAlgorithm {
 
     private String result = "";
-    private String steps = "";
+    private String plaintext = null;
+    private ArrayList<String> steps = new ArrayList<>();
 
     @Override
     public String encode(String key, String plaintext) {
-
+        this.plaintext = plaintext;
         int shift = Integer.parseInt(key);
         char temp = ' ';
 
@@ -29,7 +36,8 @@ public class CaesarCipher implements IEncryptionAlgorithm {
                     result += temp+"";
 
                 }
-                steps += plaintext.charAt(i)+" -> "+temp+"\n";
+                steps.add(plaintext.charAt(i)+" ----> "+temp+"\n");
+
             }else {
                 result += ' ';
             }
@@ -39,12 +47,49 @@ public class CaesarCipher implements IEncryptionAlgorithm {
 
     @Override
     public String getResult() {
-        return result;
+        return plaintext+"\n"+result;
     }
 
     @Override
     public String getSteps() {
-        return steps;
+        String stepsString = "";
+        int lines = 9;
+
+        if(steps.size() <= lines){
+            for (String s : steps) {
+                stepsString += s;
+            }
+        }else {
+            for (int i = 0; i < 5; i++) {
+                stepsString += steps.get(i);
+            }
+            stepsString += "......\n";
+            for (int i = steps.size()-4; i < steps.size(); i++) {
+                stepsString += steps.get(i);
+            }
+        }
+
+        return stepsString;
     }
+
+    @Override
+    public String keyPlainTextValidation(UserInput userInput) {
+        String formError = null;
+
+        if(userInput.getKey().isEmpty()) {
+            formError ="Key can't be empty";
+        } else if(!userInput.getKey().matches("^[0-9]*$")) {
+            formError = "Enter only numbers in key.";
+        } else if(userInput.getPlaintext().isEmpty()) {
+            formError = "Plain text can't be empty";
+        } else if(!userInput.getPlaintext().matches("[A-Za-z ]+")) {
+            formError = "Enter only A-Z in plain text.";
+        } else if(Integer.parseInt(userInput.getKey()) > 26){
+            formError = "The key must smaller than 26.";
+        }
+
+        return formError;
+    }
+
 }
 

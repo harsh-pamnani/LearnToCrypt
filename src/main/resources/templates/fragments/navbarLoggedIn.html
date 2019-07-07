@@ -1,0 +1,37 @@
+
+	<nav class="navbar fixed-top navbar-expand-lg navbar-light mb-2" id="navigationHome">
+	
+	    <a class="navbar-brand" href="/homepage">LearnToCrypt</a>
+	
+	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#optionsCollapsed"
+	        aria-controls="optionsCollapsed" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
+	    </button>
+	
+	    <!--- code snippet for collapsible feature of navbar with responsiveness by using bootstrap classes -->
+	    <div class="collapse navbar-collapse" id="optionsCollapsed">
+	        <ul class="navbar-nav mr-auto">
+	            <li class="nav-item">
+	                <a class="nav-link" href="/dashboard"> Dashboard </a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link" href="#"> Playground </a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link" href="#"> Contact Us </a>
+	            </li>
+	
+	        </ul>
+	        <ul class="navbar-nav ml-auto">
+	            <li class="btn-group">
+	                <button th:text="${username}" type="button" class="btn btn-dark dropdown-toggle mr-5"
+	                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Some Name </button>
+	                <div class="dropdown-menu">
+	                    <a class="dropdown-item" href="/myProgress"> My Progress </a>
+	                    <a class="dropdown-item" href="/profile"> My Profile </a>
+	                    <a class="dropdown-item" href="/logout"> Logout </a>
+	                </div>
+	            </li>
+	        </ul>
+	    </div>
+	</nav>
