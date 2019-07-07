@@ -91,7 +91,7 @@ public class AlgorithmController implements WebMvcConfigurer {
         } else {
         	model.addAttribute("invalidInput", formError);
         }
-
+        userDAO.updateProgress(useremail,algorithmName);
         return "algorithm";
     }
 
