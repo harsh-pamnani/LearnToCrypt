@@ -38,9 +38,12 @@ public class LoginController implements WebMvcConfigurer {
     public String displayLogin(HttpSession httpSession, ModelMap model) {
 		
 		if(authenticationManager.isUserAuthenticated(httpSession)) {
+			logger.info("/login redirecting to dashboard as the user " + 
+					authenticationManager.getEmail(httpSession) + " is already logged in");
 			return "redirect:/dashboard";
 		}
-		
+	
+		logger.info("Login page accessed");
 		model.addAttribute("user", businessModelAbstractFactory.createUser());		
 		return "login.html";
     }
@@ -56,7 +59,7 @@ public class LoginController implements WebMvcConfigurer {
         }
 		authenticationManager.addAuthenticatedUser(httpSession, user.getEmail());
 
-		logger.error("User \""+authenticationManager.getUsername(httpSession)+"\" login success");
+		logger.info("User \""+authenticationManager.getUsername(httpSession)+"\" login success");
 
 		return "redirect:/dashboard";
     }

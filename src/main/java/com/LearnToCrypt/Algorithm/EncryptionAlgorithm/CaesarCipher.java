@@ -4,8 +4,6 @@ import com.LearnToCrypt.Algorithm.UserInput;
 
 import java.util.ArrayList;
 
-import com.LearnToCrypt.Algorithm.UserInput;
-
 public class CaesarCipher implements IEncryptionAlgorithm {
 
     private String result = "";

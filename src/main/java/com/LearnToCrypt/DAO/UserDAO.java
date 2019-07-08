@@ -41,7 +41,7 @@ public class UserDAO implements IUserDAO {
 			resultSet = statement.executeQuery();
 			
 		} catch (SQLException e) {
-			logger.error("Error in creating a new user.", e);
+			logger.error("Error in creating a new user: " + user.getEmail(), e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}
@@ -58,7 +58,7 @@ public class UserDAO implements IUserDAO {
 		try {
 			isValid = isRegistered(isValid, query);
 		} catch (SQLException e) {
-			logger.error("Error in fetching the user credentials.", e);
+			logger.error("Error in fetching the user credentials for user: " + user.getEmail(), e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}	
@@ -75,7 +75,7 @@ public class UserDAO implements IUserDAO {
 		try {
 			isRegistered = isRegistered(isRegistered, query);
 		} catch (SQLException e) {
-			logger.error("Error in fetching the user registration details.", e);
+			logger.error("Error in fetching the user registration details for user: " + user.getEmail(), e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}	
@@ -123,7 +123,7 @@ public class UserDAO implements IUserDAO {
 				}
 			}
 		}catch (SQLException e){
-			logger.error("Error in fetching the user progress.", e);
+			logger.error("Error in fetching the user progress for user: " + email, e);
 		}finally {
 			dbConnectionInstance.closeConnection();
 		}
@@ -150,7 +150,7 @@ public class UserDAO implements IUserDAO {
 				statement = dbConnection.prepareStatement(query);
 				statement.executeQuery();
 			} catch (SQLException e) {
-				logger.error("Error in updating the user progress.", e);
+				logger.error("Error in updating the user progress for user: " + email, e);
 			} finally {
 				dbConnectionInstance.closeConnection();
 			}
@@ -201,7 +201,7 @@ public class UserDAO implements IUserDAO {
 				userName = resultSet.getString(1);
 			}
 		} catch (SQLException e) {
-			logger.error("Error in fetching the user registration details.", e);
+			logger.error("Error in fetching the user registration details for user: " + email, e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}	
@@ -235,7 +235,7 @@ public class UserDAO implements IUserDAO {
 				user.setRole(role);
 			}
 		} catch (SQLException e) {
-			System.out.println("Error : " + e.getMessage());
+			logger.error("Error in generating user object for user : " + email, e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}
