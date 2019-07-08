@@ -44,7 +44,7 @@ public class DBConnection {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			this.dbConnection = DriverManager.getConnection(dbConnectionURL, username, password);
 		} catch (Exception e) {
-			logger.error("Some error occured in loading the DB connection. ",e);
+			logger.fatal("Some error occured in loading the DB connection. ",e);
 		}
 	}
 

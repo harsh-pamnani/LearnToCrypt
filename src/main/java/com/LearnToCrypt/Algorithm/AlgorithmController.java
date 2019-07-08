@@ -1,12 +1,10 @@
 package com.LearnToCrypt.Algorithm;
 
 import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmFactory;
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.CaesarCipher;
 import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithm;
 import com.LearnToCrypt.BusinessModels.Algorithm;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IAlgorithmDAO;
-import com.LearnToCrypt.DAO.IDAOAbstractFactory;
 import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
 import com.LearnToCrypt.app.LearnToCryptApplication;
