@@ -62,7 +62,12 @@ public class ClassDAO implements IClassDAO{
                     User student = new User();
                     student.setEmail(students.getString(1));
                     student.setName(students.getString(2));
-                    student.setProgress(students.getString(5));
+                    int p = 0;
+                    if(students.getString(5) != null){
+                        p = students.getString(5).split(",").length;
+                    }
+                    student.setProgress(p+"/"+myClass.getAlg().split(",").length);
+                    System.out.println();
                     myClass.addStudents(student);
                 }
                 myClasses.add(myClass);
@@ -74,5 +79,10 @@ public class ClassDAO implements IClassDAO{
             dbConnectionInstance.closeConnection();
         }
         return myClasses;
+    }
+
+    @Override
+    public void deleteStudentFromClass(String emailID) {
+        System.out.println("Student "+emailID+" has been kicked out");
     }
 }

@@ -7,4 +7,5 @@ import java.util.List;
 public interface IClassDAO {
     public void createClass(MyClass myClass);
     public List getClass(String instructorID);
+    public void deleteStudentFromClass(String emailID);
 }

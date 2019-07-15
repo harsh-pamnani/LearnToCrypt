@@ -56,17 +56,32 @@
 <div class="container dashboard">
     <h2>Classes</h2>
     <div id="accordion">
-        <div class="card" th:each = "class:${classes}">
+        <div class="card mb-3" th:each = "class:${classes}">
             <div class="card-header" id="headingOne">
                 <h5 class="mb-0">
                     <button class="btn collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" th:text="${class.className}"></button>
                 </h5>
             </div>
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
-                    <ul class="list-group">
-                        <li class="list-group-item" th:each="student:${class.students}" th:text="${student.name}"></li>
-                    </ul>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Progress</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr  th:each="student:${class.students}">
+                            <td th:text="${student.name}"></td>
+                            <td th:text="${student.email}"></td>
+                            <td th:text="${student.progress}"></td>
+                            <td><a th:href="@{/classManagement/delete?id={id}(id=${student.email})}">Delete</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
