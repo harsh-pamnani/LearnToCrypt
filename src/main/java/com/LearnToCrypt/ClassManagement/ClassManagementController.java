@@ -1,6 +1,10 @@
 package com.LearnToCrypt.ClassManagement;
 
+import com.LearnToCrypt.BusinessModels.MyClass;
+import com.LearnToCrypt.DAO.ClassDAO;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.DAO.IClassDAO;
+import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
 import com.LearnToCrypt.app.LearnToCryptApplication;
 import org.apache.logging.log4j.LogManager;
@@ -10,6 +14,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ClassManagementController {
@@ -35,6 +41,11 @@ public class ClassManagementController {
 
             String username = authenticationManager.getUsername(httpSession);
             model.put("username", username);
+
+            DAOAbstractFactory abstractFactory = new DAOAbstractFactory();
+            IClassDAO classDAO = abstractFactory.createClassDAO();
+            //classDAO.createClass(new MyClass("new class","tonyt@dal.ca","1,2,3"));
+            model.addAttribute("classes",classDAO.getClass(email));
 
             logger.info("user \"" + username + "\" accessed dashboard!");
 

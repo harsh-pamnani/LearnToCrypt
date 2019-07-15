@@ -5,4 +5,5 @@ public interface IDAOAbstractFactory {
 	public IAlgorithmDAO createAlgorithmDAO();
 	public IPasswordUpdaterDAO createPasswordSetterDAO();
 	public INameSetterDAO createNameSetterDAO();
+	public IClassDAO createClassDAO();
 }
