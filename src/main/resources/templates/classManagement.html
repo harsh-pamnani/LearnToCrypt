@@ -78,13 +78,20 @@
             <div class="card-header" id="headingOne">
                 <h5 class="mb-0">
                     <button class="btn collapsed" data-toggle="collapse" th:data-target="'#'+${#strings.replace(class.className,' ','')}" aria-expanded="true" th:aria-controls="${#strings.replace(class.className,' ','')}" th:text="${class.className}"></button>
+                    <form class="form-inline float-right" action="/classManagement/deleteClass">
+                        <div class="form-group mx-sm-3 mb-2">
+                            <!--<input type="text" class="form-control" id="classToDelete_expected" placeholder="Enter the class name" required>-->
+                            <input type="hidden" id="classToDelete_actual" name="classToDelete_actual" th:value="${class.className}">
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2" >Delete</button>
+                    </form>
                 </h5>
             </div>
             <div th:id="${#strings.replace(class.className,' ','')}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
                     <form method="post" action="/classManagement/addStudent" enctype="multipart/form-data">
                         <label for="studentList">Please submit student list here</label><br>
-                        <input type="file" name="studentList" id="studentList"/>
+                        <input type="file" name="studentList" id="studentList" required/>
                         <input type="hidden" id="classID" name="classID" th:value="${class.className}"><br>
                         <button type="submit" class="btn btn-primary mt-3">Confirm</button>
                     </form>
@@ -104,7 +111,7 @@
                             <td th:text="${student.name}"></td>
                             <td th:text="${student.email}"></td>
                             <td th:text="${student.progress}"></td>
-                            <td><a th:href="@{/classManagement/delete?id={id}(id=${student.email})}">Delete</a></td>
+                            <td><a th:href="@{/classManagement/deleteStudent?id={id}(id=${student.email})}">Delete</a></td>
                         </tr>
                         </tbody>
                     </table>

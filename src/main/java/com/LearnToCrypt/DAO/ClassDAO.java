@@ -111,4 +111,18 @@ public class ClassDAO implements IClassDAO{
             }
         }
     }
+
+    @Override
+    public void deleteClass(String className) {
+        String query = "call CSCI5308_7_TEST.delete_class('"+className+"');";
+        try {
+            dbConnection = dbConnectionInstance.getConnection();
+            statement = dbConnection.prepareStatement(query);
+            statement.executeQuery();
+        } catch (SQLException e) {
+            logger.error("Error in creating add student to class.", e);
+        } finally {
+            dbConnectionInstance.closeConnection();
+        }
+    }
 }

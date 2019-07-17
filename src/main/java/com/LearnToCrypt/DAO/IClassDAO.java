@@ -10,4 +10,5 @@ public interface IClassDAO {
     public List getClass(String instructorID);
     public void deleteStudentFromClass(String emailID);
     public void addStudentToClass(ArrayList<String> studentList, String className);
+    public void deleteClass(String className);
 }

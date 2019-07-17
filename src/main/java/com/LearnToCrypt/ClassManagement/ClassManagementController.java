@@ -64,7 +64,7 @@ public class ClassManagementController {
         return "classManagement";
     }
 
-    @GetMapping("/classManagement/delete")
+    @GetMapping("/classManagement/deleteStudent")
     public String removeStudentFromClass(HttpSession httpSession, ModelMap model,
                                          @RequestParam(name = "id", required=false, defaultValue="example@example.org")String emailID){
         boolean isUserAuthenticated = authenticationManager.isUserAuthenticated(httpSession);
@@ -74,6 +74,20 @@ public class ClassManagementController {
             DAOAbstractFactory abstractFactory = new DAOAbstractFactory();
             IClassDAO classDAO = abstractFactory.createClassDAO();
             classDAO.deleteStudentFromClass(emailID);
+        }
+        return "redirect:/classManagement";
+    }
+
+    @GetMapping("/classManagement/deleteClass")
+    public String deleteClass(HttpSession httpSession, ModelMap model,
+                              @RequestParam("classToDelete_actual") String className){
+        boolean isUserAuthenticated = authenticationManager.isUserAuthenticated(httpSession);
+        if(!isUserAuthenticated) {
+            return "redirect:/login";
+        } else {
+            DAOAbstractFactory abstractFactory = new DAOAbstractFactory();
+            IClassDAO classDAO = abstractFactory.createClassDAO();
+            classDAO.deleteClass(className);
         }
         return "redirect:/classManagement";
     }
