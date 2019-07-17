@@ -1,6 +1,9 @@
 package com.LearnToCrypt.DAO;
 
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmFactory;
 import com.LearnToCrypt.BusinessModels.Algorithm;
+import com.LearnToCrypt.BusinessModels.BusinessModelAbstractFactory;
+import com.LearnToCrypt.BusinessModels.IBusinessModelAbstractFactory;
 import com.LearnToCrypt.DatabaseConnection.DBConnection;
 import com.LearnToCrypt.app.LearnToCryptApplication;
 import org.apache.logging.log4j.LogManager;
@@ -10,6 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AlgorithmDAO implements IAlgorithmDAO {
 
@@ -51,7 +56,7 @@ public class AlgorithmDAO implements IAlgorithmDAO {
 
     @Override
     public ArrayList<String> getAllAvailableAlgorithm() {
-        String query = "call CSCI5308_7_TEST.get_all_avaiable_algorithm();\n";
+        String query = "call CSCI5308_7_TEST.get_all_avaiable_algorithm();";
         ArrayList<String> result = new ArrayList<>();
         try{
             dbConnection = dbConnectionInstance.getConnection();
@@ -67,5 +72,58 @@ public class AlgorithmDAO implements IAlgorithmDAO {
             dbConnectionInstance.closeConnection();
         }
         return result;
+    }
+
+    @Override
+    public ArrayList<Algorithm> getAlgorithmByLevelAndClass(int lv,String className) {
+        String[] algorithmStrings = getAlgList(className);
+        if(algorithmStrings == null){
+            logger.info("This student has not register for any class");
+            return null;
+        }
+        ArrayList<String> algorithmList = new ArrayList<>(Arrays.asList(algorithmStrings));
+        String query = "call CSCI5308_7_TEST.get_algorithm_by_level("+lv+");";
+        ArrayList<Algorithm> result = new ArrayList<>();
+        IBusinessModelAbstractFactory businessModelAbstractFactory = new BusinessModelAbstractFactory();
+        try{
+            dbConnection = dbConnectionInstance.getConnection();
+            statement = dbConnection.prepareStatement(query);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Algorithm algorithm = businessModelAbstractFactory.createAlgorithm();
+                algorithm.setName(resultSet.getString("name"));
+                algorithm.setDescriptionShort(resultSet.getString("descriptionShort"));
+                algorithm.setType(resultSet.getString("type"));
+                if(algorithmList.contains(resultSet.getString("name"))){
+                    result.add(algorithm);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("Error in fetching the algorithm by id.", e);
+        }finally {
+            dbConnectionInstance.closeConnection();
+        }
+        return result;
+    }
+
+    private String[] getAlgList(String className){
+        String[] toReturn = null;
+        //get_algorithm_List
+        String query = "call CSCI5308_7_TEST.get_algorithm_List('"+className+"');";
+        try{
+            dbConnection = dbConnectionInstance.getConnection();
+            statement = dbConnection.prepareStatement(query);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                toReturn  = resultSet.getString(1).split(",");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("Error in fetching the algorithm list.", e);
+        }finally {
+            dbConnectionInstance.closeConnection();
+        }
+        return toReturn;
     }
 }

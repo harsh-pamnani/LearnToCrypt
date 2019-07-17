@@ -1,6 +1,9 @@
 package com.LearnToCrypt.Dashboard;
 
 
+import com.LearnToCrypt.DAO.IAlgorithmDAO;
+import com.LearnToCrypt.DAO.IClassDAO;
+import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.app.LearnToCryptApplication;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,16 +38,20 @@ public class DashboardController implements WebMvcConfigurer {
 		} else {
 			String email = authenticationManager.getEmail(httpSession);
 			String role = daoAbstractFactory.createUserDAO().getUserRole(email);
-			
+			if(role.equals("Instructor")) {
+				return "instructorDashboard";
+			}
+
 			String username = authenticationManager.getUsername(httpSession);
 			model.put("username", username);
 
-	        logger.info("user \"" + username + "\" accessed dashboard!");
+			IAlgorithmDAO algorithmDAO = daoAbstractFactory.createAlgorithmDAO();
+			IUserDAO userDAO = daoAbstractFactory.createUserDAO();
+			String className = userDAO.getUserClass(email);
 
-	        if(role.equals("Instructor")) {
-	        	return "instructorDashboard";
-	        }
-	        
+			model.addAttribute("basic",algorithmDAO.getAlgorithmByLevelAndClass(1,className));
+			model.addAttribute("intermediate",algorithmDAO.getAlgorithmByLevelAndClass(2,className));
+			logger.info("user \"" + username + "\" accessed dashboard!");
 	        return "dashboard";
 		}
     }

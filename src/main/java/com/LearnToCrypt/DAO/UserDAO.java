@@ -157,6 +157,26 @@ public class UserDAO implements IUserDAO {
 		}
 	}
 
+	@Override
+	public String getUserClass(String email) {
+		String userClass = "";
+		String query = "call CSCI5308_7_TEST.get_user_class('"+email+"');";
+		try {
+			dbConnection = dbConnectionInstance.getConnection();
+			statement = dbConnection.prepareStatement(query);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()){
+				userClass = resultSet.getString("class");
+				System.out.println("userClass"+userClass);
+			}
+		} catch (SQLException e) {
+			logger.error("Error in fetching the user class.", e);
+		} finally {
+			dbConnectionInstance.closeConnection();
+		}
+		return userClass;
+	}
+
 	private boolean isAlreadyTested(String[] userProgress, String newProgress){
 		if (userProgress != null && newProgress!= null ){
 			for (String i:userProgress) {

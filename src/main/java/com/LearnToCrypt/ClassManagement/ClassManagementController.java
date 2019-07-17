@@ -28,14 +28,18 @@ public class ClassManagementController {
 
     private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
 
-    AuthenticationManager authenticationManager;
-    DAOAbstractFactory daoAbstractFactory;
-    IBusinessModelAbstractFactory businessModelAbstractFactory;
+    private AuthenticationManager authenticationManager;
+    private DAOAbstractFactory daoAbstractFactory;
+    private IBusinessModelAbstractFactory businessModelAbstractFactory;
+    private DAOAbstractFactory abstractFactory;
+    private IClassDAO classDAO;
 
     public ClassManagementController() {
         authenticationManager = AuthenticationManager.instance();
         daoAbstractFactory = new DAOAbstractFactory();
         businessModelAbstractFactory = new BusinessModelAbstractFactory();
+        abstractFactory = new DAOAbstractFactory();
+        classDAO = abstractFactory.createClassDAO();
     }
 
     @GetMapping("/classManagement")
@@ -46,12 +50,12 @@ public class ClassManagementController {
         } else {
             String email = authenticationManager.getEmail(httpSession);
             String role = daoAbstractFactory.createUserDAO().getUserRole(email);
-
+            if(!role.equals("Instructor")) {
+                return "dashboard";
+            }
             String username = authenticationManager.getUsername(httpSession);
             model.put("username", username);
 
-            DAOAbstractFactory abstractFactory = new DAOAbstractFactory();
-            IClassDAO classDAO = abstractFactory.createClassDAO();
             IAlgorithmDAO algorithmDAO = abstractFactory.createAlgorithmDAO();
             //classDAO.createClass(new MyClass("new class","tonyt@dal.ca","1,2,3"));
             model.addAttribute("classes",classDAO.getClass(email));
@@ -71,8 +75,11 @@ public class ClassManagementController {
         if(!isUserAuthenticated) {
             return "redirect:/login";
         } else {
-            DAOAbstractFactory abstractFactory = new DAOAbstractFactory();
-            IClassDAO classDAO = abstractFactory.createClassDAO();
+            String email = authenticationManager.getEmail(httpSession);
+            String role = daoAbstractFactory.createUserDAO().getUserRole(email);
+            if(!role.equals("Instructor")) {
+                return "dashboard";
+            }
             classDAO.deleteStudentFromClass(emailID);
         }
         return "redirect:/classManagement";
@@ -85,8 +92,11 @@ public class ClassManagementController {
         if(!isUserAuthenticated) {
             return "redirect:/login";
         } else {
-            DAOAbstractFactory abstractFactory = new DAOAbstractFactory();
-            IClassDAO classDAO = abstractFactory.createClassDAO();
+            String email = authenticationManager.getEmail(httpSession);
+            String role = daoAbstractFactory.createUserDAO().getUserRole(email);
+            if(!role.equals("Instructor")) {
+                return "dashboard";
+            }
             classDAO.deleteClass(className);
         }
         return "redirect:/classManagement";
@@ -102,6 +112,10 @@ public class ClassManagementController {
             return "redirect:/login";
         } else {
             String email = authenticationManager.getEmail(httpSession);
+            String role = daoAbstractFactory.createUserDAO().getUserRole(email);
+            if(!role.equals("Instructor")) {
+                return "dashboard";
+            }
             String alg = "";
             if(classAlg != null) {
                 for (String s: classAlg
@@ -109,8 +123,6 @@ public class ClassManagementController {
                     alg += s+",";
                 }
             }
-            DAOAbstractFactory abstractFactory = new DAOAbstractFactory();
-            IClassDAO classDAO = abstractFactory.createClassDAO();
             classDAO.createClass(new MyClass(myNewClass.getClassName(),email,alg));
         }
 
@@ -125,10 +137,13 @@ public class ClassManagementController {
         if(!isUserAuthenticated) {
             return "redirect:/login";
         } else {
+            String email = authenticationManager.getEmail(httpSession);
+            String role = daoAbstractFactory.createUserDAO().getUserRole(email);
+            if(!role.equals("Instructor")) {
+                return "dashboard";
+            }
             if (!file.isEmpty()){
                 ArrayList<String> studentList = readStudentList(file);
-                DAOAbstractFactory abstractFactory = new DAOAbstractFactory();
-                IClassDAO classDAO = abstractFactory.createClassDAO();
                 classDAO.addStudentToClass(studentList,className);
             }
         }

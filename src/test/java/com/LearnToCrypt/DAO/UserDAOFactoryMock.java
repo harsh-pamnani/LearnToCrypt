@@ -135,4 +135,9 @@ public class UserDAOFactoryMock implements IUserDAO {
 			getUser(email).setProgress(getUser(email).getProgress()+newProgress+",");
 		}
 	}
+
+	@Override
+	public String getUserClass(String email) {
+		return "Rail Fence Cipher,,Caesar Cipher,";
+	}
 }
