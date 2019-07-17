@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class AlgorithmDAO implements IAlgorithmDAO {
 
@@ -46,5 +47,25 @@ public class AlgorithmDAO implements IAlgorithmDAO {
         }
 
         return algorithm;
+    }
+
+    @Override
+    public ArrayList<String> getAllAvailableAlgorithm() {
+        String query = "call CSCI5308_7_TEST.get_all_avaiable_algorithm();\n";
+        ArrayList<String> result = new ArrayList<>();
+        try{
+            dbConnection = dbConnectionInstance.getConnection();
+            statement = dbConnection.prepareStatement(query);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result.add(resultSet.getString("name"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("Error in fetching the algorithm name.", e);
+        }finally {
+            dbConnectionInstance.closeConnection();
+        }
+        return result;
     }
 }

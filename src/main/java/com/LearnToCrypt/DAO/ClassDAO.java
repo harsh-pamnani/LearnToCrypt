@@ -28,7 +28,6 @@ public class ClassDAO implements IClassDAO{
 
     @Override
     public void createClass(MyClass myClass) {
-        //TODO: String query = "CALL create_class();";
         String query = "call CSCI5308_7_TEST.create_class('"+myClass.getClassName()+"', '"+myClass.getInstructorID()+"', '"+myClass.getAlg()+"');";
         try {
             dbConnection = dbConnectionInstance.getConnection();
@@ -83,6 +82,33 @@ public class ClassDAO implements IClassDAO{
 
     @Override
     public void deleteStudentFromClass(String emailID) {
-        System.out.println("Student "+emailID+" has been kicked out");
+        String query = "call CSCI5308_7_TEST.remove_student_from_class('"+emailID+"');";
+        try {
+            dbConnection = dbConnectionInstance.getConnection();
+            statement = dbConnection.prepareStatement(query);
+            statement.executeQuery();
+            logger.info("Student "+emailID+" has been kicked out");
+        } catch (SQLException e) {
+            logger.error("Error in creating add student to class.", e);
+        } finally {
+            dbConnectionInstance.closeConnection();
+        }
+    }
+
+    @Override
+    public void addStudentToClass(ArrayList<String> studentList,String className) {
+        for (String student:studentList
+             ) {
+            String query = "call CSCI5308_7_TEST.add_student_to_class('"+student+"', '"+className+"');";
+            try {
+                dbConnection = dbConnectionInstance.getConnection();
+                statement = dbConnection.prepareStatement(query);
+                statement.executeQuery();
+            } catch (SQLException e) {
+                logger.error("Error in creating add student to class.", e);
+            } finally {
+                dbConnectionInstance.closeConnection();
+            }
+        }
     }
 }

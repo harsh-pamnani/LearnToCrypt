@@ -15,6 +15,8 @@ public class MyClass {
         this.students = new ArrayList<>();
     }
 
+    public MyClass(){};
+
     public String getClassName() {
         return className;
     }
