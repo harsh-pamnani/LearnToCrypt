@@ -65,8 +65,6 @@ public class AlgorithmController implements WebMvcConfigurer {
         algorithmImage = algorithm.getImage();
         setModelAttributes(model);
 
-
-
         return "algorithm";
     }
 

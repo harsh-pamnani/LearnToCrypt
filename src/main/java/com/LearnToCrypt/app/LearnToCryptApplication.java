@@ -1,6 +1,7 @@
 package com.LearnToCrypt.app;
 
 import com.LearnToCrypt.Algorithm.AlgorithmController;
+import com.LearnToCrypt.ClassManagement.ClassManagementController;
 import com.LearnToCrypt.ForgotPassword.ForgotPasswordController;
 import com.LearnToCrypt.MyProgress.MyProgressController;
 import com.LearnToCrypt.Profile.PasswordChangeController;
@@ -27,7 +28,8 @@ import com.LearnToCrypt.Dashboard.DashboardController;
 		ProfileController.class,
 		ForgotPasswordController.class,
 		PasswordChangeController.class,
-		MyProgressController.class
+		MyProgressController.class,
+		ClassManagementController.class
 })
 public class LearnToCryptApplication {
 

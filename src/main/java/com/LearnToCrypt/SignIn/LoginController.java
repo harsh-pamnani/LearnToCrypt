@@ -63,4 +63,5 @@ public class LoginController implements WebMvcConfigurer {
 
 		return "redirect:/dashboard";
     }
+
 }

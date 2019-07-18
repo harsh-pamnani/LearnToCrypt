@@ -6,6 +6,15 @@ public class User {
 	private String password;
 	private String role;
 	private String progress;
+	private String UserClass;
+
+	public String getUserClass() {
+		return UserClass;
+	}
+
+	public void setUserClass(String userClass) {
+		UserClass = userClass;
+	}
 
 	public String getProgress() {
 		return progress;

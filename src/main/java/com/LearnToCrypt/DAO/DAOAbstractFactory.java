@@ -19,4 +19,9 @@ public class DAOAbstractFactory implements IDAOAbstractFactory {
 	public INameSetterDAO createNameSetterDAO() {
 		return new ProfileUpdateDAO();
 	}
+
+	@Override
+	public IClassDAO createClassDAO() {
+		return new ClassDAO();
+	}
 }

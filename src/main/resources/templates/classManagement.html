@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+
+    <style type="text/css">
+        .dashboard {
+            margin-top: 7rem;
+            margin-bottom: 7rem;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <title> LearnToCrypt Home </title>
+</head>
+
+<body>
+<nav class="navbar fixed-top navbar-expand-lg navbar-light mb-2" id="navigationHome">
+
+    <a class="navbar-brand" href="/homepage">LearnToCrypt</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#optionsCollapsed" aria-controls="optionsCollapsed" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!--- code snippet for collapsible feature of navbar with responsiveness by using bootstrap classes -->
+    <div class="collapse navbar-collapse" id="optionsCollapsed">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#"> Dashboard </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"> Playground </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"> Contact Us </a>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="btn-group">
+                <button th:text="${username}" type="button" class="btn btn-dark dropdown-toggle mr-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Some Name </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/profile"> My Profile </a>
+                    <a class="dropdown-item" href="/logout"> Logout </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container dashboard">
+    <h2>Classes</h2>
+    <h5 class="mb-3">
+        <button class="btn collapsed" data-toggle="collapse" data-target="#addNewClass" aria-expanded="true" aria-controls="addNewClass">Add New Class</button>
+    </h5>
+    <div id="addNewClass" class="collapse">
+        <form method="post" action="/classManagement/addClass">
+            <div class="form-group w-25">
+                <label for="exampleInputClassName">Class Name</label>
+                <input type="text" class="form-control" id="exampleInputClassName" placeholder="Enter class name" th:field="${myNewClass.className}" required>
+            </div>
+            <label>Please select algorithms fomr the following list</label><br>
+            <div class="form-check form-check-inline" th:each="algorithm:${algorithms}">
+                <input class="form-check-input" type="checkbox" name="classAlg" th:id="${#strings.replace(algorithm,' ','')}" th:value="${algorithm}">
+                <label class="form-check-label" th:for="${#strings.replace(algorithm,' ','')}" th:text="${algorithm}"></label>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary mt-3">Confirm</button>
+        </form>
+    </div>
+    <div id="accordion" class="mt-3">
+        <div class="card mb-3" th:each = "class:${classes}">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn collapsed" data-toggle="collapse" th:data-target="'#'+${#strings.replace(class.className,' ','')}" aria-expanded="true" th:aria-controls="${#strings.replace(class.className,' ','')}" th:text="${class.className}"></button>
+                    <form class="form-inline float-right" action="/classManagement/deleteClass">
+                        <div class="form-group mx-sm-3 mb-2">
+                            <!--<input type="text" class="form-control" id="classToDelete_expected" placeholder="Enter the class name" required>-->
+                            <input type="hidden" id="classToDelete_actual" name="classToDelete_actual" th:value="${class.className}">
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2" >Delete</button>
+                    </form>
+                </h5>
+            </div>
+            <div th:id="${#strings.replace(class.className,' ','')}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <form method="post" action="/classManagement/addStudent" enctype="multipart/form-data">
+                        <label for="studentList">Please submit student list here</label><br>
+                        <input type="file" name="studentList" id="studentList" required/>
+                        <input type="hidden" id="classID" name="classID" th:value="${class.className}"><br>
+                        <button type="submit" class="btn btn-primary mt-3">Confirm</button>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Progress</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr  th:each="student:${class.students}">
+                            <td th:text="${student.name}"></td>
+                            <td th:text="${student.email}"></td>
+                            <td th:text="${student.progress}"></td>
+                            <td><a th:href="@{/classManagement/deleteStudent?id={id}(id=${student.email})}">Delete</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div th:replace="fragments/footer"></div> -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
