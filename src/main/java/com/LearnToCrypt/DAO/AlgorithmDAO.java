@@ -107,7 +107,8 @@ public class AlgorithmDAO implements IAlgorithmDAO {
         return result;
     }
 
-    private String[] getAlgList(String className){
+    @Override
+    public String[] getAlgList(String className){
         String[] toReturn = null;
         //get_algorithm_List
         String query = "call CSCI5308_7_TEST.get_algorithm_List('"+className+"');";
