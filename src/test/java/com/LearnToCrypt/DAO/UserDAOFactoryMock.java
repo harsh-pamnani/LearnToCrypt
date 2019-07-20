@@ -140,4 +140,10 @@ public class UserDAOFactoryMock implements IUserDAO {
 	public String getUserClass(String email) {
 		return "Rail Fence Cipher,,Caesar Cipher,";
 	}
+
+	@Override
+	public boolean deleteUser(String email) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

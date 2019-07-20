@@ -21,4 +21,6 @@ public interface IUserDAO {
 	public void updateProgress(String email, String newProgress);
 
 	public String getUserClass(String email);
+	
+	public boolean deleteUser(String email);
 }
