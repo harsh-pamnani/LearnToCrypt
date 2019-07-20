@@ -11,12 +11,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.LearnToCrypt.HashingAlgorithm.MD5;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
+import com.LearnToCrypt.app.LearnToCryptApplication;
 
 @Controller
 public class HomePageController implements WebMvcConfigurer {
 	
 	AuthenticationManager authenticationManager;
-	private static final Logger logger = LogManager.getLogger(MD5.class);
+	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
 	
 	public HomePageController() {
 		authenticationManager = AuthenticationManager.instance();
@@ -28,7 +29,7 @@ public class HomePageController implements WebMvcConfigurer {
 			String username = authenticationManager.getUsername(httpSession);
 			model.put("username", username);
 			
-			logger.info(username + "accessed homepage");
+			logger.info(username + " accessed homepage");
 			
 			return "homepageLoggedInUser.html";
 		}

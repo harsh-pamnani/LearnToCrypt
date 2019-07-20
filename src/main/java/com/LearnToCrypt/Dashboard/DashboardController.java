@@ -36,13 +36,14 @@ public class DashboardController implements WebMvcConfigurer {
 		} else {
 			String email = authenticationManager.getEmail(httpSession);
 			String role = daoAbstractFactory.createUserDAO().getUserRole(email);
-			if(role.equals("Instructor")) {
-				return "instructorDashboard";
-			}
-
+			
 			String username = authenticationManager.getUsername(httpSession);
 			model.put("username", username);
 
+			if(role.equals("Instructor")) {
+				return "instructorDashboard";
+			}
+			
 			IAlgorithmDAO algorithmDAO = daoAbstractFactory.createAlgorithmDAO();
 			IUserDAO userDAO = daoAbstractFactory.createUserDAO();
 			String className = userDAO.getUserClass(email);
