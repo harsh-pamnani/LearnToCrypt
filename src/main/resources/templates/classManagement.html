@@ -64,7 +64,7 @@
                 <label for="exampleInputClassName">Class Name</label>
                 <input type="text" class="form-control" id="exampleInputClassName" placeholder="Enter class name" th:field="${myNewClass.className}" required>
             </div>
-            <label>Please select algorithms fomr the following list</label><br>
+            <label>Please select algorithms from the following list</label><br>
             <div class="form-check form-check-inline" th:each="algorithm:${algorithms}">
                 <input class="form-check-input" type="checkbox" name="classAlg" th:id="${#strings.replace(algorithm,' ','')}" th:value="${algorithm}">
                 <label class="form-check-label" th:for="${#strings.replace(algorithm,' ','')}" th:text="${algorithm}"></label>

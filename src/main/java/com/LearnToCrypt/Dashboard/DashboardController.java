@@ -1,22 +1,20 @@
 package com.LearnToCrypt.Dashboard;
 
 
-import com.LearnToCrypt.DAO.IAlgorithmDAO;
-import com.LearnToCrypt.DAO.IClassDAO;
-import com.LearnToCrypt.DAO.IUserDAO;
-import com.LearnToCrypt.app.LearnToCryptApplication;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.DAO.IAlgorithmDAO;
+import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
+import com.LearnToCrypt.app.LearnToCryptApplication;
 
 @Controller
 public class DashboardController implements WebMvcConfigurer {

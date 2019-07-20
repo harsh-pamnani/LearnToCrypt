@@ -1,14 +1,23 @@
 package com.LearnToCrypt.Validations;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.LearnToCrypt.BusinessModels.User;
+import com.LearnToCrypt.app.LearnToCryptApplication;
 
 public class RoleValidation implements IValidation {
+
+	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
 
 	@Override
 	public boolean isValid(User user, String confirmPassword) {
 		String role = user.getRole();
-		if( role != null) {
-			return role.equals("Student") || role.equals("Instructor");
+		if (role != null) {
+			boolean result = role.equals("Student") || role.equals("Instructor");
+			logger.info("Role validation for user : " + user.getEmail() + ". Role : " + user.getRole() + ". Name : "
+					+ user.getName() + ". Result : " + result);
+			return result;
 		}
 		return false;
 	}
@@ -17,5 +26,5 @@ public class RoleValidation implements IValidation {
 	public String getError() {
 		return "Role can not be empty.";
 	}
-	
+
 }

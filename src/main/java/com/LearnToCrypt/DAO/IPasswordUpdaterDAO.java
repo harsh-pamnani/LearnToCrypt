@@ -1,7 +1,5 @@
 package com.LearnToCrypt.DAO;
 
-import com.LearnToCrypt.BusinessModels.User;
-
 public interface IPasswordUpdaterDAO {
     void setPassword(String email, String password);
 

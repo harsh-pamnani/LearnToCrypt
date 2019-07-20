@@ -1,11 +1,12 @@
 package com.LearnToCrypt.ClassManagement;
 
-import com.LearnToCrypt.BusinessModels.BusinessModelAbstractFactory;
-import com.LearnToCrypt.BusinessModels.IBusinessModelAbstractFactory;
-import com.LearnToCrypt.BusinessModels.MyClass;
-import com.LearnToCrypt.DAO.*;
-import com.LearnToCrypt.SignIn.AuthenticationManager;
-import com.LearnToCrypt.app.LearnToCryptApplication;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -15,13 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import com.LearnToCrypt.BusinessModels.BusinessModelAbstractFactory;
+import com.LearnToCrypt.BusinessModels.IBusinessModelAbstractFactory;
+import com.LearnToCrypt.BusinessModels.MyClass;
+import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.DAO.IAlgorithmDAO;
+import com.LearnToCrypt.DAO.IClassDAO;
+import com.LearnToCrypt.SignIn.AuthenticationManager;
+import com.LearnToCrypt.app.LearnToCryptApplication;
 
 @Controller
 public class ClassManagementController {

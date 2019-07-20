@@ -2,10 +2,12 @@ package com.LearnToCrypt.DAO;
 
 public class DAOAbstractFactory implements IDAOAbstractFactory {
 	
+	@Override
 	public IUserDAO createUserDAO() {
 		return new UserDAO();
 	}
 
+	@Override
 	public IAlgorithmDAO createAlgorithmDAO() {
 		return new AlgorithmDAO();
 	}

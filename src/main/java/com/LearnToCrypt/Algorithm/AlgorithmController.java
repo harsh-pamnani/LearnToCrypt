@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.security.NoSuchAlgorithmException;
+
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -80,26 +82,34 @@ public class AlgorithmController implements WebMvcConfigurer {
         setModelAttributes(model);
 
         AlgorithmFactory algorithmFactory = new AlgorithmFactory();
-        IEncryptionAlgorithm cipher =  algorithmFactory.createAlgorithm(algorithmName);
+        IEncryptionAlgorithm cipher;
+		
+        try {
+			cipher = algorithmFactory.createAlgorithm(algorithmName);
+			
+			String formError = cipher.keyPlainTextValidation(userInput);
 
-        String formError = cipher.keyPlainTextValidation(userInput);
+	        if(formError == null) {
+	        	cipher.encode(userInput.getKey()+"",userInput.getPlaintext());
 
-        if(formError == null) {
-        	cipher.encode(userInput.getKey()+"",userInput.getPlaintext());
+	            String result = cipher.getResult();
+	            model.addAttribute("result",result);
 
-            String result = cipher.getResult();
-            model.addAttribute("result",result);
-
-            String steps = cipher.getSteps();
-            model.addAttribute("steps",steps);
-            
-            userDAO.updateProgress(useremail,algorithmName);
-        } else {
-        	model.addAttribute("invalidInput", formError);
-        }
+	            String steps = cipher.getSteps();
+	            model.addAttribute("steps",steps);
+	            
+	            userDAO.updateProgress(useremail,algorithmName);
+	        } else {
+	        	model.addAttribute("invalidInput", formError);
+	        }
+	        
+	        logger.info("user \""+username+"\" tested " + algorithmName);
+	        return "algorithm";
+		} catch (NoSuchAlgorithmException e) {
+			logger.error("Unknown algorithm request : " + algorithmName);
+		}
         
-        logger.info("user \""+username+"\" tested "+algorithmName);
-        return "algorithm";
+        return "redirect:/dashboard";
     }
 
     private void setModelAttributes(Model model) {
