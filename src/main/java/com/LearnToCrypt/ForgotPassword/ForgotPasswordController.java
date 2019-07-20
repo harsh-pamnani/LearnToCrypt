@@ -1,14 +1,10 @@
 package com.LearnToCrypt.ForgotPassword;
 
-import com.LearnToCrypt.BusinessModels.User;
-import com.LearnToCrypt.DAO.DAOAbstractFactory;
-import com.LearnToCrypt.DAO.IDAOAbstractFactory;
-import com.LearnToCrypt.DAO.IPasswordUpdaterDAO;
-import com.LearnToCrypt.DAO.IUserDAO;
-import com.LearnToCrypt.EmailService.EmailService;
-import com.LearnToCrypt.EmailService.IEmailService;
-import com.LearnToCrypt.SignIn.AuthenticationManager;
-import com.LearnToCrypt.app.LearnToCryptApplication;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -18,9 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.UUID;
+import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.DAO.IDAOAbstractFactory;
+import com.LearnToCrypt.DAO.IPasswordUpdaterDAO;
+import com.LearnToCrypt.DAO.IUserDAO;
+import com.LearnToCrypt.EmailService.EmailService;
+import com.LearnToCrypt.EmailService.IEmailService;
+import com.LearnToCrypt.SignIn.AuthenticationManager;
+import com.LearnToCrypt.app.LearnToCryptApplication;
 
 @Controller
 public class ForgotPasswordController implements WebMvcConfigurer {
@@ -31,14 +32,12 @@ public class ForgotPasswordController implements WebMvcConfigurer {
 	private IPasswordUpdaterDAO passwordUpdaterDAO;
 	private IEmailService emailService;
 	private AuthenticationManager authenticationManager;
-	private User user;
 
 	public ForgotPasswordController() {
 		abstractFactory = new DAOAbstractFactory();
 		userDAO = abstractFactory.createUserDAO();
 		passwordUpdaterDAO = abstractFactory.createPasswordSetterDAO();
 		emailService = new EmailService();
-		user = new User();
 		authenticationManager = AuthenticationManager.instance();
 	}
 
@@ -67,9 +66,9 @@ public class ForgotPasswordController implements WebMvcConfigurer {
 		else {
 			serverUrl = httpServletRequest.getScheme() + "://" + server;
 		}
+		
 		String token;
-		user.setEmail(email);
-		if (userDAO.isUserRegistered(user)) {
+		if (userDAO.isUserRegistered(email)) {
 			token = UUID.randomUUID().toString();
 			String url = serverUrl + "/passwordchange?token=" + token;
 			logger.info("Reset url for email: " + email + "is " + url);

@@ -59,7 +59,7 @@ public class SignUpController implements WebMvcConfigurer {
 		
 		if( formError.equals("") ) {		
 			IUserDAO userDAOValidation = daoAbstractFactory.createUserDAO();
-			boolean isUserRegistered = userDAOValidation.isUserRegistered(user);
+			boolean isUserRegistered = userDAOValidation.isUserRegistered(user.getEmail());
 			
 			if (isUserRegistered) {
 				model.put("invalidSignup", "Email id is already registered. Registration Failed.");

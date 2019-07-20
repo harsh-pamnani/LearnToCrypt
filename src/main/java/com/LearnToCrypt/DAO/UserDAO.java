@@ -88,15 +88,15 @@ public class UserDAO implements IUserDAO {
 	}
 	
 	@Override
-	public boolean isUserRegistered(User user) {		
+	public boolean isUserRegistered(String email) {		
 		boolean isRegistered = false;
 		
-		String query = "CALL count_registered_user(\""+ user.getEmail() + "\");";
+		String query = "CALL count_registered_user(\""+ email + "\");";
 		
 		try {
 			isRegistered = isRegistered(query);
 		} catch (SQLException e) {
-			logger.error("Error in fetching the user registration details for user: " + user.getEmail(), e);
+			logger.error("Error in fetching the user registration details for user: " + email, e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}	

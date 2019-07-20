@@ -49,10 +49,10 @@ public class UserDAOTest {
 	@Test
 	public void testIsUserRegistered() {
 		user.setEmail("rob@gmail.com");
-		assertTrue(userDAOFactoryMock.isUserRegistered(user));
+		assertTrue(userDAOFactoryMock.isUserRegistered(user.getEmail()));
 
 		user.setEmail("xyz@hotmail.com");
-		assertFalse(userDAOFactoryMock.isUserRegistered(user));
+		assertFalse(userDAOFactoryMock.isUserRegistered(user.getEmail()));
 	}
 
 	@Test

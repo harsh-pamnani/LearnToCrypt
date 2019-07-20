@@ -34,7 +34,7 @@ public class ProfileUpdaterTest {
 		user.setName("Profile Update");
 		user.setRole("Student");
 		md5 = new MD5();
-		if(!userDAO.isUserRegistered(user)) {
+		if(!userDAO.isUserRegistered(user.getEmail())) {
 			userDAO.createUser(user);
 		}
 		profileBridge = new UserProfile(user.getEmail());

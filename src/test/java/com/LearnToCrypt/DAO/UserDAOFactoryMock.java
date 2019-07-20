@@ -61,11 +61,11 @@ public class UserDAOFactoryMock implements IUserDAO {
 	}
 
 	@Override
-	public boolean isUserRegistered(User user) {
+	public boolean isUserRegistered(String email) {
 		boolean isRegistered = false;
 
 		for (User u : users) {
-			if (u.getEmail().equals(user.getEmail())) {
+			if (u.getEmail().equals(email)) {
 				isRegistered = true;
 				break;
 			}

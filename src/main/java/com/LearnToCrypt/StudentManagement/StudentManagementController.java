@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.LearnToCrypt.BusinessModels.BusinessModelAbstractFactory;
-import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
@@ -23,12 +21,10 @@ public class StudentManagementController {
 	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
     private AuthenticationManager authenticationManager;
     private DAOAbstractFactory daoAbstractFactory;
-    private BusinessModelAbstractFactory businessModelAbstractFactory;
     
     public StudentManagementController() {
         authenticationManager = AuthenticationManager.instance();
         daoAbstractFactory = new DAOAbstractFactory();
-        businessModelAbstractFactory = new BusinessModelAbstractFactory();
     }
     
 	@GetMapping("/studentManagement")
@@ -54,12 +50,10 @@ public class StudentManagementController {
         model.put("username", username);
         
 		IUserDAO userDAO = daoAbstractFactory.createUserDAO();
-		User user = businessModelAbstractFactory.createUser();
-		user.setEmail(email);
 		
 		model.addAttribute("isErrorPresent", "Yes");
 		String formResponseMessage = "";
-		if (userDAO.isUserRegistered(user)) {
+		if (userDAO.isUserRegistered(email)) {
 			System.out.println("HP");
 			System.out.println(authenticationManager.getEmail(httpSession));
 			System.out.println(email);
