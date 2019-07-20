@@ -15,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 import com.LearnToCrypt.Homepage.HomePageController;
 import com.LearnToCrypt.SignIn.LoginController;
 import com.LearnToCrypt.SignUp.SignUpController;
+import com.LearnToCrypt.StudentManagement.StudentManagementController;
 import com.LearnToCrypt.Dashboard.DashboardController;
 
 
@@ -29,7 +30,8 @@ import com.LearnToCrypt.Dashboard.DashboardController;
 		ForgotPasswordController.class,
 		PasswordChangeController.class,
 		MyProgressController.class,
-		ClassManagementController.class
+		ClassManagementController.class,
+		StudentManagementController.class
 })
 public class LearnToCryptApplication {
 
