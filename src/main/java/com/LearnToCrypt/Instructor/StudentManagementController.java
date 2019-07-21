@@ -1,4 +1,4 @@
-package com.LearnToCrypt.StudentManagement;
+package com.LearnToCrypt.Instructor;
 
 import javax.servlet.http.HttpSession;
 

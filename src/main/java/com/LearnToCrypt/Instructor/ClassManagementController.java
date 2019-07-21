@@ -1,4 +1,4 @@
-package com.LearnToCrypt.ClassManagement;
+package com.LearnToCrypt.Instructor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
