@@ -1,6 +1,6 @@
 package com.LearnToCrypt.Profile;
 
-import com.LearnToCrypt.BusinessModels.User;
+import com.LearnToCrypt.BusinessModels.IUser;
 
 public interface IUserProfileBridge {
     String getUserName();
@@ -9,5 +9,5 @@ public interface IUserProfileBridge {
 
     String getRole();
 
-    User getUser();
+    IUser getUser();
 }

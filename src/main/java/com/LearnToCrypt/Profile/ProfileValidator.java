@@ -1,6 +1,7 @@
 package com.LearnToCrypt.Profile;
 
-import com.LearnToCrypt.BusinessModels.User;
+import com.LearnToCrypt.BusinessModels.IUser;
+import com.LearnToCrypt.HashingAlgorithm.IHash;
 import com.LearnToCrypt.HashingAlgorithm.MD5;
 import com.LearnToCrypt.Validations.IValidation;
 import com.LearnToCrypt.Validations.UserProfileNameUpdateValidation;
@@ -16,14 +17,14 @@ public class ProfileValidator implements IProfileValidator {
 	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
 	private UserProfileNameUpdateValidation nameValidationRules = null;
 	private UserProfilePasswordUpdateValidation passwordValidationRules = null;
-	private User user;
-	private MD5 md5;
+	private IUser user;
+	private IHash hash;
 
-	public ProfileValidator(IUserProfileBridge profile) {
+	public ProfileValidator(IUserProfileBridge profile, IHash hash) {
 		nameValidationRules = new UserProfileNameUpdateValidation();
 		passwordValidationRules = new UserProfilePasswordUpdateValidation();
 		user = profile.getUser();
-		md5 = new MD5();
+		this.hash = hash;
 	}
 
 	@Override
@@ -47,7 +48,7 @@ public class ProfileValidator implements IProfileValidator {
 		logger.info("Validating Password");
 		List<IValidation> rules = passwordValidationRules.getValidationRules();
 		String formError = null;
-		String hashedPassword = md5.generateMD5HashValue(password);
+		String hashedPassword = hash.generateHashValue(password);
 		if (hashedPassword.equals(user.getPassword())) {
 			formError = "New password cannot be same as the old password";
 			logger.error("Validation Error: " + formError);

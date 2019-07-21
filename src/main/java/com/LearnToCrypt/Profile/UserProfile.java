@@ -1,5 +1,6 @@
 package com.LearnToCrypt.Profile;
 
+import com.LearnToCrypt.BusinessModels.IUser;
 import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IDAOAbstractFactory;
@@ -9,12 +10,11 @@ public class UserProfile implements IUserProfileBridge {
 
     IDAOAbstractFactory abstractFactory;
     IUserDAO userDAO;
-    User user;
+    IUser user;
 
     UserProfile(String email) {
         abstractFactory = new DAOAbstractFactory();
         userDAO = abstractFactory.createUserDAO();
-        user = new User();
         user = userDAO.getUser(email);
     }
 
@@ -34,7 +34,7 @@ public class UserProfile implements IUserProfileBridge {
     }
 
     @Override
-    public User getUser() {
+    public IUser getUser() {
         return user;
     }
 }

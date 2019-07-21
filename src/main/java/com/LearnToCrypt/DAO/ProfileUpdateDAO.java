@@ -1,6 +1,5 @@
 package com.LearnToCrypt.DAO;
 
-import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DatabaseConnection.DBConnection;
 import com.LearnToCrypt.HashingAlgorithm.MD5;
 import com.LearnToCrypt.app.LearnToCryptApplication;
@@ -29,7 +28,7 @@ public class ProfileUpdateDAO implements IPasswordUpdaterDAO, INameSetterDAO {
     @Override
     public void setPassword(String email, String password) {
         logger.info("Updating Database. Setting Password: " + password);
-        String hashedPassword = md5Algorithm.generateMD5HashValue(password);
+        String hashedPassword = md5Algorithm.generateHashValue(password);
         String query = "CALL update_password(\""+ email +"\", \""+ hashedPassword + "\");";
         try {
             dbConnection = dbConnectionInstance.getConnection();

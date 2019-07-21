@@ -1,5 +1,6 @@
 package com.LearnToCrypt.ForgotPassword;
 
+import com.LearnToCrypt.BusinessModels.IUser;
 import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IDAOAbstractFactory;
@@ -31,7 +32,7 @@ public class ForgotPasswordController implements WebMvcConfigurer {
 	private IPasswordUpdaterDAO passwordUpdaterDAO;
 	private IEmailService emailService;
 	private AuthenticationManager authenticationManager;
-	private User user;
+	private IUser user;
 
 	public ForgotPasswordController() {
 		abstractFactory = new DAOAbstractFactory();

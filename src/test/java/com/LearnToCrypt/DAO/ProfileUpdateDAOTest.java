@@ -36,7 +36,7 @@ public class ProfileUpdateDAOTest {
 	@Test
 	public void testSetPassword() {
 		passwordUpdaterDAO.setPassword(user.getEmail(), "Test@1234");
-		String hash = md5.generateMD5HashValue("Test@1234");
+		String hash = md5.generateHashValue("Test@1234");
 		User testUser = userDAO.getUser(user.getEmail());
 		passwordUpdaterDAO.setPassword(user.getEmail(), user.getPassword());
 		assertEquals(testUser.getPassword(), hash);

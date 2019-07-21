@@ -1,5 +1,10 @@
 package com.LearnToCrypt.Profile;
 
+import com.LearnToCrypt.DAO.INameSetterDAO;
+import com.LearnToCrypt.DAO.IPasswordUpdaterDAO;
+import com.LearnToCrypt.DAO.ProfileUpdateDAO;
+import com.LearnToCrypt.HashingAlgorithm.IHash;
+import com.LearnToCrypt.HashingAlgorithm.MD5;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
 import com.LearnToCrypt.app.LearnToCryptApplication;
 import org.apache.logging.log4j.LogManager;
@@ -24,11 +29,19 @@ public class ProfileController implements WebMvcConfigurer {
 	private String email;
 	private AuthenticationManager authenticationManager;
 	private IProfileValidator profileValidator;
+	private INameSetterDAO nameSetter;
+	private IPasswordUpdaterDAO passwordUpdater;
+	private ProfileUpdater profileUpdater;
+	private IHash hash;
 
 	ProfileController() {
-		passwordChanger = new ProfileUpdater();
-		userNameChanger = new ProfileUpdater();
+		nameSetter = new ProfileUpdateDAO();
+		passwordUpdater = new ProfileUpdateDAO();
+		profileUpdater = new ProfileUpdater(nameSetter, passwordUpdater);
+		passwordChanger = profileUpdater;
+		userNameChanger = profileUpdater;
 		authenticationManager = AuthenticationManager.instance();
+		hash = new MD5();
 	}
 
 	@GetMapping("/profile")
@@ -67,7 +80,8 @@ public class ProfileController implements WebMvcConfigurer {
 		logger.info("Processing profile update request");
 		email = authenticationManager.getEmail(httpSession);
 		profile = new UserProfile(email);
-		profileValidator = new ProfileValidator(profile);
+		profileValidator = new ProfileValidator(profile, hash);
+
 		if(null != username && !username.equals(profile.getUserName())) {
 			logger.info("Processing Request to update username to " + username);
 			String error = profileValidator.isNameValid(username);

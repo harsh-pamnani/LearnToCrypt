@@ -3,6 +3,7 @@ package com.LearnToCrypt.DAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.LearnToCrypt.BusinessModels.IUser;
 import com.LearnToCrypt.BusinessModels.User;
 
 public class UserDAOFactoryMock implements IUserDAO {
@@ -89,7 +90,7 @@ public class UserDAOFactoryMock implements IUserDAO {
 	}
 
 	@Override
-	public User getUser(String email) {
+	public IUser getUser(String email) {
 		return users.get(0);
 	}
 

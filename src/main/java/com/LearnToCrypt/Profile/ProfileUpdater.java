@@ -6,17 +6,22 @@ import com.LearnToCrypt.DAO.INameSetterDAO;
 import com.LearnToCrypt.DAO.IPasswordUpdaterDAO;
 
 public class ProfileUpdater implements IPasswordChanger, IUserNameChanger {
+
+    private INameSetterDAO nameSetterDAO;
+    private IPasswordUpdaterDAO passwordUpdaterDAO;
+
+    public ProfileUpdater(INameSetterDAO nameSetterDAO, IPasswordUpdaterDAO passwordUpdaterDAO) {
+        this.nameSetterDAO = nameSetterDAO;
+        this.passwordUpdaterDAO = passwordUpdaterDAO;
+    }
+
     @Override
     public void changePassword(String email, String newPassword) {
-        IDAOAbstractFactory abstractFactory = new DAOAbstractFactory();
-        IPasswordUpdaterDAO passwordSetterDAO = abstractFactory.createPasswordSetterDAO();
-        passwordSetterDAO.setPassword(email, newPassword);
+        passwordUpdaterDAO.setPassword(email, newPassword);
     }
 
     @Override
     public void changeName(String email, String newName) {
-        IDAOAbstractFactory abstractFactory = new DAOAbstractFactory();
-        INameSetterDAO nameSetterDAO = abstractFactory.createNameSetterDAO();
         nameSetterDAO.setName(email, newName);
     }
 }

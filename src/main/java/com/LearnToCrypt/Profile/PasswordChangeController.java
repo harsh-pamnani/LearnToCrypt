@@ -1,8 +1,8 @@
 package com.LearnToCrypt.Profile;
 
-import com.LearnToCrypt.DAO.DAOAbstractFactory;
-import com.LearnToCrypt.DAO.IDAOAbstractFactory;
-import com.LearnToCrypt.DAO.IPasswordUpdaterDAO;
+import com.LearnToCrypt.DAO.*;
+import com.LearnToCrypt.HashingAlgorithm.IHash;
+import com.LearnToCrypt.HashingAlgorithm.MD5;
 import com.LearnToCrypt.app.LearnToCryptApplication;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,11 +23,17 @@ public class PasswordChangeController implements WebMvcConfigurer {
 	private IPasswordUpdaterDAO passwordUpdaterDAO;
 	private IDAOAbstractFactory abstractFactory;
 	private IPasswordChanger passwordChanger;
-
+	private IHash hash;
+	private IPasswordUpdaterDAO passwordUpdater;
+	private INameSetterDAO nameSetter;
 	public PasswordChangeController() {
 		abstractFactory = new DAOAbstractFactory();
 		passwordUpdaterDAO = abstractFactory.createPasswordSetterDAO();
-		passwordChanger = new ProfileUpdater();
+		hash = new MD5();
+		nameSetter = new ProfileUpdateDAO();
+		passwordUpdater = new ProfileUpdateDAO();
+		passwordChanger = new ProfileUpdater(nameSetter, passwordUpdater);
+		profileValidator = new ProfileValidator(profile, hash);
 	}
 
 	@GetMapping("/passwordchange")
@@ -61,7 +67,6 @@ public class PasswordChangeController implements WebMvcConfigurer {
 		else {
 			String email = passwordUpdaterDAO.getEmailFromToken(resetToken);
 			profile = new UserProfile(email);
-			profileValidator = new ProfileValidator(profile);
 			String error = profileValidator.isPasswordValid(newPass, confirmPass);
 			if (null == error) {
 				passwordChanger.changePassword(email, newPass);

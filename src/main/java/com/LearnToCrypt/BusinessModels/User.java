@@ -1,6 +1,6 @@
 package com.LearnToCrypt.BusinessModels;
 
-public class User {
+public class User implements IUser {
 	private String email;
 	private String name;
 	private String password;

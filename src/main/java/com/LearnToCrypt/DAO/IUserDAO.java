@@ -1,18 +1,18 @@
 package com.LearnToCrypt.DAO;
 
-import com.LearnToCrypt.BusinessModels.User;
+import com.LearnToCrypt.BusinessModels.IUser;
 
 public interface IUserDAO {
 	
-	public void createUser(User user);
+	public void createUser(IUser user);
 	
-	public boolean isUserValid(User user);
+	public boolean isUserValid(IUser user);
 	
-	public boolean isUserRegistered(User user);
+	public boolean isUserRegistered(IUser user);
 	
 	public String getUserName(String email);
 
-	public User getUser(String email);
+	public IUser getUser(String email);
 	
 	public String getUserRole(String email);
 

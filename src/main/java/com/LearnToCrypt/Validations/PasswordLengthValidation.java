@@ -1,11 +1,11 @@
 package com.LearnToCrypt.Validations;
 
-import com.LearnToCrypt.BusinessModels.User;
+import com.LearnToCrypt.BusinessModels.IUser;
 
 public class PasswordLengthValidation implements IValidation {
 
 	@Override
-	public boolean isValid(User user, String confirmPassword) {
+	public boolean isValid(IUser user, String confirmPassword) {
 		return user.getPassword().length() > 7;
 	}
 

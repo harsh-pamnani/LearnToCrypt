@@ -55,6 +55,6 @@ public class ProfileUpdaterTest {
 		IUserProfileBridge testProfile = new UserProfile(user.getEmail());
 		passwordChanger.changePassword(user.getEmail(), user.getPassword());
 		assertNotEquals(profileBridge.getUser(), testProfile.getUser());
-		assertEquals(md5.generateMD5HashValue("NewPass@123"), testProfile.getUser().getPassword());
+		assertEquals(md5.generateHashValue("NewPass@123"), testProfile.getUser().getPassword());
 	}
 }
