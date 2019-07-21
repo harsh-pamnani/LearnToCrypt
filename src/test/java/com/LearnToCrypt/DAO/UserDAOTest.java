@@ -90,4 +90,17 @@ public class UserDAOTest {
 		userDAOFactoryMock.updateProgress(user.getEmail(), "Caesar Cipher");
 		assertEquals("Rail Fence Cipher,Caesar Cipher,", user.getProgress());
 	}
+	
+	@Test
+	public void testDeleteUser() {
+		user.setEmail("milly@gmail.com");
+		user.setName("Milly Duke");
+		user.setPassword("Milly@9876");
+		user.setRole("Student");
+
+		assertTrue(userDAOFactoryMock.isUserValid(user));
+
+		userDAOFactoryMock.deleteUser(user.getEmail());
+		assertFalse(userDAOFactoryMock.isUserValid(user));
+	}
 }

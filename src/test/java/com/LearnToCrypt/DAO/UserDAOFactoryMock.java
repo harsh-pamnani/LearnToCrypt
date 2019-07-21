@@ -143,7 +143,15 @@ public class UserDAOFactoryMock implements IUserDAO {
 
 	@Override
 	public boolean deleteUser(String email) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isDeleted = false;
+		
+		for (User u : users) {
+			if (u.getEmail().equals(email)) {
+				users.remove(u);
+				isDeleted = true;
+				break;
+			}
+		}
+		return isDeleted;
 	}
 }
