@@ -57,6 +57,11 @@ public class VigenereCipher implements IEncryptionAlgorithm {
 	}
 
 	@Override
+	public String getName() {
+		return "Vigenere Cipher";
+	}
+
+	@Override
 	public String keyPlainTextValidation(UserInput userInput) {
 
 		logger.info("Validating key for Vigenere Cipher. Key: " + userInput.getKey());

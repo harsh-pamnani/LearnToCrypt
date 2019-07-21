@@ -70,6 +70,11 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 	}
 
 	@Override
+	public String getName() {
+		return "Playfair Cipher";
+	}
+
+	@Override
 	public String keyPlainTextValidation(UserInput userInput) {
 		String formError = null;
     	

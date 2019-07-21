@@ -52,6 +52,11 @@ public class MatrixTransposeCipher implements IEncryptionAlgorithm {
 	}
 
 	@Override
+	public String getName() {
+		return "Matrix Transposition Cipher";
+	}
+
+	@Override
 	public String keyPlainTextValidation(UserInput userInput) {
 		logger.info("Validating key for Matrix Transposition Cipher. Key: " + userInput.getKey());
 		String formError = null;

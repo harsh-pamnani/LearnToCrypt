@@ -71,6 +71,11 @@ public class CaesarCipher implements IEncryptionAlgorithm {
     }
 
     @Override
+    public String getName() {
+        return "Caesar Cipher";
+    }
+
+    @Override
     public String keyPlainTextValidation(UserInput userInput) {
         String formError = null;
 
