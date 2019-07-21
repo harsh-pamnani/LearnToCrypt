@@ -1,7 +1,7 @@
 package com.LearnToCrypt.Profile;
 
-import com.LearnToCrypt.SignIn.AuthenticationManager;
-import com.LearnToCrypt.app.LearnToCryptApplication;
+import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.http.HttpSession;
+import com.LearnToCrypt.SignIn.AuthenticationManager;
+import com.LearnToCrypt.app.LearnToCryptApplication;
 
 @Controller
 public class ProfileController implements WebMvcConfigurer {
@@ -20,7 +21,6 @@ public class ProfileController implements WebMvcConfigurer {
 	private IUserProfileBridge profile;
 	private IPasswordChanger passwordChanger;
 	private IUserNameChanger userNameChanger;
-	private String username;
 	private String email;
 	private AuthenticationManager authenticationManager;
 	private IProfileValidator profileValidator;

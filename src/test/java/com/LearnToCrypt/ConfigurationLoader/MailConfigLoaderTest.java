@@ -1,6 +1,10 @@
 package com.LearnToCrypt.ConfigurationLoader;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
+
+import com.LearnToCrypt.app.LearnToCryptApplication;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +14,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class MailConfigLoaderTest {
+	
+    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+
 	MailConfigLoader mailConfigLoader;
 	String host;
 	String port;
@@ -34,8 +41,7 @@ public class MailConfigLoaderTest {
 			username = javaMailProperties.getProperty("username");
 			password = javaMailProperties.getProperty("password");
 		} catch (IOException e) {
-			System.out.println("Error occurred in accessing the config file");
-			System.out.println("Error : " + e.getMessage());
+			logger.fatal("Error occured in accessing the config file during test case. Error message: ", e.getMessage());
 		}
 	}
 

@@ -2,111 +2,104 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
 
-	<link rel="stylesheet" type="text/css" href="/css/main.css">
-	
-	<style type="text/css">
-        .dashboard {
-            margin-top: 7rem;
-            margin-bottom: 7rem;
-        }
+<link rel="stylesheet" type="text/css" href="/css/main.css">
 
-        .img {
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
-        }
+<style type="text/css">
+.dashboard {
+	margin-top: 7rem;
+	margin-bottom: 7rem;
+}
 
-        .card {
-            width: 100%;
-            height: 350px;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            -webkit-box-shadow: inset 0px 0px 3px 2px rgba(0, 0, 0, 0.44);
-            -moz-box-shadow: inset 0px 0px 3px 2px rgba(0, 0, 0, 0.44);
-            box-shadow: inset 0px 0px 3px 2px rgba(0, 0, 0, 0.44);
-            padding: 15px;
-        }
-        
-        #formError {
-		    color: red;
-		    font-size: 15px;
-		    font-family: cursive;
-		}
-    </style>
+.img {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+}
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+.card {
+	width: 100%;
+	height: 350px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	-webkit-box-shadow: inset 0px 0px 3px 2px rgba(0, 0, 0, 0.44);
+	-moz-box-shadow: inset 0px 0px 3px 2px rgba(0, 0, 0, 0.44);
+	box-shadow: inset 0px 0px 3px 2px rgba(0, 0, 0, 0.44);
+	padding: 15px;
+}
 
-    <title> LearnToCrypt Home </title>
+#formError {
+	color: red;
+	font-size: 15px;
+	font-family: cursive;
+}
+</style>
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+	integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+	crossorigin="anonymous">
+
+<title>LearnToCrypt Home</title>
 </head>
 
 <body>
 	<div th:replace="fragments/navbarLoggedIn"></div>
 
-    <div class="container dashboard">
-        <h2 class="text-center" th:text="${alg}"></h2>
-        <hr>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4 img" th:style="'background-image:url(' + @{${url}} + ');'"></div>
-                <div class="col-md-4">
-                    <p th:text="${description}"></p>
-                </div>
-                <div class="col-md-2"></div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                    <form action="#" th:action="@{/algorithm}" th:object="${userInput}" method="post">
-                        <div class="form-group">
-                            <label for="key">Key</label>
-                            <input type="text" id="key" name="key" class="key form-control" th:field="*{key}" />
-                        </div>
-                        <div class="form-group">
-                            <label for="plaintext">Plaintext</label>
-                            <input type="text" id="plaintext" name="plaintext" class="plaintext form-control"
-                                th:field="*{plaintext}" />
-                        </div>
-                        <div class="form-group">
-                        	<div id="formError" th:text="${invalidInput}"></div>
-                    	</div>
-                        <input type="submit" class="btn btn-primary" value="Submit" />
-                    </form>
-                </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                    <br>
-                    <label for="cipherResult"> Result: </label>
-                    <div id="cipherResult" class="container card">
-                        <P style="white-space: pre;" th:text="${result}"></P>
-                        <P style="white-space: pre;" th:text="${steps}"></P>
-                    </div>
-                </div>
-                <div class="col-md-2"></div>
-            </div>
-        </div>
-    </div>
+	<div class="container dashboard">
+		<h2 class="text-center" th:text="${alg}"></h2>
+		<hr>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-md-4 img"
+					th:style="'background-image:url(' + @{${url}} + ');'"></div>
+				<div class="col-md-4">
+					<p th:text="${description}"></p>
+				</div>
+				<div class="col-md-2"></div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-md-8">
+					<form action="#" th:action="@{/algorithm}" th:object="${userInput}"
+						method="post">
+						<div class="form-group">
+							<label for="key">Key</label> <input type="text" id="key"
+								name="key" class="key form-control" th:field="*{key}" />
+						</div>
+						<div class="form-group">
+							<label for="plaintext">Plaintext</label> <input type="text"
+								id="plaintext" name="plaintext" class="plaintext form-control"
+								th:field="*{plaintext}" />
+						</div>
+						<div class="form-group">
+							<div id="formError" th:text="${invalidInput}"></div>
+						</div>
+						<input type="submit" class="btn btn-primary" value="Submit" />
+					</form>
+				</div>
+				<div class="col-md-2"></div>
+			</div>
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-md-8">
+					<br> <label for="cipherResult"> Result: </label>
+					<div id="cipherResult" class="container card">
+						<P style="white-space: pre;" th:text="${result}"></P>
+						<P style="white-space: pre;" th:text="${steps}"></P>
+					</div>
+				</div>
+				<div class="col-md-2"></div>
+			</div>
+		</div>
+	</div>
 
 	<div th:replace="fragments/footer"></div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-
 </body>
+</html>

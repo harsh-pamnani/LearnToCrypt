@@ -7,9 +7,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
+import com.LearnToCrypt.app.LearnToCryptApplication;
+
 public class DBConfigLoaderTest {
+
+    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
 
 	DBConfigLoader dbConfigLoader;
 	String database;
@@ -34,8 +40,7 @@ public class DBConfigLoaderTest {
 			port = DatabaseCredentialsProperties.getProperty("port");
 			
 		} catch (IOException e) {
-			System.out.println("Error occured in accessing the config file");
-			System.out.println("Error : " + e.getMessage());
+			logger.fatal("Error occured in accessing the config file during test case. Error message: ", e.getMessage());
 		}
 		
 	}

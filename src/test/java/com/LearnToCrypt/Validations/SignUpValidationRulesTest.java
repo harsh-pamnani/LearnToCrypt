@@ -15,8 +15,8 @@ public class SignUpValidationRulesTest {
 
 	@Test
 	public void testGetValidationRules() {
-		// Using the form ArrayList<?> instead ArrayList<IValidation>
-		// since further generic type information will be erased at runtime
+		// Using the form ArrayList<?> instead ArrayList<IValidation> due to error
+		// "further generic type information will be erased at runtime"
 		assertTrue(signUpValidationRulesTest.getValidationRules() instanceof ArrayList<?>);
 	}
 }

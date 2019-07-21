@@ -61,11 +61,11 @@ public class UserDAOFactoryMock implements IUserDAO {
 	}
 
 	@Override
-	public boolean isUserRegistered(User user) {
+	public boolean isUserRegistered(String email) {
 		boolean isRegistered = false;
 
 		for (User u : users) {
-			if (u.getEmail().equals(user.getEmail())) {
+			if (u.getEmail().equals(email)) {
 				isRegistered = true;
 				break;
 			}
@@ -139,5 +139,19 @@ public class UserDAOFactoryMock implements IUserDAO {
 	@Override
 	public String getUserClass(String email) {
 		return "Rail Fence Cipher,,Caesar Cipher,";
+	}
+
+	@Override
+	public boolean deleteUser(String email) {
+		boolean isDeleted = false;
+		
+		for (User u : users) {
+			if (u.getEmail().equals(email)) {
+				users.remove(u);
+				isDeleted = true;
+				break;
+			}
+		}
+		return isDeleted;
 	}
 }

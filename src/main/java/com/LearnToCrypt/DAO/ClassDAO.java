@@ -1,19 +1,19 @@
 package com.LearnToCrypt.DAO;
 
-import com.LearnToCrypt.BusinessModels.MyClass;
-import com.LearnToCrypt.BusinessModels.User;
-import com.LearnToCrypt.DatabaseConnection.DBConnection;
-import com.LearnToCrypt.HashingAlgorithm.MD5;
-import com.LearnToCrypt.app.LearnToCryptApplication;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.LearnToCrypt.BusinessModels.MyClass;
+import com.LearnToCrypt.BusinessModels.User;
+import com.LearnToCrypt.DatabaseConnection.DBConnection;
+import com.LearnToCrypt.app.LearnToCryptApplication;
 
 public class ClassDAO implements IClassDAO{
     private DBConnection dbConnectionInstance = null;
@@ -43,7 +43,7 @@ public class ClassDAO implements IClassDAO{
     }
 
     @Override
-    public ArrayList getClass(String instructorID) {
+    public List<MyClass> getClass(String instructorID) {
         String query1 = "call CSCI5308_7_TEST.get_class('"+instructorID+"');";
         ArrayList<MyClass> myClasses = new ArrayList<>();
         try {

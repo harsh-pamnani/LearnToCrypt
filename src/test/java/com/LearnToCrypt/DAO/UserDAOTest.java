@@ -9,57 +9,56 @@ import org.junit.Test;
 
 import com.LearnToCrypt.BusinessModels.BusinessModelAbstractFactory;
 import com.LearnToCrypt.BusinessModels.User;
-import org.junit.runner.notification.RunListener;
 
 public class UserDAOTest {
 
 	UserDAOFactoryMock userDAOFactoryMock;
 	BusinessModelAbstractFactory businessModelAbstractFactory;
 	User user;
-	
+
 	public UserDAOTest() {
 		userDAOFactoryMock = new UserDAOFactoryMock();
 		businessModelAbstractFactory = new BusinessModelAbstractFactory();
 		user = businessModelAbstractFactory.createUser();
 	}
-	
+
 	@Test
 	public void testCreateUser() {
 		user.setEmail("malcolmvaughn@gmail.com");
 		user.setName("Malcolm Vaughn");
 		user.setPassword("Vaughn!8z5");
 		user.setRole("Instructor");
-		
+
 		assertFalse(userDAOFactoryMock.isUserValid(user));
-		
+
 		userDAOFactoryMock.createUser(user);
 		assertTrue(userDAOFactoryMock.isUserValid(user));
 	}
-	
+
 	@Test
 	public void testIsUserValid() {
 		user.setEmail("milly@gmail.com");
 		user.setPassword("Milly@9876");
 		assertTrue(userDAOFactoryMock.isUserValid(user));
-		
+
 		user.setEmail("millan@fake.com");
 		user.setPassword("millan@7648");
 		assertFalse(userDAOFactoryMock.isUserValid(user));
 	}
-	
+
 	@Test
 	public void testIsUserRegistered() {
 		user.setEmail("rob@gmail.com");
-		assertTrue(userDAOFactoryMock.isUserRegistered(user));
-		
+		assertTrue(userDAOFactoryMock.isUserRegistered(user.getEmail()));
+
 		user.setEmail("xyz@hotmail.com");
-		assertFalse(userDAOFactoryMock.isUserRegistered(user));
+		assertFalse(userDAOFactoryMock.isUserRegistered(user.getEmail()));
 	}
-	
+
 	@Test
 	public void testGetUsername() {
 		assertEquals("Shelley Dhillan", userDAOFactoryMock.getUserName("shelley@gmail.com"));
-		
+
 		assertNotEquals("Harsh Pamnani", userDAOFactoryMock.getUserName("shelley@gmail.com"));
 	}
 
@@ -67,28 +66,41 @@ public class UserDAOTest {
 	public void testGetUser() {
 		assertTrue(userDAOFactoryMock.getUser("rob@gmail.com") instanceof User);
 	}
-	
+
 	@Test
 	public void testGetRole() {
 		assertEquals("Instructor", userDAOFactoryMock.getUserRole("rob@gmail.com"));
-		
+
 		assertNotEquals("Student", userDAOFactoryMock.getUserRole("rob@gmail.com"));
 	}
 
 	@Test
-	public void testGetProgress(){
-		String[] expected = {"Rail Fence Cipher","Caesar Cipher"};
+	public void testGetProgress() {
+		String[] expected = { "Rail Fence Cipher", "Caesar Cipher" };
 		String[] actual = userDAOFactoryMock.getProgress("rob@gmail.com");
-		assertEquals(expected.length,actual.length);
-		for (int i = 0; i<expected.length; i++){
-			assertEquals(expected[i],actual[i]);
+		assertEquals(expected.length, actual.length);
+		for (int i = 0; i < expected.length; i++) {
+			assertEquals(expected[i], actual[i]);
 		}
 	}
 
 	@Test
-	public void testUpdateProgress_ProgressAlreadyExist(){
+	public void testUpdateProgress_ProgressAlreadyExist() {
 		User user = userDAOFactoryMock.getUser("milly@gmail.com");
-		userDAOFactoryMock.updateProgress(user.getEmail(),"Caesar Cipher");
-		assertEquals("Rail Fence Cipher,Caesar Cipher,",user.getProgress());
+		userDAOFactoryMock.updateProgress(user.getEmail(), "Caesar Cipher");
+		assertEquals("Rail Fence Cipher,Caesar Cipher,", user.getProgress());
+	}
+	
+	@Test
+	public void testDeleteUser() {
+		user.setEmail("milly@gmail.com");
+		user.setName("Milly Duke");
+		user.setPassword("Milly@9876");
+		user.setRole("Student");
+
+		assertTrue(userDAOFactoryMock.isUserValid(user));
+
+		userDAOFactoryMock.deleteUser(user.getEmail());
+		assertFalse(userDAOFactoryMock.isUserValid(user));
 	}
 }

@@ -56,7 +56,7 @@ public class UserDAO implements IUserDAO {
 		String query = "CALL count_user(\""+ user.getEmail() + "\",\"" + hashedPassword + "\");";
 		
 		try {
-			isValid = isRegistered(isValid, query);
+			isValid = isRegistered(query);
 		} catch (SQLException e) {
 			logger.error("Error in fetching the user credentials for user: " + user.getEmail(), e);
 		} finally {
@@ -67,15 +67,36 @@ public class UserDAO implements IUserDAO {
 	}
 	
 	@Override
-	public boolean isUserRegistered(User user) {		
-		boolean isRegistered = false;
+	public boolean deleteUser(String email) {
+		boolean isDeleted = false;
 		
-		String query = "CALL count_registered_user(\""+ user.getEmail() + "\");";
+		String query = "CALL delete_user(\""+ email + "\");";
 		
 		try {
-			isRegistered = isRegistered(isRegistered, query);
+			dbConnection = dbConnectionInstance.getConnection();
+			
+			statement = dbConnection.prepareStatement(query);		
+			resultSet = statement.executeQuery();
+			isDeleted = true;
 		} catch (SQLException e) {
-			logger.error("Error in fetching the user registration details for user: " + user.getEmail(), e);
+			logger.error("Error in deleting the user user: " + email, e);
+		} finally {
+			dbConnectionInstance.closeConnection();
+		}	
+		
+		return isDeleted;
+	}
+	
+	@Override
+	public boolean isUserRegistered(String email) {		
+		boolean isRegistered = false;
+		
+		String query = "CALL count_registered_user(\""+ email + "\");";
+		
+		try {
+			isRegistered = isRegistered(query);
+		} catch (SQLException e) {
+			logger.error("Error in fetching the user registration details for user: " + email, e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}	
@@ -188,7 +209,9 @@ public class UserDAO implements IUserDAO {
 		return false;
 	}
 
-	private boolean isRegistered(boolean isRegistered, String query) throws SQLException {
+	private boolean isRegistered(String query) throws SQLException {
+		boolean isRegistered = false;
+		
 		dbConnection = dbConnectionInstance.getConnection();
 
 		statement = dbConnection.prepareStatement(query);

@@ -25,7 +25,7 @@ import com.LearnToCrypt.DAO.IUserDAO;
 @Controller
 public class SignUpController implements WebMvcConfigurer {
 	
-	IDAOAbstractFactory abstractFactory;
+	IDAOAbstractFactory daoAbstractFactory;
 	ValidateSignUpForm validateSignUpForm;
 	IBusinessModelAbstractFactory businessModelAbstractFactory;
 
@@ -34,7 +34,7 @@ public class SignUpController implements WebMvcConfigurer {
 
 
 	public SignUpController() {
-		 abstractFactory = new DAOAbstractFactory();
+		 daoAbstractFactory = new DAOAbstractFactory();
 		 validateSignUpForm = new ValidateSignUpForm();
 		 businessModelAbstractFactory = new BusinessModelAbstractFactory();
 	    authenticationManager = AuthenticationManager.instance();
@@ -58,15 +58,15 @@ public class SignUpController implements WebMvcConfigurer {
 		String formError = validateSignUpForm.validateFormDetails(user, confirmPassword);
 		
 		if( formError.equals("") ) {		
-			IUserDAO userDAOValidation = abstractFactory.createUserDAO();
-			boolean isUserRegistered = userDAOValidation.isUserRegistered(user);
+			IUserDAO userDAOValidation = daoAbstractFactory.createUserDAO();
+			boolean isUserRegistered = userDAOValidation.isUserRegistered(user.getEmail());
 			
 			if (isUserRegistered) {
 				model.put("invalidSignup", "Email id is already registered. Registration Failed.");
 				logger.error("Email id \""+user.getEmail()+"\" is already registered. Registration Failed.");
 				return "registration.html";
 			} else {
-				IUserDAO userDAORegistration = abstractFactory.createUserDAO();
+				IUserDAO userDAORegistration = daoAbstractFactory.createUserDAO();
 				userDAORegistration.createUser(user);
 				logger.info(user.getEmail()+" registration success.");
 			}
@@ -76,7 +76,7 @@ public class SignUpController implements WebMvcConfigurer {
 			return "registration.html";
 		}
 		
-		IUserDAO userDAOName = abstractFactory.createUserDAO();
+		IUserDAO userDAOName = daoAbstractFactory.createUserDAO();
 		String userName = userDAOName.getUserName(user.getEmail());
 		
 		// This logic will be updated to get the user's name from database.

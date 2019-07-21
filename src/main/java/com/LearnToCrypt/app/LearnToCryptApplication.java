@@ -1,7 +1,6 @@
 package com.LearnToCrypt.app;
 
 import com.LearnToCrypt.Algorithm.AlgorithmController;
-import com.LearnToCrypt.ClassManagement.ClassManagementController;
 import com.LearnToCrypt.ForgotPassword.ForgotPasswordController;
 import com.LearnToCrypt.MyProgress.MyProgressController;
 import com.LearnToCrypt.Profile.PasswordChangeController;
@@ -13,6 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.LearnToCrypt.Homepage.HomePageController;
+import com.LearnToCrypt.Instructor.ClassManagementController;
+import com.LearnToCrypt.Instructor.StudentManagementController;
 import com.LearnToCrypt.SignIn.LoginController;
 import com.LearnToCrypt.SignUp.SignUpController;
 import com.LearnToCrypt.Dashboard.DashboardController;
@@ -29,7 +30,8 @@ import com.LearnToCrypt.Dashboard.DashboardController;
 		ForgotPasswordController.class,
 		PasswordChangeController.class,
 		MyProgressController.class,
-		ClassManagementController.class
+		ClassManagementController.class,
+		StudentManagementController.class
 })
 public class LearnToCryptApplication {
 

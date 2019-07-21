@@ -26,7 +26,6 @@ public class LoginController implements WebMvcConfigurer {
 	private static final Logger logger = LogManager.getLogger(LoginController.class);
 
 	AuthenticationManager authenticationManager;
-
 	
     public LoginController() {
     	validateUserCredentials = new ValidateUserCredentials();
