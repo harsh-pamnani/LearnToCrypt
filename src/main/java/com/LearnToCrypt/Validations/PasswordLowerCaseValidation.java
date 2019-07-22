@@ -7,17 +7,22 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.BusinessModels.User;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 public class PasswordLowerCaseValidation implements IValidation {
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
-
-	public static final Pattern LOWERCASE_REGEX = Pattern.compile(".*[a-z].*");
+	private static final Logger logger = LogManager.getLogger(PasswordLowerCaseValidation.class);
+	private String ruleValue;
 	
 	@Override
+	public void setValue(String ruleValue) {
+		this.ruleValue = ruleValue;
+	}
+		
+	@Override
 	public boolean isValid(User user, String confirmPassword) {
-		Matcher passwordLowerCaseMatcher = LOWERCASE_REGEX.matcher(user.getPassword());
+		Pattern lowercaseRegx = Pattern.compile(this.ruleValue);
+		Matcher passwordLowerCaseMatcher = lowercaseRegx.matcher(user.getPassword());
+		
 		boolean result = passwordLowerCaseMatcher.find();
 		logger.info("Password lowercase validation for user : " + user.getEmail() + ". Result : " + result);
 		return result;

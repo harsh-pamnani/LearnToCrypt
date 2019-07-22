@@ -14,13 +14,12 @@ import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IAlgorithmDAO;
 import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 import java.util.ArrayList;
 
 @Controller
 public class DashboardController implements WebMvcConfigurer {
-    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+    private static final Logger logger = LogManager.getLogger(DashboardController.class);
 	
 	AuthenticationManager authenticationManager;
 	DAOAbstractFactory daoAbstractFactory;

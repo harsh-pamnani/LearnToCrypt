@@ -3,12 +3,7 @@ package com.LearnToCrypt.DAO;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmFactory;
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.CaesarCipher;
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IAlgorithmFactory;
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithm;
 import com.LearnToCrypt.BusinessModels.Algorithm;
-import com.LearnToCrypt.BusinessModels.User;
 
 public class AlgorithmDAOFactoryMock implements IAlgorithmDAO {
 

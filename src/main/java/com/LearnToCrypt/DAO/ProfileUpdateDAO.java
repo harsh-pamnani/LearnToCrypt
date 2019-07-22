@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.DatabaseConnection.DBConnection;
 import com.LearnToCrypt.HashingAlgorithm.MD5;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 public class ProfileUpdateDAO implements IPasswordUpdaterDAO, INameSetterDAO {
 
@@ -19,7 +18,7 @@ public class ProfileUpdateDAO implements IPasswordUpdaterDAO, INameSetterDAO {
     private PreparedStatement statement;
     ResultSet resultSet;
     MD5 md5Algorithm;
-    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+    private static final Logger logger = LogManager.getLogger(ProfileUpdateDAO.class);
 
     public ProfileUpdateDAO() {
         dbConnectionInstance = DBConnection.instance();
@@ -32,6 +31,7 @@ public class ProfileUpdateDAO implements IPasswordUpdaterDAO, INameSetterDAO {
         String hashedPassword = md5Algorithm.generateMD5HashValue(password);
         String query = "CALL update_password(\""+ email +"\", \""+ hashedPassword + "\");";
         updateDatabase(query);
+
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ProfileUpdateDAO implements IPasswordUpdaterDAO, INameSetterDAO {
             logger.info("Queried Database. Email: " + email);
             return email;
         } catch (SQLException e) {
-            logger.error("Database query error: " + e.getMessage());
+            logger.error("Database query error: ", e);
         } finally {
             dbConnectionInstance.closeConnection();
         }
@@ -77,7 +77,7 @@ public class ProfileUpdateDAO implements IPasswordUpdaterDAO, INameSetterDAO {
             resultSet = statement.executeQuery();
             logger.info("Updated Database");
         } catch (SQLException e) {
-            logger.error("Database update error: " + e.getMessage());
+            logger.error("Database update error: ", e);
         } finally {
             dbConnectionInstance.closeConnection();
         }

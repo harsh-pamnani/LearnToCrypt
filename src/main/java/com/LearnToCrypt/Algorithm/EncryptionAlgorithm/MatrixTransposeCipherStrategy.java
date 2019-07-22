@@ -1,13 +1,12 @@
 package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
-import com.LearnToCrypt.Algorithm.UserInput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.ArrayList;
 
-public class MatrixTransposeCipher implements IEncryptionAlgorithm {
+import com.LearnToCrypt.Algorithm.UserInput;
 
+public class MatrixTransposeCipherStrategy implements IEncryptionAlgorithmStrategy {
 	private final String resultTxt = "Cipher Text: ";
 	private final String keyRegex = "([0-9],)+[0-9]";
 	private final String plaintextRegex = "[A-Za-z ]+";
@@ -15,7 +14,13 @@ public class MatrixTransposeCipher implements IEncryptionAlgorithm {
 	private String unencryptedPlaintext = null;
 	private String encryptionKey = null;
 	private String encryptedCipherText = null;
-	private static final Logger logger = LogManager.getLogger(MatrixTransposeCipher.class);
+	private static final Logger logger = LogManager.getLogger(MatrixTransposeCipherStrategy.class);
+	private static final String ALGORITHM_NAME = "Matrix Transposition Cipher";
+
+	@Override
+	public String getName() {
+		return ALGORITHM_NAME;
+	}
 
 	@Override
 	public String encode(String key, String plaintext) {

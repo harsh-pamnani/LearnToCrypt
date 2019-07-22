@@ -26,4 +26,9 @@ public class DAOAbstractFactory implements IDAOAbstractFactory {
 	public IClassDAO createClassDAO() {
 		return new ClassDAO();
 	}
+	
+	@Override
+	public ISignUpValidationRulesDAO createSignUpValidationRulesDAO() {
+		return new SignUpValidationRulesDAO();
+	}
 }

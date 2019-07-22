@@ -1,15 +1,15 @@
 package com.LearnToCrypt.Profile;
 
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.HashingAlgorithm.MD5;
 import com.LearnToCrypt.Validations.IValidation;
 import com.LearnToCrypt.Validations.UserProfileNameUpdateValidation;
 import com.LearnToCrypt.Validations.UserProfilePasswordUpdateValidation;
-import com.LearnToCrypt.app.LearnToCryptApplication;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.util.List;
 
 public class ProfileValidator implements IProfileValidator {
 

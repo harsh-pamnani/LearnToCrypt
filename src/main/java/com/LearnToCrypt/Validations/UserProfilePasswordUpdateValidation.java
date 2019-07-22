@@ -6,11 +6,9 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.LearnToCrypt.app.LearnToCryptApplication;
-
 public class UserProfilePasswordUpdateValidation {
 	private List<IValidation> validationRules;
-    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+    private static final Logger logger = LogManager.getLogger(UserProfilePasswordUpdateValidation.class);
 
 	public UserProfilePasswordUpdateValidation() {
 		validationRules = new ArrayList<IValidation>();

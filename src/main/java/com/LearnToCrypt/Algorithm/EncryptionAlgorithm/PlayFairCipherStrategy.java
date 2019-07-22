@@ -7,9 +7,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.Algorithm.UserInput;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
-public class PlayFairCipher implements IEncryptionAlgorithm {
+public class PlayFairCipherStrategy implements IEncryptionAlgorithmStrategy {
 
 	private static final String ALL_CHARS = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
 	private static final String CHARACTER_TO_REPLACE = "X";
@@ -19,9 +18,15 @@ public class PlayFairCipher implements IEncryptionAlgorithm {
 	private String plaintext = "Plain Text: ";
 	private HashMap<String, String> repeatedCharacters;
 	private char[][] keyMatrix;
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
-	
-	public PlayFairCipher() {
+	private static final Logger logger = LogManager.getLogger(PlayFairCipherStrategy.class);
+	private static final String ALGORITHM_NAME = "Playfair Cipher";
+
+	@Override
+	public String getName() {
+		return ALGORITHM_NAME;
+	}
+
+	public PlayFairCipherStrategy() {
 		repeatedCharacters = new HashMap<String, String>();
 		keyMatrix = new char[MATRIX_SIZE][MATRIX_SIZE];
 		setRepeatedCharactersList();

@@ -4,17 +4,22 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.BusinessModels.User;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 public class RoleValidation implements IValidation {
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
-
+	private static final Logger logger = LogManager.getLogger(RoleValidation.class);
+	private String ruleValue;
+	
+	@Override
+	public void setValue(String ruleValue) {
+		this.ruleValue = ruleValue;
+	}
+	
 	@Override
 	public boolean isValid(User user, String confirmPassword) {
 		String role = user.getRole();
 		if (role != null) {
-			boolean result = role.equals("Student") || role.equals("Instructor");
+			boolean result = this.ruleValue.contains(role);
 			logger.info("Role validation for user : " + user.getEmail() + ". Role : " + user.getRole() + ". Name : "
 					+ user.getName() + ". Result : " + result);
 			return result;

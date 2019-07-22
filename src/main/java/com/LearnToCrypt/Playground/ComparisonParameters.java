@@ -1,6 +1,6 @@
 package com.LearnToCrypt.Playground;
 
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithm;
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithmStrategy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +11,7 @@ public class ComparisonParameters implements IComparisonParameters{
 
 	private static final Logger logger = LogManager.getLogger(ComparisonParameters.class);
 	private HashMap<String, String> keyMap;
-	private HashMap<String, IEncryptionAlgorithm> algorithmMap;
+	private HashMap<String, IEncryptionAlgorithmStrategy> algorithmMap;
 	private Iterator iterator;
 	private String plaintext;
 
@@ -22,7 +22,7 @@ public class ComparisonParameters implements IComparisonParameters{
 	}
 
 	@Override
-	public void addAlgorithm(IEncryptionAlgorithm algorithm, String key, String name) {
+	public void addAlgorithm(IEncryptionAlgorithmStrategy algorithm, String key, String name) {
 		logger.info("Adding " + name + " to parameters with key :" + key);
 		keyMap.put(name, key);
 		algorithmMap.put(name, algorithm);
@@ -54,7 +54,7 @@ public class ComparisonParameters implements IComparisonParameters{
 	}
 
 	@Override
-	public IEncryptionAlgorithm getEncryptionAlgorithm(String name) {
+	public IEncryptionAlgorithmStrategy getEncryptionAlgorithm(String name) {
 		return algorithmMap.get(name);
 	}
 

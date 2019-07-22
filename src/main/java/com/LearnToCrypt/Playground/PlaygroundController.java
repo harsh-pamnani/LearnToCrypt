@@ -2,7 +2,7 @@ package com.LearnToCrypt.Playground;
 
 import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmFactory;
 import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IAlgorithmFactory;
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithm;
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithmStrategy;
 import com.LearnToCrypt.DAO.AlgorithmDAO;
 import com.LearnToCrypt.DAO.IAlgorithmDAO;
 import com.LearnToCrypt.FileToString.FileToString;
@@ -97,8 +97,8 @@ public class PlaygroundController implements WebMvcConfigurer {
 		String fileString = fileToString.getStringFromFile(file);
 		comparisonParameters.clearInputParams();
 		comparisonParameters.setPlaintext(fileString);
-		IEncryptionAlgorithm firstAlgorithm = algorithmList.getAlgorithmWithName(firstAlgo);
-		IEncryptionAlgorithm secondAlgorithm = algorithmList.getAlgorithmWithName(secondAlgo);
+		IEncryptionAlgorithmStrategy firstAlgorithm = algorithmList.getAlgorithmWithName(firstAlgo);
+		IEncryptionAlgorithmStrategy secondAlgorithm = algorithmList.getAlgorithmWithName(secondAlgo);
 		comparisonParameters.addAlgorithm(firstAlgorithm, keyLeft, firstAlgo);
 		comparisonParameters.addAlgorithm(secondAlgorithm, keyRight, secondAlgo);
 		comparisonResultSet = compare.compareAlgorithms(comparisonParameters);

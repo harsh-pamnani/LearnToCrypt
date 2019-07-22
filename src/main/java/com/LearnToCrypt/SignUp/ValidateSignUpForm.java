@@ -6,14 +6,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.BusinessModels.User;
-import com.LearnToCrypt.SignIn.LoginController;
 import com.LearnToCrypt.Validations.IValidation;
 import com.LearnToCrypt.Validations.SignUpValidationRules;
 
 public class ValidateSignUpForm {
 	
 	private SignUpValidationRules validationRules = null;
-	private static final Logger logger = LogManager.getLogger(LoginController.class);
+	private static final Logger logger = LogManager.getLogger(ValidateSignUpForm.class);
 
 	public ValidateSignUpForm() {
 		validationRules = new SignUpValidationRules();

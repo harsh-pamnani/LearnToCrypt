@@ -1,8 +1,7 @@
 package com.LearnToCrypt.MyProgress;
 
-import com.LearnToCrypt.DAO.DAOAbstractFactory;
-import com.LearnToCrypt.SignIn.AuthenticationManager;
-import com.LearnToCrypt.app.LearnToCryptApplication;
+import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -10,12 +9,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.http.HttpSession;
+import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.SignIn.AuthenticationManager;
 
 @Controller
 public class MyProgressController implements WebMvcConfigurer {
 
-    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+    private static final Logger logger = LogManager.getLogger(MyProgressController.class);
     private AuthenticationManager authenticationManager;
     private DAOAbstractFactory daoAbstractFactory;
 

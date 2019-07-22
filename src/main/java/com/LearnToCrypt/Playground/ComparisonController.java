@@ -21,12 +21,13 @@ public class ComparisonController implements WebMvcConfigurer {
 
 	public ComparisonController() {
 		authenticationManager = AuthenticationManager.instance();
-		results = new ArrayList<>();
+
 	}
 
 	@GetMapping("/comparison")
 	public String displayComparison(HttpSession httpSession,
 									ModelMap model) {
+		results = new ArrayList<>();
 		comparisonResultSet = (ComparisonResultSet) httpSession.getAttribute("resultSet");
 		httpSession.removeAttribute("resultSet");
 		logger.info("Loading Comparison Result");

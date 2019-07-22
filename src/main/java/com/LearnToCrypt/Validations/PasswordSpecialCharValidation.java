@@ -7,17 +7,22 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.BusinessModels.User;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 public class PasswordSpecialCharValidation implements IValidation {
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
-
-	public static final Pattern SPECIAL_CHAR_REGEX = Pattern.compile(".*[!@#$%^&*()].*");
-
+	private static final Logger logger = LogManager.getLogger(PasswordSpecialCharValidation.class);
+	private String ruleValue;
+	
+	@Override
+	public void setValue(String ruleValue) {
+		this.ruleValue = ruleValue;
+	}
+	
 	@Override
 	public boolean isValid(User user, String confirmPassword) {
-		Matcher specialCharachterMatcher = SPECIAL_CHAR_REGEX.matcher(user.getPassword());
+		Pattern specialCharRegx = Pattern.compile(this.ruleValue);
+		Matcher specialCharachterMatcher = specialCharRegx.matcher(user.getPassword());
+		
 		boolean result = specialCharachterMatcher.find();
 		logger.info("Password special character validation for user : " + user.getEmail() + ". Result : " + result);
 		return result;

@@ -1,7 +1,7 @@
 package com.LearnToCrypt.Playground;
 
 import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IAlgorithmFactory;
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithm;
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithmStrategy;
 import com.LearnToCrypt.DAO.IAlgorithmDAO;
 import com.LearnToCrypt.app.LearnToCryptApplication;
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +15,7 @@ public class ListAlgorithms implements IListAlgorithms {
 
 	private static final Logger logger = LogManager.getLogger(ListAlgorithms.class);
 	private ArrayList<String> algorithmNames;
-	private HashMap<String, IEncryptionAlgorithm> algorithms;
+	private HashMap<String, IEncryptionAlgorithmStrategy> algorithms;
 
 	public ListAlgorithms(IAlgorithmDAO algorithmDAO, IAlgorithmFactory algorithmFactory) {
 		logger.info("Populating available algorithms list");
@@ -37,7 +37,7 @@ public class ListAlgorithms implements IListAlgorithms {
 	}
 
 	@Override
-	public IEncryptionAlgorithm getAlgorithmWithName(String name) {
+	public IEncryptionAlgorithmStrategy getAlgorithmWithName(String name) {
 		return algorithms.get(name);
 	}
 }

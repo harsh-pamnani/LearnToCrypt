@@ -1,6 +1,6 @@
 package com.LearnToCrypt.Playground;
 
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithm;
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithmStrategy;
 import com.LearnToCrypt.Algorithm.UserInput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +15,7 @@ import java.util.Date;
 public class Compare implements ICompare {
 
 	private static final Logger logger = LogManager.getLogger(Compare.class);
-	private IEncryptionAlgorithm algorithm;
+	private IEncryptionAlgorithmStrategy algorithm;
 	private IComparisonResultSet resultSet;
 	private Calendar calendar;
 

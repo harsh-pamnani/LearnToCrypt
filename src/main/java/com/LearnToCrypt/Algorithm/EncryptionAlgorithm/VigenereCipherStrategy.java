@@ -1,11 +1,11 @@
 package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
-import com.LearnToCrypt.Algorithm.UserInput;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class VigenereCipher implements IEncryptionAlgorithm {
+import com.LearnToCrypt.Algorithm.UserInput;
+
+public class VigenereCipherStrategy implements IEncryptionAlgorithmStrategy {
 	private final char startChar = 'A';
 	private final char endChar = 'Z';
 	private final String resultTxt = "Cipher Text: ";
@@ -13,7 +13,13 @@ public class VigenereCipher implements IEncryptionAlgorithm {
 	private String unencryptedPlaintext = null;
 	private String encryptionKey = null;
 	private String encryptedCipherText = null;
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(VigenereCipherStrategy.class);
+	private static final String ALGORITHM_NAME = "Vigenere Cipher";
+
+	@Override
+	public String getName() {
+		return ALGORITHM_NAME;
+	}
 
 	@Override
 	public String encode(String key, String plaintext) {

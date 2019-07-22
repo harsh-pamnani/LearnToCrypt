@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.LearnToCrypt.HashingAlgorithm.MD5;
-import com.LearnToCrypt.BusinessModels.User;
-import com.LearnToCrypt.DatabaseConnection.DBConnection;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.LearnToCrypt.BusinessModels.User;
+import com.LearnToCrypt.DatabaseConnection.DBConnection;
+import com.LearnToCrypt.HashingAlgorithm.MD5;
 
 public class UserDAO implements IUserDAO {
 
@@ -20,7 +20,7 @@ public class UserDAO implements IUserDAO {
 	ResultSet resultSet;
 	MD5 md5Algorithm;
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(UserDAO.class);
 	
 	public UserDAO() {
 		dbConnectionInstance = DBConnection.instance();

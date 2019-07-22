@@ -10,14 +10,13 @@ import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IUserDAO;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 public class AuthenticationManager {
 	
 	private static AuthenticationManager authenticationManagerInstance = null;
 	private static Map<String, String> authenticatedUsers;
 	DAOAbstractFactory daoAbstractFactory;
-    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+    private static final Logger logger = LogManager.getLogger(AuthenticationManager.class);
 	
 	public static AuthenticationManager instance() {
 		if (null == authenticationManagerInstance) {

@@ -1,10 +1,10 @@
 package com.LearnToCrypt.Playground;
 
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithm;
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithmStrategy;
 
 import java.util.ArrayList;
 
 public interface IListAlgorithms {
 	ArrayList<String> getAvailableAlgorithms();
-	IEncryptionAlgorithm getAlgorithmWithName(String name);
+	IEncryptionAlgorithmStrategy getAlgorithmWithName(String name);
 }

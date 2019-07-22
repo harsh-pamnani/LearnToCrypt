@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 @Controller
 public class StudentManagementController {
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(StudentManagementController.class);
     private AuthenticationManager authenticationManager;
     private DAOAbstractFactory daoAbstractFactory;
     
@@ -54,9 +53,6 @@ public class StudentManagementController {
 		model.addAttribute("isErrorPresent", "Yes");
 		String formResponseMessage = "";
 		if (userDAO.isUserRegistered(email)) {
-			System.out.println("HP");
-			System.out.println(authenticationManager.getEmail(httpSession));
-			System.out.println(email);
 			if (!authenticationManager.getEmail(httpSession).equals(email)) {
 				IUserDAO userDAOForDelete = daoAbstractFactory.createUserDAO();
 				if (userDAOForDelete.deleteUser(email)) {

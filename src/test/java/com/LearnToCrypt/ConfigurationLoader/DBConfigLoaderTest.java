@@ -11,11 +11,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
-import com.LearnToCrypt.app.LearnToCryptApplication;
-
 public class DBConfigLoaderTest {
 
-    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+    private static final Logger logger = LogManager.getLogger(DBConfigLoaderTest.class);
 
 	DBConfigLoader dbConfigLoader;
 	String database;

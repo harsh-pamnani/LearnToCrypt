@@ -1,19 +1,26 @@
 package com.LearnToCrypt.Validations;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.LearnToCrypt.app.LearnToCryptApplication;
+import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.DAO.ISignUpValidationRulesDAO;
 
 public class SignUpValidationRules {
 	private List<IValidation> validationRules;
-    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
-
+    private static final Logger logger = LogManager.getLogger(SignUpValidationRules.class);
+    DAOAbstractFactory daoAbstractFactory;
+    private HashMap<String, IValidation> rulesMap = new HashMap<String, IValidation>();
+    
 	public SignUpValidationRules() {
+		daoAbstractFactory = new DAOAbstractFactory();
 		validationRules = new ArrayList<IValidation>();
+		
+		setRulesMap();
 		setValidationRules();
 	}
 	
@@ -22,20 +29,31 @@ public class SignUpValidationRules {
 		return validationRules;
 	}
 
+	private void setRulesMap() {
+		rulesMap.put("EmailValidation", new EmailValidation());
+		rulesMap.put("NameCharactersValidation", new NameCharactersValidation());
+		rulesMap.put("PasswordLengthValidation", new PasswordLengthValidation());
+		rulesMap.put("PasswordLowerCaseValidation", new PasswordLowerCaseValidation());
+		rulesMap.put("PasswordSpecialCharValidation", new PasswordSpecialCharValidation());
+		rulesMap.put("PasswordUpperCaseValidation", new PasswordUpperCaseValidation());
+		rulesMap.put("ConfirmPasswordValidation", new ConfirmPasswordValidation());
+		rulesMap.put("RoleValidation", new RoleValidation());
+	}
+	
 	private void setValidationRules() {
-		validationRules.add(new NameEmptyValidation());
-		validationRules.add(new NameCharactersValidation());
+		ISignUpValidationRulesDAO signUpValidationRulesDAO = daoAbstractFactory.createSignUpValidationRulesDAO();
 		
-		validationRules.add(new EmailValidation());
+		HashMap<String, String> rulesAndValue = signUpValidationRulesDAO.getRulesAndValues();
 		
-		validationRules.add(new PasswordLengthValidation());
-		validationRules.add(new PasswordLowerCaseValidation());
-		validationRules.add(new PasswordSpecialCharValidation());
-		validationRules.add(new PasswordUpperCaseValidation());
-		
-		validationRules.add(new ConfirmPasswordValidation());
-		
-		validationRules.add(new RoleValidation());
+		try {
+			for(String key: rulesAndValue.keySet()) {
+				IValidation validationRule = rulesMap.get(key);
+				validationRule.setValue(rulesAndValue.get(key));
+				validationRules.add(validationRule);
+			}
+		} catch (NullPointerException e) {
+			logger.error("Error in creating the sign up validation rules. ", e);
+		}
 		
 		logger.info("Sign up validation rules created.");
 	}

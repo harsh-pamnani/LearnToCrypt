@@ -1,19 +1,18 @@
 package com.LearnToCrypt.ConfigurationLoader;
 
-import com.LearnToCrypt.app.LearnToCryptApplication;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class MailConfigLoader {
 	private static MailConfigLoader mailConfigInstance = null;
 
 	private HashMap<String, String> mailConfig;
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(MailConfigLoader.class);
 	private Properties javaMailProperties;
 
 	public static MailConfigLoader getInstance() {

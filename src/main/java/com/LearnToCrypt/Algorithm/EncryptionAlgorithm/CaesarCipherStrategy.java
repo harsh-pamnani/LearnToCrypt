@@ -7,13 +7,18 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
-public class CaesarCipher implements IEncryptionAlgorithm {
+public class CaesarCipherStrategy implements IEncryptionAlgorithmStrategy {
 
     private String result = "";
     private String plaintext = null;
     private ArrayList<String> steps = new ArrayList<>();
     private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+    private static final String ALGORITHM_NAME = "Caesar Cipher";
 
+    @Override
+    public String getName() {
+        return ALGORITHM_NAME;
+    }
 
     @Override
     public String encode(String key, String plaintext) {
@@ -100,6 +105,5 @@ public class CaesarCipher implements IEncryptionAlgorithm {
 
         return formError;
     }
-
 }
 

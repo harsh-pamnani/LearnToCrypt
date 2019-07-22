@@ -90,7 +90,16 @@ public class UserDAOFactoryMock implements IUserDAO {
 
 	@Override
 	public User getUser(String email) {
-		return users.get(0);
+		User newUser = null;
+		
+		for (User u : users) {
+			if (u.getEmail().equals(email)) {
+				newUser = u;
+				break;
+			}
+		}
+		
+		return newUser;
 	}
 
 	@Override
