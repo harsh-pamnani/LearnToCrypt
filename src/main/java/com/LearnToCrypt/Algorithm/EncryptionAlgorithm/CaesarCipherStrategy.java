@@ -22,6 +22,7 @@ public class CaesarCipherStrategy implements IEncryptionAlgorithmStrategy {
 
     @Override
     public String encode(String key, String plaintext) {
+        result = "";
         this.plaintext = plaintext;
         int shift = Integer.parseInt(key);
         char temp = ' ';
