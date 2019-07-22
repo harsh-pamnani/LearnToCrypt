@@ -17,7 +17,7 @@ import com.LearnToCrypt.app.LearnToCryptApplication;
 @Controller
 public class ProfileController implements WebMvcConfigurer {
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(ProfileController.class);
 	private IUserProfileBridge profile;
 	private IPasswordChanger passwordChanger;
 	private IUserNameChanger userNameChanger;

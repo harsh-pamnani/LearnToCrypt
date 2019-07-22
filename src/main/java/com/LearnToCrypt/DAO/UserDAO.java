@@ -188,7 +188,6 @@ public class UserDAO implements IUserDAO {
 			resultSet = statement.executeQuery();
 			if(resultSet.next()){
 				userClass = resultSet.getString("class");
-				System.out.println("userClass"+userClass);
 			}
 		} catch (SQLException e) {
 			logger.error("Error in fetching the user class.", e);

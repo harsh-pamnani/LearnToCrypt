@@ -76,7 +76,7 @@ public class CaesarCipher implements IEncryptionAlgorithm {
         return stepsString;
     }
 
-    @Override
+	@Override
     public String keyPlainTextValidation(UserInput userInput) {
         String formError = null;
 
