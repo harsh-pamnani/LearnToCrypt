@@ -1,6 +1,9 @@
 package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
 import com.LearnToCrypt.Algorithm.UserInput;
+import com.LearnToCrypt.app.LearnToCryptApplication;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
@@ -9,6 +12,8 @@ public class CaesarCipher implements IEncryptionAlgorithm {
     private String result = "";
     private String plaintext = null;
     private ArrayList<String> steps = new ArrayList<>();
+    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+
 
     @Override
     public String encode(String key, String plaintext) {
@@ -40,6 +45,7 @@ public class CaesarCipher implements IEncryptionAlgorithm {
                 result += ' ';
             }
         }
+        logger.info("Caesar Cipher: Encoding done.");
         return result;
     }
 
@@ -66,7 +72,7 @@ public class CaesarCipher implements IEncryptionAlgorithm {
                 stepsString += steps.get(i);
             }
         }
-
+        logger.info("Caesar Cipher: Decoding done.");
         return stepsString;
     }
 
@@ -84,6 +90,12 @@ public class CaesarCipher implements IEncryptionAlgorithm {
             formError = "Enter only A-Z in plain text.";
         } else if(Integer.parseInt(userInput.getKey()) > 26){
             formError = "The key must smaller than 26.";
+        }
+
+        if (formError == null) {
+            logger.info("Caesar Cipher: Key Validated Successfully");
+        } else {
+            logger.error("Caesar Cipher: Key Validation Error: " + formError);
         }
 
         return formError;
