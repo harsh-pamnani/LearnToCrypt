@@ -4,7 +4,7 @@ import com.LearnToCrypt.Algorithm.UserInput;
 
 import java.util.ArrayList;
 
-public class CaesarCipher implements IEncryptionAlgorithm {
+public class CaesarCipherStrategy implements IEncryptionAlgorithmStrategy {
 
     private String result = "";
     private String plaintext = null;

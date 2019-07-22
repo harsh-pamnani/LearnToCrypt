@@ -10,23 +10,23 @@ public class AlgorithmFactory implements IAlgorithmFactory{
     private static final Logger logger = LogManager.getLogger(AlgorithmFactory.class);
 	
     @Override
-    public IEncryptionAlgorithm createAlgorithm(String name) throws NoSuchAlgorithmException {
-        IEncryptionAlgorithm algorithm = null;
+    public IEncryptionAlgorithmStrategy createAlgorithm(String name) throws NoSuchAlgorithmException {
+        IEncryptionAlgorithmStrategy algorithm = null;
         switch(name) {
             case "Caesar Cipher":
-                algorithm = new CaesarCipher();
+                algorithm = new CaesarCipherStrategy();
                 break;
             case "Vigenere Cipher":
-                algorithm = new VigenereCipher();
+                algorithm = new VigenereCipherStrategy();
                 break;
             case "Matrix Transposition Cipher":
-                algorithm = new MatrixTransposeCipher();
+                algorithm = new MatrixTransposeCipherStrategy();
                 break;
             case "Playfair Cipher":
-                algorithm = new PlayFairCipher();
+                algorithm = new PlayFairCipherStrategy();
                 break;
             case "Rail Fence Cipher":
-            	algorithm = new RailFenceCipher();
+            	algorithm = new RailFenceCipherStrategy();
                 break;
             default:
             	logger.error("Unknown algorithm request : " + name);

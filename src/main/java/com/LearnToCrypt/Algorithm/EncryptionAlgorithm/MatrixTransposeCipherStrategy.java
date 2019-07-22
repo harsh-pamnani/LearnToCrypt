@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.Algorithm.UserInput;
 
-public class MatrixTransposeCipher implements IEncryptionAlgorithm {
+public class MatrixTransposeCipherStrategy implements IEncryptionAlgorithmStrategy {
 
 	private final String resultTxt = "Cipher Text: ";
 	private final String keyRegex = "([0-9],)+[0-9]";
@@ -14,7 +14,7 @@ public class MatrixTransposeCipher implements IEncryptionAlgorithm {
 	private String unencryptedPlaintext = null;
 	private String encryptionKey = null;
 	private String encryptedCipherText = null;
-	private static final Logger logger = LogManager.getLogger(MatrixTransposeCipher.class);
+	private static final Logger logger = LogManager.getLogger(MatrixTransposeCipherStrategy.class);
 
 	@Override
 	public String encode(String key, String plaintext) {

@@ -5,12 +5,12 @@ import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.Algorithm.UserInput;
 
-public class RailFenceCipher implements IEncryptionAlgorithm {
+public class RailFenceCipherStrategy implements IEncryptionAlgorithmStrategy {
 
 	private String result = "Cipher Text: ";
 	private String steps = "Steps:\n";
 	private String plaintext = null;
-	private static final Logger logger = LogManager.getLogger(RailFenceCipher.class);
+	private static final Logger logger = LogManager.getLogger(RailFenceCipherStrategy.class);
 
 	@Override
 	public String encode(String key, String plaintext) {

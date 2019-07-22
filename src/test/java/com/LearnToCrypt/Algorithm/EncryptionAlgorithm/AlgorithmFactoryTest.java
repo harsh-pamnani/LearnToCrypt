@@ -21,20 +21,20 @@ public class AlgorithmFactoryTest {
 	@Test
 	public void testCreateAlgorithm() {
 		try {
-			assertTrue(algorithmFactoryTest.createAlgorithm("Caesar Cipher") instanceof CaesarCipher);
-			assertFalse(algorithmFactoryTest.createAlgorithm("Caesar Cipher") instanceof RailFenceCipher);
+			assertTrue(algorithmFactoryTest.createAlgorithm("Caesar Cipher") instanceof CaesarCipherStrategy);
+			assertFalse(algorithmFactoryTest.createAlgorithm("Caesar Cipher") instanceof RailFenceCipherStrategy);
 			
-			assertTrue(algorithmFactoryTest.createAlgorithm("Rail Fence Cipher") instanceof RailFenceCipher);
-			assertFalse(algorithmFactoryTest.createAlgorithm("Rail Fence Cipher") instanceof CaesarCipher);
+			assertTrue(algorithmFactoryTest.createAlgorithm("Rail Fence Cipher") instanceof RailFenceCipherStrategy);
+			assertFalse(algorithmFactoryTest.createAlgorithm("Rail Fence Cipher") instanceof CaesarCipherStrategy);
 			
-			assertTrue(algorithmFactoryTest.createAlgorithm("Vigenere Cipher") instanceof VigenereCipher);
-			assertFalse(algorithmFactoryTest.createAlgorithm("Vigenere Cipher") instanceof CaesarCipher);
+			assertTrue(algorithmFactoryTest.createAlgorithm("Vigenere Cipher") instanceof VigenereCipherStrategy);
+			assertFalse(algorithmFactoryTest.createAlgorithm("Vigenere Cipher") instanceof CaesarCipherStrategy);
 			
-			assertTrue(algorithmFactoryTest.createAlgorithm("Matrix Transposition Cipher") instanceof MatrixTransposeCipher);
-			assertFalse(algorithmFactoryTest.createAlgorithm("Matrix Transposition Cipher") instanceof CaesarCipher);
+			assertTrue(algorithmFactoryTest.createAlgorithm("Matrix Transposition Cipher") instanceof MatrixTransposeCipherStrategy);
+			assertFalse(algorithmFactoryTest.createAlgorithm("Matrix Transposition Cipher") instanceof CaesarCipherStrategy);
 
-			assertTrue(algorithmFactoryTest.createAlgorithm("Playfair Cipher") instanceof PlayFairCipher);
-			assertFalse(algorithmFactoryTest.createAlgorithm("Playfair Cipher") instanceof CaesarCipher);
+			assertTrue(algorithmFactoryTest.createAlgorithm("Playfair Cipher") instanceof PlayFairCipherStrategy);
+			assertFalse(algorithmFactoryTest.createAlgorithm("Playfair Cipher") instanceof CaesarCipherStrategy);
 		} catch (NoSuchAlgorithmException e) {
 			logger.error("Error occurred during algorithm factory test", e);
 		}

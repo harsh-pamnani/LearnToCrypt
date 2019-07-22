@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.Algorithm.UserInput;
 
-public class VigenereCipher implements IEncryptionAlgorithm {
+public class VigenereCipherStrategy implements IEncryptionAlgorithmStrategy {
 	private final char startChar = 'A';
 	private final char endChar = 'Z';
 	private final String resultTxt = "Cipher Text: ";
@@ -13,7 +13,7 @@ public class VigenereCipher implements IEncryptionAlgorithm {
 	private String unencryptedPlaintext = null;
 	private String encryptionKey = null;
 	private String encryptedCipherText = null;
-	private static final Logger logger = LogManager.getLogger(VigenereCipher.class);
+	private static final Logger logger = LogManager.getLogger(VigenereCipherStrategy.class);
 
 	@Override
 	public String encode(String key, String plaintext) {
