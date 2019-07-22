@@ -36,7 +36,7 @@ public class DBConfigLoader {
 		
 		try {
 			Properties DatabaseCredentialsProperties = new Properties();
-			String configFile = "DatabaseConfigurationTest.properties";
+			String configFile = "DatabaseConfigurationProd.properties";
 			InputStream input = getClass().getClassLoader().getResourceAsStream(configFile);
 			DatabaseCredentialsProperties.load(input);
 			
