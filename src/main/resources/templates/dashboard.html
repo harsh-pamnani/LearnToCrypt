@@ -29,7 +29,7 @@
 
 	<div class="container dashboard">
 		<hr>
-		<h2>Basic encryption algorithm</h2>
+		<h2 th:text="${subtitle1}"></h2>
 		<div class="row">
 			<div class="col-md-4" th:each="basicAlgorithm:${basic}">
 				<div class="card" style="width: 18rem;">
@@ -46,7 +46,7 @@
 		</div>
 		<br>
 		<hr>
-		<h2>Intermediate encryption algorithm</h2>
+		<h2 th:text="${subtitle2}"></h2>
 		<div class="row">
 			<div class="col-md-4" th:each="intermediateAlgorithm:${intermediate}">
 				<div class="card" style="width: 18rem;">

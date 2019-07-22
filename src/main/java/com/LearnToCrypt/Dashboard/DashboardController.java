@@ -16,6 +16,8 @@ import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
 import com.LearnToCrypt.app.LearnToCryptApplication;
 
+import java.util.ArrayList;
+
 @Controller
 public class DashboardController implements WebMvcConfigurer {
     private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
@@ -36,7 +38,6 @@ public class DashboardController implements WebMvcConfigurer {
 		} else {
 			String email = authenticationManager.getEmail(httpSession);
 			String role = daoAbstractFactory.createUserDAO().getUserRole(email);
-			
 			String username = authenticationManager.getUsername(httpSession);
 			model.put("username", username);
 
@@ -48,8 +49,23 @@ public class DashboardController implements WebMvcConfigurer {
 			IUserDAO userDAO = daoAbstractFactory.createUserDAO();
 			String className = userDAO.getUserClass(email);
 
-			model.addAttribute("basic",algorithmDAO.getAlgorithmByLevelAndClass(1,className));
-			model.addAttribute("intermediate",algorithmDAO.getAlgorithmByLevelAndClass(2,className));
+			ArrayList basicAlgorithm = algorithmDAO.getAlgorithmByLevelAndClass(1,className);
+			ArrayList intermediateAlgorithm = algorithmDAO.getAlgorithmByLevelAndClass(2,className);
+
+			if(!(basicAlgorithm == null) && basicAlgorithm.size()>=1){
+				model.addAttribute("subtitle1","Basic encryption algorithm");
+				model.addAttribute("basic",basicAlgorithm);
+			}
+
+			if(!(intermediateAlgorithm == null) && intermediateAlgorithm.size()>=1){
+				model.addAttribute("subtitle2","Intermediate encryption algorithm");
+				model.addAttribute("intermediate",intermediateAlgorithm);
+			}
+
+			if(userDAO.getUserClass(email) == null){
+				model.addAttribute("subtitle1","You have not resisted to any class yet.");
+			}
+
 			logger.info("user \"" + username + "\" accessed dashboard!");
 	        return "dashboard";
 		}

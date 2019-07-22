@@ -59,7 +59,6 @@ public class ClassManagementController {
             model.put("username", username);
 
             IAlgorithmDAO algorithmDAO = abstractFactory.createAlgorithmDAO();
-            //classDAO.createClass(new MyClass("new class","tonyt@dal.ca","1,2,3"));
             model.addAttribute("classes",classDAO.getClass(email));
             model.addAttribute("algorithms",algorithmDAO.getAllAvailableAlgorithm());
 
@@ -84,6 +83,8 @@ public class ClassManagementController {
             }
             classDAO.deleteStudentFromClass(emailID);
         }
+        String username = authenticationManager.getUsername(httpSession);
+        logger.info("Instructor \"" + username + "\" deleted a student!");
         return "redirect:/classManagement";
     }
 
@@ -101,6 +102,8 @@ public class ClassManagementController {
             }
             classDAO.deleteClass(className);
         }
+        String username = authenticationManager.getUsername(httpSession);
+        logger.info("Instructor \"" + username + "\" deleted a class!");
         return "redirect:/classManagement";
     }
 
@@ -127,7 +130,8 @@ public class ClassManagementController {
             }
             classDAO.createClass(new MyClass(myNewClass.getClassName(),email,alg));
         }
-
+        String username = authenticationManager.getUsername(httpSession);
+        logger.info("Instructor \"" + username + "\" added a class!");
         return "redirect:/classManagement";
     }
 
@@ -149,6 +153,8 @@ public class ClassManagementController {
                 classDAO.addStudentToClass(studentList,className);
             }
         }
+        String username = authenticationManager.getUsername(httpSession);
+        logger.info("Instructor \"" + username + "\" added a list of to class "+className);
         return "redirect:/classManagement";
     }
 
@@ -161,7 +167,7 @@ public class ClassManagementController {
                 result.add(line.split(",")[0]);
             }
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            logger.info(e.getMessage());
         }
         return result;
     }
