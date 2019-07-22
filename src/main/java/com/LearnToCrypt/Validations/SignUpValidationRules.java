@@ -3,18 +3,19 @@ package com.LearnToCrypt.Validations;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
-import com.LearnToCrypt.DAO.ISignUpValidationRulesDAO;
+import com.LearnToCrypt.DAO.IValidationRulesDAO;
 
 public class SignUpValidationRules {
 	private List<IValidation> validationRules;
     private static final Logger logger = LogManager.getLogger(SignUpValidationRules.class);
     DAOAbstractFactory daoAbstractFactory;
-    private HashMap<String, IValidation> rulesMap = new HashMap<String, IValidation>();
+    private Map<String, IValidation> rulesMap = new HashMap<String, IValidation>();
     
 	public SignUpValidationRules() {
 		daoAbstractFactory = new DAOAbstractFactory();
@@ -41,9 +42,9 @@ public class SignUpValidationRules {
 	}
 	
 	private void setValidationRules() {
-		ISignUpValidationRulesDAO signUpValidationRulesDAO = daoAbstractFactory.createSignUpValidationRulesDAO();
+		IValidationRulesDAO signUpValidationRulesDAO = daoAbstractFactory.createSignUpValidationRulesDAO();
 		
-		HashMap<String, String> rulesAndValue = signUpValidationRulesDAO.getRulesAndValues();
+		Map<String, String> rulesAndValue = signUpValidationRulesDAO.getRulesAndValues();
 		
 		try {
 			for(String key: rulesAndValue.keySet()) {

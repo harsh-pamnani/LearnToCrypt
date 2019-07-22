@@ -5,13 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.DatabaseConnection.DBConnection;
 
-public class SignUpValidationRulesDAO implements ISignUpValidationRulesDAO {
+public class SignUpValidationRulesDAO implements IValidationRulesDAO {
 
 	DBConnection dbConnectionInstance = null;
 	Connection dbConnection = null;
@@ -19,7 +20,7 @@ public class SignUpValidationRulesDAO implements ISignUpValidationRulesDAO {
 	ResultSet resultSet;
 
 	private static final Logger logger = LogManager.getLogger(SignUpValidationRulesDAO.class);
-	private HashMap<String, String> rulesAndValues = new HashMap<String, String>();
+	private Map<String, String> rulesAndValues = new HashMap<String, String>();
 	
 	public SignUpValidationRulesDAO() {
 		dbConnectionInstance = DBConnection.instance();
@@ -39,14 +40,14 @@ public class SignUpValidationRulesDAO implements ISignUpValidationRulesDAO {
 				rulesAndValues.put(resultSet.getString(1), resultSet.getString(2));
 			}
 		} catch (SQLException e) {
-			logger.error("Error in loading sign validation rules. ", e);
+			logger.error("Error in loading sign up validation rules. ", e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}
 	}
 	
 	@Override
-	public HashMap<String, String> getRulesAndValues() {
+	public Map<String, String> getRulesAndValues() {
 		return rulesAndValues;
 	}
 }

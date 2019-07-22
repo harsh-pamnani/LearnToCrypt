@@ -28,7 +28,17 @@ public class DAOAbstractFactory implements IDAOAbstractFactory {
 	}
 	
 	@Override
-	public ISignUpValidationRulesDAO createSignUpValidationRulesDAO() {
+	public IValidationRulesDAO createSignUpValidationRulesDAO() {
 		return new SignUpValidationRulesDAO();
+	}
+
+	@Override
+	public IValidationRulesDAO createProfileNameUpdateValidationRulesDAO() {
+		return new ProfileNameUpdateValidationRulesDAO();
+	}
+
+	@Override
+	public IValidationRulesDAO createProfilePasswordUpdateValidationRulesDAO() {
+		return new ProfilePasswordUpdateValidationRulesDAO();
 	}
 }
