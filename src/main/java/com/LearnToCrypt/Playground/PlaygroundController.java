@@ -94,6 +94,10 @@ public class PlaygroundController implements WebMvcConfigurer {
 				"; keyLeft = " + keyLeft +
 				"; secondAlgo = " + secondAlgo +
 				"; keyRight = " + keyRight);
+		if (firstAlgo.equals(secondAlgo)) {
+			logger.error("Same algorithms selected for comparison");
+			return "redirect:/playground?errorText=Both algorithms can not be same";
+		}
 		String fileString = fileToString.getStringFromFile(file);
 		comparisonParameters.clearInputParams();
 		comparisonParameters.setPlaintext(fileString);
@@ -101,6 +105,11 @@ public class PlaygroundController implements WebMvcConfigurer {
 		IEncryptionAlgorithmStrategy secondAlgorithm = algorithmList.getAlgorithmWithName(secondAlgo);
 		comparisonParameters.addAlgorithm(firstAlgorithm, keyLeft, firstAlgo);
 		comparisonParameters.addAlgorithm(secondAlgorithm, keyRight, secondAlgo);
+
+		if (comparisonResultSet != null) {
+			comparisonResultSet.clearResultSet();
+		}
+		
 		comparisonResultSet = compare.compareAlgorithms(comparisonParameters);
 		while (comparisonResultSet.hasNextResult()) {
 			IComparisonResult result = comparisonResultSet.getNextResult();

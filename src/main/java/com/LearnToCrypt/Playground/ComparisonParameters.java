@@ -72,5 +72,6 @@ public class ComparisonParameters implements IComparisonParameters{
 	public void clearInputParams() {
 		keyMap.clear();
 		algorithmMap.clear();
+		iterator = keyMap.keySet().iterator();
 	}
 }

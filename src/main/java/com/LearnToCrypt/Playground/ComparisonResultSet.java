@@ -36,4 +36,11 @@ public class ComparisonResultSet implements IComparisonResultSet {
 		}
 		return null;
 	}
+
+	@Override
+	public void clearResultSet() {
+		resultMap.clear();
+		iterator = resultMap.keySet().iterator();
+	}
+
 }
