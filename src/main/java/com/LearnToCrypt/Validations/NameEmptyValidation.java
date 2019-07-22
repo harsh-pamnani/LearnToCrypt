@@ -17,15 +17,14 @@ public class NameEmptyValidation implements IValidation {
 	
 	@Override
 	public boolean isValid(User user, String confirmPassword) {
-		boolean result = true;
-		
-		if (this.ruleValue.equalsIgnoreCase("Yes")) {
-			String username = user.getName();
-			if (username != null) {
-				result = !username.equals("");
-				logger.info("Name empty validation for user : " + user.getEmail() + ". Result : " + result);
-			}
+		boolean result = false;
+
+		String username = user.getName();
+		if (username != null) {
+			result = !username.equals("");
+			logger.info("Name empty validation for user : " + user.getEmail() + ". Result : " + result);
 		}
+
 
 		return result;
 	}

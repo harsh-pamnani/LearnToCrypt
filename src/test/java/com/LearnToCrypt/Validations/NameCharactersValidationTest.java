@@ -15,7 +15,7 @@ public class NameCharactersValidationTest {
 	
 	public NameCharactersValidationTest() {
 		nameCharactersValidation = new NameCharactersValidation();
-		
+		nameCharactersValidation.setValue("[a-zA-Z ]+");
 		user = new User();
 		user.setEmail("linus@gmail.com");
 		user.setName("Avgust Linus");

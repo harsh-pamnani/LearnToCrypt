@@ -16,7 +16,7 @@ public class PasswordLowerCaseValidationTest {
 	
 	public PasswordLowerCaseValidationTest() {
 		passwordLowerCaseValidation = new PasswordLowerCaseValidation();
-		
+		passwordLowerCaseValidation.setValue(".*[a-z].*");
 		user = new User();
 		user.setEmail("Balbinoeleonora@abc.org");
 		user.setName("Balbino Eleonora");

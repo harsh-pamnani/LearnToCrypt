@@ -16,7 +16,7 @@ public class PasswordSpecialCharValidationTest {
 	
 	public PasswordSpecialCharValidationTest() {
 		passwordSpecialCharValidation = new PasswordSpecialCharValidation();
-		
+		passwordSpecialCharValidation.setValue(".*[!@#$%^&*()].*");
 		user = new User();
 		user.setEmail("Maryiaanda1@apple.org");
 		user.setName("Maryia Anda");

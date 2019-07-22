@@ -16,7 +16,7 @@ public class PasswordUpperCaseValidationTest {
 	
 	public PasswordUpperCaseValidationTest() {
 		passwordUpperCaseValidation = new PasswordUpperCaseValidation();
-		
+		passwordUpperCaseValidation.setValue(".*[A-Z].*");
 		user = new User();
 		user.setEmail("Araceli@abc.org");
 		user.setName("Araceli Dorinel");
