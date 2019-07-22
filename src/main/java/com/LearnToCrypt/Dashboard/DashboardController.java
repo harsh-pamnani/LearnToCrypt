@@ -62,7 +62,7 @@ public class DashboardController implements WebMvcConfigurer {
 			}
 
 			if(userDAO.getUserClass(email) == null){
-				model.addAttribute("subtitle1","You have not resisted to any class yet.");
+				model.addAttribute("subtitle1","You have not been assigned to any class yet.");
 			}
 
 			logger.info("user \"" + username + "\" accessed dashboard!");
