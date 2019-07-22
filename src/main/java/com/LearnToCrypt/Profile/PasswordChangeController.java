@@ -1,9 +1,5 @@
 package com.LearnToCrypt.Profile;
 
-import com.LearnToCrypt.DAO.DAOAbstractFactory;
-import com.LearnToCrypt.DAO.IDAOAbstractFactory;
-import com.LearnToCrypt.DAO.IPasswordUpdaterDAO;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -13,10 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.DAO.IDAOAbstractFactory;
+import com.LearnToCrypt.DAO.IPasswordUpdaterDAO;
+
 @Controller
 public class PasswordChangeController implements WebMvcConfigurer {
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(PasswordChangeController.class);
 	private String resetToken;
 	private IProfileValidator profileValidator;
 	private IUserProfileBridge profile;

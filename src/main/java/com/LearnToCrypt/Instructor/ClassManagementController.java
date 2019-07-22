@@ -23,12 +23,11 @@ import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IAlgorithmDAO;
 import com.LearnToCrypt.DAO.IClassDAO;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 @Controller
 public class ClassManagementController {
 
-    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+    private static final Logger logger = LogManager.getLogger(ClassManagementController.class);
 
     private AuthenticationManager authenticationManager;
     private DAOAbstractFactory daoAbstractFactory;

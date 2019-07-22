@@ -7,11 +7,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.BusinessModels.User;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 public class EmailValidation implements IValidation {
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(EmailValidation.class);
 
 	// Reference for Email validation Regx -
 	// https://stackoverflow.com/questions/8204680/java-regex-email

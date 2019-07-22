@@ -7,11 +7,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.BusinessModels.User;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 public class PasswordSpecialCharValidation implements IValidation {
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(PasswordSpecialCharValidation.class);
 
 	public static final Pattern SPECIAL_CHAR_REGEX = Pattern.compile(".*[!@#$%^&*()].*");
 

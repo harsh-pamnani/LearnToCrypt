@@ -1,13 +1,9 @@
 package com.LearnToCrypt.Algorithm;
 
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmFactory;
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithm;
-import com.LearnToCrypt.BusinessModels.Algorithm;
-import com.LearnToCrypt.DAO.DAOAbstractFactory;
-import com.LearnToCrypt.DAO.IAlgorithmDAO;
-import com.LearnToCrypt.DAO.IUserDAO;
-import com.LearnToCrypt.SignIn.AuthenticationManager;
-import com.LearnToCrypt.app.LearnToCryptApplication;
+import java.security.NoSuchAlgorithmException;
+
+import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -18,14 +14,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.security.NoSuchAlgorithmException;
-
-import javax.servlet.http.HttpSession;
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmFactory;
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithm;
+import com.LearnToCrypt.BusinessModels.Algorithm;
+import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.DAO.IAlgorithmDAO;
+import com.LearnToCrypt.DAO.IUserDAO;
+import com.LearnToCrypt.SignIn.AuthenticationManager;
 
 @Controller
 public class AlgorithmController implements WebMvcConfigurer {
 
-    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+    private static final Logger logger = LogManager.getLogger(AlgorithmController.class);
 
     private AuthenticationManager authenticationManager;
     private DAOAbstractFactory abstractFactory;

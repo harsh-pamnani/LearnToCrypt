@@ -13,7 +13,6 @@ import com.LearnToCrypt.BusinessModels.Algorithm;
 import com.LearnToCrypt.BusinessModels.BusinessModelAbstractFactory;
 import com.LearnToCrypt.BusinessModels.IBusinessModelAbstractFactory;
 import com.LearnToCrypt.DatabaseConnection.DBConnection;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 public class AlgorithmDAO implements IAlgorithmDAO {
 
@@ -22,7 +21,7 @@ public class AlgorithmDAO implements IAlgorithmDAO {
     private PreparedStatement statement;
     private ResultSet resultSet;
 
-    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+    private static final Logger logger = LogManager.getLogger(AlgorithmDAO.class);
 
     public AlgorithmDAO() {
         this.dbConnectionInstance = DBConnection.instance();
@@ -44,7 +43,6 @@ public class AlgorithmDAO implements IAlgorithmDAO {
                 algorithm.setLevel(resultSet.getInt("level"));
             }
         } catch (Exception e) {
-            e.printStackTrace();
             logger.error("Error in fetching the algorithm.", e);
         }finally {
             dbConnectionInstance.closeConnection();
@@ -65,7 +63,6 @@ public class AlgorithmDAO implements IAlgorithmDAO {
                 result.add(resultSet.getString("name"));
             }
         } catch (Exception e) {
-            e.printStackTrace();
             logger.error("Error in fetching the algorithm name.", e);
         }finally {
             dbConnectionInstance.closeConnection();
@@ -98,7 +95,6 @@ public class AlgorithmDAO implements IAlgorithmDAO {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
             logger.error("Error in fetching the algorithm by id.", e);
         }finally {
             dbConnectionInstance.closeConnection();
@@ -119,7 +115,6 @@ public class AlgorithmDAO implements IAlgorithmDAO {
                 toReturn  = resultSet.getString(1).split(",");
             }
         } catch (Exception e) {
-            e.printStackTrace();
             logger.error("Error in fetching the algorithm list.", e);
         }finally {
             dbConnectionInstance.closeConnection();

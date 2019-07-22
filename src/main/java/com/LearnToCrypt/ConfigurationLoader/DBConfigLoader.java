@@ -8,13 +8,11 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.LearnToCrypt.app.LearnToCryptApplication;
-
 public class DBConfigLoader {
 	private HashMap<String, String> dbCredentialsMap;
 
 	private static DBConfigLoader configurationUniqueInstance = null;
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(DBConfigLoader.class);
 
 	public static DBConfigLoader instance() {
 		if (null == configurationUniqueInstance) {

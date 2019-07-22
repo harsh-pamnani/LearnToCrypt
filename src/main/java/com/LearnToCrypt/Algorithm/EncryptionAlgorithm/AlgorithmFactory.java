@@ -5,11 +5,9 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.LearnToCrypt.app.LearnToCryptApplication;
-
 public class AlgorithmFactory implements IAlgorithmFactory{
 	
-    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+    private static final Logger logger = LogManager.getLogger(AlgorithmFactory.class);
 	
     @Override
     public IEncryptionAlgorithm createAlgorithm(String name) throws NoSuchAlgorithmException {

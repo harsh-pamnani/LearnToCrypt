@@ -4,14 +4,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.Algorithm.UserInput;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 public class RailFenceCipher implements IEncryptionAlgorithm {
 
 	private String result = "Cipher Text: ";
 	private String steps = "Steps:\n";
 	private String plaintext = null;
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(RailFenceCipher.class);
 
 	@Override
 	public String encode(String key, String plaintext) {

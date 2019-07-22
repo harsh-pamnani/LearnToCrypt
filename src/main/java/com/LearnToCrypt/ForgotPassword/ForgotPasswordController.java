@@ -21,12 +21,11 @@ import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.EmailService.EmailService;
 import com.LearnToCrypt.EmailService.IEmailService;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 @Controller
 public class ForgotPasswordController implements WebMvcConfigurer {
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(ForgotPasswordController.class);
 	private IDAOAbstractFactory abstractFactory;
 	private IUserDAO userDAO;
 	private IPasswordUpdaterDAO passwordUpdaterDAO;

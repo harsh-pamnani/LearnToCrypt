@@ -1,9 +1,9 @@
 package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
-import com.LearnToCrypt.Algorithm.UserInput;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.LearnToCrypt.Algorithm.UserInput;
 
 public class VigenereCipher implements IEncryptionAlgorithm {
 	private final char startChar = 'A';
@@ -13,7 +13,7 @@ public class VigenereCipher implements IEncryptionAlgorithm {
 	private String unencryptedPlaintext = null;
 	private String encryptionKey = null;
 	private String encryptedCipherText = null;
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(VigenereCipher.class);
 
 	@Override
 	public String encode(String key, String plaintext) {

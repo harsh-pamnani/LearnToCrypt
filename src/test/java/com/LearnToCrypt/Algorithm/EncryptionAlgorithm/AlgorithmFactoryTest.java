@@ -5,10 +5,13 @@ import static org.junit.Assert.assertTrue;
 
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
 public class AlgorithmFactoryTest {
 	
+	private static final Logger logger = LogManager.getLogger(AlgorithmFactoryTest.class);
 	AlgorithmFactory algorithmFactoryTest;
 	
 	public AlgorithmFactoryTest() {
@@ -33,7 +36,7 @@ public class AlgorithmFactoryTest {
 			assertTrue(algorithmFactoryTest.createAlgorithm("Playfair Cipher") instanceof PlayFairCipher);
 			assertFalse(algorithmFactoryTest.createAlgorithm("Playfair Cipher") instanceof CaesarCipher);
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+			logger.error("Error occurred during algorithm factory test", e);
 		}
 	}
 }

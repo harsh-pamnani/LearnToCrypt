@@ -7,11 +7,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.BusinessModels.User;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 public class PasswordUpperCaseValidation implements IValidation {
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(PasswordUpperCaseValidation.class);
 
 	public static final Pattern UPPERCASE_REGEX = Pattern.compile(".*[A-Z].*");
 	

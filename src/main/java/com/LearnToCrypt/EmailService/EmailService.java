@@ -1,16 +1,16 @@
 package com.LearnToCrypt.EmailService;
 
-import com.LearnToCrypt.ConfigurationLoader.MailConfigLoader;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.Async;
 
+import com.LearnToCrypt.ConfigurationLoader.MailConfigLoader;
+
 public class EmailService implements IEmailService {
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(EmailService.class);
 	private SimpleMailMessage mailMessage;
 	private MailConfigLoader mailConfigLoader;
 	private final String fromAddress = "support@LearnToCrypt.com";

@@ -1,8 +1,5 @@
 package com.LearnToCrypt.SignUp;
 
-import com.LearnToCrypt.SignIn.AuthenticationManager;
-import com.LearnToCrypt.SignIn.LoginController;
-
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +18,7 @@ import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IDAOAbstractFactory;
 import com.LearnToCrypt.DAO.IUserDAO;
+import com.LearnToCrypt.SignIn.AuthenticationManager;
 
 @Controller
 public class SignUpController implements WebMvcConfigurer {
@@ -29,7 +27,7 @@ public class SignUpController implements WebMvcConfigurer {
 	ValidateSignUpForm validateSignUpForm;
 	IBusinessModelAbstractFactory businessModelAbstractFactory;
 
-	private static final Logger logger = LogManager.getLogger(LoginController.class);
+	private static final Logger logger = LogManager.getLogger(SignUpController.class);
 	AuthenticationManager authenticationManager;
 
 

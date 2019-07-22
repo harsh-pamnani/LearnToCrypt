@@ -6,12 +6,11 @@ import org.apache.logging.log4j.Logger;
 import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IUserDAO;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 public class ValidateUserCredentials {
 	
 	DAOAbstractFactory abstractFactory;
-    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+    private static final Logger logger = LogManager.getLogger(ValidateUserCredentials.class);
 
 	public ValidateUserCredentials() {
 		abstractFactory = new DAOAbstractFactory();
