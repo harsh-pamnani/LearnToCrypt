@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+
+    <style type="text/css">
+        .content {
+            margin-top: 7rem;
+            margin-bottom: 7rem;
+        }
+        form {
+            width: 100%;
+            padding: 20px;
+        }
+    </style>
+
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+          crossorigin="anonymous">
+
+    <title>LearnToCrypt Playground</title>
+</head>
+<body>
+<div th:replace="fragments/navbarLoggedIn"></div>
+
+<div class="container content">
+    <div id="profile-form-style" class="card">
+        <div class="card-title card-header"> Comparison Results </div>
+        <div class="card-body">
+            <div class="row" th:object="${algorithmResults}">
+                <div class="col-sm-6" th:each="result: ${algorithmResults}">
+                    <h3 th:text="${result.getName()}"></h3>
+                    <h6>Time taken: </h6>
+                    <h6 th:text="${result.getDuration()}"></h6>
+                    <h6>Plaintext Length:</h6>
+                    <h6 th:text="${result.getPlaintextLength()}"></h6>
+                    <h6>Encrypted Text Length:</h6>
+                    <h6 th:text="${result.getEncryptedTextLength()}"></h6>
+                    <h6>Ciphertext:</h6>
+                    <div th:text = "${result.getEncryptedText()}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer"></div>
+</body>
+</html>

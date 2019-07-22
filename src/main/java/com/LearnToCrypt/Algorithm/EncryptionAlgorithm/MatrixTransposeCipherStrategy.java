@@ -2,11 +2,11 @@ package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.util.ArrayList;
 
 import com.LearnToCrypt.Algorithm.UserInput;
 
 public class MatrixTransposeCipherStrategy implements IEncryptionAlgorithmStrategy {
-
 	private final String resultTxt = "Cipher Text: ";
 	private final String keyRegex = "([0-9],)+[0-9]";
 	private final String plaintextRegex = "[A-Za-z ]+";
@@ -70,6 +70,8 @@ public class MatrixTransposeCipherStrategy implements IEncryptionAlgorithmStrate
 			formError = "Plain text can't be empty";
 		} else if (!userInput.getPlaintext().matches(plaintextRegex)) {
 			formError = "Enter only A-Z charachters in plain text.";
+		} else if (!validateKeySeries(userInput.getKey())) {
+			formError = "Key should contain a continuous series of numbers. e.g. 4,1,3,2";
 		}
 
 		if (formError == null) {
@@ -135,5 +137,29 @@ public class MatrixTransposeCipherStrategy implements IEncryptionAlgorithmStrate
 		numCols += 1;
 		logger.info("Number of columns in the matrix: " + String.valueOf(numCols));
 		return numCols;
+	}
+
+	private boolean validateKeySeries (String key) {
+		logger.info("Validation for key being a continuous series");
+		int[] keyNums= parseKey(key);
+		boolean isValid = false;
+		ArrayList<Boolean> series = new ArrayList<>();
+		for (int i = 0; i < keyNums.length; i++) {
+			series.add(false);
+		}
+		try {
+			for (int i = 0; i < keyNums.length; i++) {
+				series.set(keyNums[i], true);
+			}
+			if (series.contains(false)) {
+				isValid = false;
+			} else {
+				isValid = true;
+			}
+		} catch (IndexOutOfBoundsException e) {
+			logger.error("Error in key format");
+			isValid = false;
+		}
+		return isValid;
 	}
 }

@@ -53,7 +53,7 @@ public class AlgorithmDAO implements IAlgorithmDAO {
 
     @Override
     public ArrayList<String> getAllAvailableAlgorithm() {
-        String query = "call CSCI5308_7_TEST.get_all_avaiable_algorithm();";
+        String query = "call get_all_avaiable_algorithm();";
         ArrayList<String> result = new ArrayList<>();
         try{
             dbConnection = dbConnectionInstance.getConnection();
@@ -78,7 +78,7 @@ public class AlgorithmDAO implements IAlgorithmDAO {
             return null;
         }
         ArrayList<String> algorithmList = new ArrayList<>(Arrays.asList(algorithmStrings));
-        String query = "call CSCI5308_7_TEST.get_algorithm_by_level("+lv+");";
+        String query = "call get_algorithm_by_level("+lv+");";
         ArrayList<Algorithm> result = new ArrayList<>();
         IBusinessModelAbstractFactory businessModelAbstractFactory = new BusinessModelAbstractFactory();
         try{
@@ -106,7 +106,7 @@ public class AlgorithmDAO implements IAlgorithmDAO {
     public String[] getAlgList(String className){
         String[] toReturn = null;
         //get_algorithm_List
-        String query = "call CSCI5308_7_TEST.get_algorithm_List('"+className+"');";
+        String query = "call get_algorithm_List('"+className+"');";
         try{
             dbConnection = dbConnectionInstance.getConnection();
             statement = dbConnection.prepareStatement(query);

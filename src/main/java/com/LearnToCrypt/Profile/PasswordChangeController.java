@@ -1,5 +1,8 @@
 package com.LearnToCrypt.Profile;
 
+import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.DAO.IDAOAbstractFactory;
+import com.LearnToCrypt.DAO.IPasswordUpdaterDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;

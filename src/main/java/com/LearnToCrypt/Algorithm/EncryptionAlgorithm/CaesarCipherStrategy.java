@@ -81,7 +81,7 @@ public class CaesarCipherStrategy implements IEncryptionAlgorithmStrategy {
         return stepsString;
     }
 
-    @Override
+	@Override
     public String keyPlainTextValidation(UserInput userInput) {
         String formError = null;
 
