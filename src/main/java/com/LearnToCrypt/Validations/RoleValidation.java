@@ -18,7 +18,7 @@ public class RoleValidation implements IValidation {
 	@Override
 	public boolean isValid(User user, String confirmPassword) {
 		String role = user.getRole();
-		if (role != null) {
+		if (role != null && !role.equals("")) {
 			boolean result = this.ruleValue.contains(role);
 			logger.info("Role validation for user : " + user.getEmail() + ". Role : " + user.getRole() + ". Name : "
 					+ user.getName() + ". Result : " + result);

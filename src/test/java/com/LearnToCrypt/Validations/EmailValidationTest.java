@@ -16,7 +16,7 @@ public class EmailValidationTest {
 	
 	public EmailValidationTest() {
 		emailValidation = new EmailValidation();
-		
+		emailValidation.setValue("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$");
 		user = new User();
 		user.setEmail("Harsh@gmail.com");
 		user.setName("Harsh Pamnani");

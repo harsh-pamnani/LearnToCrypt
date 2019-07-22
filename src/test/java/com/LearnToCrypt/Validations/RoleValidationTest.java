@@ -16,7 +16,7 @@ public class RoleValidationTest {
 	
 	public RoleValidationTest() {
 		roleValidation = new RoleValidation();
-		
+		roleValidation.setValue("Student Instructor");
 		user = new User();
 		user.setEmail("Orfeomarta@abc.org");
 		user.setName("Orfeo Marta");

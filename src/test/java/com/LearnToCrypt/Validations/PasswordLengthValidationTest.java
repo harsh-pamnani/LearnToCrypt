@@ -16,7 +16,7 @@ public class PasswordLengthValidationTest {
 	
 	public PasswordLengthValidationTest() {
 		passwordLengthValidation = new PasswordLengthValidation();
-		
+		passwordLengthValidation.setValue("8");
 		user = new User();
 		user.setEmail("Shiva@gmail.com");
 		user.setName("Shiva Armel");
