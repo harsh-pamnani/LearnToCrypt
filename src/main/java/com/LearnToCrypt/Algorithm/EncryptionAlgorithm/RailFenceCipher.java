@@ -62,11 +62,6 @@ public class RailFenceCipher implements IEncryptionAlgorithm {
 	}
 
 	@Override
-	public String getName() {
-		return "Railfence Cipher";
-	}
-
-	@Override
 	public String keyPlainTextValidation(UserInput userInput) {
 		String formError = null;
 

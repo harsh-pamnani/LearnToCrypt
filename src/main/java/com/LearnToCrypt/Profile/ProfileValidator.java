@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ProfileValidator implements IProfileValidator {
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(ProfileValidator.class);
 	private UserProfileNameUpdateValidation nameValidationRules = null;
 	private UserProfilePasswordUpdateValidation passwordValidationRules = null;
 	private User user;

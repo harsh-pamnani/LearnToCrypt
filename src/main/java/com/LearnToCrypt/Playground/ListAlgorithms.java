@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class ListAlgorithms implements IListAlgorithms {
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(ListAlgorithms.class);
 	private ArrayList<String> algorithmNames;
 	private HashMap<String, IEncryptionAlgorithm> algorithms;
 
@@ -32,7 +32,7 @@ public class ListAlgorithms implements IListAlgorithms {
 	}
 
 	@Override
-	public ArrayList<String> getAvailableAlogorithms() {
+	public ArrayList<String> getAvailableAlgorithms() {
 		return algorithmNames;
 	}
 

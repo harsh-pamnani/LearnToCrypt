@@ -31,9 +31,14 @@ public class VigenereCipher implements IEncryptionAlgorithm {
 			int textCharAscii = (int) textChar;
 			int keyAscii = (int) keyChar;
 			int keyCharFromA = keyAscii - (int)startChar;
-			int encryptedCharAscii = textCharAscii + keyCharFromA;
-			if (encryptedCharAscii > (int) endChar) {
-				encryptedCharAscii -= ((int)endChar - (int) startChar);
+			int encryptedCharAscii;
+			if (textCharAscii >= (int)startChar && textCharAscii <= (int)endChar) {
+				encryptedCharAscii = textCharAscii + keyCharFromA;
+				if (encryptedCharAscii > (int) endChar) {
+					encryptedCharAscii -= ((int)endChar - (int) startChar);
+				}
+			} else {
+				encryptedCharAscii = textCharAscii;
 			}
 			char encryptedChar = (char) encryptedCharAscii;
 			encryptedChars[textIndex] = encryptedChar;
@@ -57,11 +62,6 @@ public class VigenereCipher implements IEncryptionAlgorithm {
 	}
 
 	@Override
-	public String getName() {
-		return "Vigenere Cipher";
-	}
-
-	@Override
 	public String keyPlainTextValidation(UserInput userInput) {
 
 		logger.info("Validating key for Vigenere Cipher. Key: " + userInput.getKey());
@@ -70,11 +70,11 @@ public class VigenereCipher implements IEncryptionAlgorithm {
 		if (userInput.getKey().isEmpty()) {
 			formError = "Key can't be empty";
 		} else if (!userInput.getKey().matches("[A-Za-z ]+")) {
-			formError = "Enter only A-Z charachters in key.";
+			formError = "Enter only A-Z characters in key.";
 		} else if (userInput.getPlaintext().isEmpty()) {
 			formError = "Plain text can't be empty";
 		} else if (!userInput.getPlaintext().matches("[A-Za-z ]+")) {
-			formError = "Enter only A-Z charachters in plain text.";
+			formError = "Enter only A-Z characters in plain text.";
 		}
 
 		if (formError == null) {
