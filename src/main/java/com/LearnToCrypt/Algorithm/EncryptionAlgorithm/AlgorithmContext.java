@@ -19,7 +19,7 @@ public class AlgorithmContext {
 		userDAO = abstractFactory.createUserDAO();
 	}
 
-	public void executeStrategy(UserInput userInput, String algorithmName, String useremail, Model model) {
+	public void executeStrategy(UserInput userInput, String useremail, Model model) {
 		String formError = encryptionAlgorithmStrategy.keyPlainTextValidation(userInput);
 
 		if (formError == null) {
@@ -31,7 +31,7 @@ public class AlgorithmContext {
 			String steps = encryptionAlgorithmStrategy.getSteps();
 			model.addAttribute("steps", steps);
 
-			userDAO.updateProgress(useremail, algorithmName);
+			userDAO.updateProgress(useremail, this.encryptionAlgorithmStrategy.getName());
 		} else {
 			model.addAttribute("invalidInput", formError);
 		}

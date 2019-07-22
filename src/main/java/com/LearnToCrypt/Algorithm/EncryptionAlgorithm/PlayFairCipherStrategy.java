@@ -19,7 +19,13 @@ public class PlayFairCipherStrategy implements IEncryptionAlgorithmStrategy {
 	private HashMap<String, String> repeatedCharacters;
 	private char[][] keyMatrix;
 	private static final Logger logger = LogManager.getLogger(PlayFairCipherStrategy.class);
-	
+	private static final String ALGORITHM_NAME = "Playfair Cipher";
+
+	@Override
+	public String getName() {
+		return ALGORITHM_NAME;
+	}
+
 	public PlayFairCipherStrategy() {
 		repeatedCharacters = new HashMap<String, String>();
 		keyMatrix = new char[MATRIX_SIZE][MATRIX_SIZE];

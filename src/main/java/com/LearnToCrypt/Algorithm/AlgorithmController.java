@@ -86,7 +86,7 @@ public class AlgorithmController implements WebMvcConfigurer {
 			cipherStrategy = algorithmFactory.createAlgorithm(algorithmName);
 
 			AlgorithmContext algorithmContext = new AlgorithmContext(cipherStrategy);
-			algorithmContext.executeStrategy(userInput, algorithmName, useremail, model);
+			algorithmContext.executeStrategy(userInput, useremail, model);
 
 			logger.info("user \"" + username + "\" tested " + algorithmName);
 			return "algorithm";

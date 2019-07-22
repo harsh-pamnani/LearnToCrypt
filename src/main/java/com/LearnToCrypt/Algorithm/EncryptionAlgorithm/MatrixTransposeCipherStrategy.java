@@ -15,6 +15,12 @@ public class MatrixTransposeCipherStrategy implements IEncryptionAlgorithmStrate
 	private String encryptionKey = null;
 	private String encryptedCipherText = null;
 	private static final Logger logger = LogManager.getLogger(MatrixTransposeCipherStrategy.class);
+	private static final String ALGORITHM_NAME = "Matrix Transposition Cipher";
+
+	@Override
+	public String getName() {
+		return ALGORITHM_NAME;
+	}
 
 	@Override
 	public String encode(String key, String plaintext) {

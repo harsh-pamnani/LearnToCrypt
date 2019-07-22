@@ -11,6 +11,12 @@ public class RailFenceCipherStrategy implements IEncryptionAlgorithmStrategy {
 	private String steps = "Steps:\n";
 	private String plaintext = null;
 	private static final Logger logger = LogManager.getLogger(RailFenceCipherStrategy.class);
+	private static final String ALGORITHM_NAME = "Rail Fence Cipher";
+
+	@Override
+	public String getName() {
+		return ALGORITHM_NAME;
+	}
 
 	@Override
 	public String encode(String key, String plaintext) {

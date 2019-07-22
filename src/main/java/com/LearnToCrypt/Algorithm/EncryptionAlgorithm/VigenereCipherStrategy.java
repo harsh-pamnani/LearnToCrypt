@@ -14,6 +14,12 @@ public class VigenereCipherStrategy implements IEncryptionAlgorithmStrategy {
 	private String encryptionKey = null;
 	private String encryptedCipherText = null;
 	private static final Logger logger = LogManager.getLogger(VigenereCipherStrategy.class);
+	private static final String ALGORITHM_NAME = "Vigenere Cipher";
+
+	@Override
+	public String getName() {
+		return ALGORITHM_NAME;
+	}
 
 	@Override
 	public String encode(String key, String plaintext) {

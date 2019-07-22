@@ -7,4 +7,5 @@ public interface IEncryptionAlgorithmStrategy {
     public String getResult();
     public String getSteps();
     public String keyPlainTextValidation(UserInput userInput);
+    public String getName();
 }
