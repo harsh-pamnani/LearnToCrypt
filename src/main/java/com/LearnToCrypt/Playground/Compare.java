@@ -1,6 +1,7 @@
 package com.LearnToCrypt.Playground;
 
 import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithm;
+import com.LearnToCrypt.Algorithm.UserInput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,6 +35,7 @@ public class Compare implements ICompare {
 		LocalDateTime endTime;
 		Duration duration;
 		logger.info("Starting Comparison");
+		UserInput input = new UserInput();
 		while (parameters.hasNextAlgorithmName()) {
 			result = new ComparisonResult();
 			name = parameters.getNextAlgorithmName();
@@ -42,16 +44,26 @@ public class Compare implements ICompare {
 			algorithm = parameters.getEncryptionAlgorithm(name);
 			startTime = LocalDateTime.now();
 			logger.info("Encrypting with " + name + "; start at: " + startTime);
-			encryptedText = algorithm.encode(key, plaintext);
-			endTime = LocalDateTime.now();
-			logger.info("Encrypting with " + name + "; end at: " + endTime);
-			duration = Duration.between(startTime, endTime);
-			logger.info("Time taken to encrypt: " + duration.toMillis());
 			result.setName(name);
-			result.setEncryptedText(encryptedText);
-			result.setDuration(duration.toMillis());
-			result.setPlaintextLength(plaintext.length());
-			result.setEncryptedTextLength(encryptedText.length());
+			input.setKey(key);
+			input.setPlaintext(plaintext);
+			String error = algorithm.keyPlainTextValidation(input);
+			if (error == null) {
+				encryptedText = algorithm.encode(key, plaintext);
+				endTime = LocalDateTime.now();
+				logger.info("Encrypting with " + name + "; end at: " + endTime);
+				duration = Duration.between(startTime, endTime);
+				logger.info("Time taken to encrypt: " + duration.toMillis());
+				result.setEncryptedText(encryptedText);
+				result.setDuration(duration.toMillis());
+				result.setPlaintextLength(plaintext.length());
+				result.setEncryptedTextLength(encryptedText.length());
+				result.setHasError(false);
+			} else {
+				logger.error("Error in key validation");
+				result.setHasError(true);
+				result.setErrorText(error);
+			}
 			resultSet.add(result);
 		}
 		return resultSet;

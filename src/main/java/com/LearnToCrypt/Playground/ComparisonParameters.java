@@ -31,7 +31,12 @@ public class ComparisonParameters implements IComparisonParameters{
 
 	@Override
 	public boolean hasNextAlgorithmName() {
-		return iterator.hasNext();
+		if (iterator.hasNext()) {
+			return true;
+		} else {
+			iterator = keyMap.keySet().iterator();
+			return false;
+		}
 	}
 
 	@Override

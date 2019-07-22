@@ -7,6 +7,8 @@ public class ComparisonResult implements IComparisonResult {
 	private long duration;
 	private int plaintextLength;
 	private int encryptedTextLength;
+	private boolean hasError;
+	private String errorText;
 
 	@Override
 	public void setName(String name) {
@@ -34,7 +36,47 @@ public class ComparisonResult implements IComparisonResult {
 	}
 
 	@Override
+	public void setHasError(boolean hasError) {
+		this.hasError = hasError;
+	}
+
+	@Override
+	public void setErrorText(String errorText) {
+		this.errorText = errorText;
+	}
+
+	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public long getDuration() {
+		return duration;
+	}
+
+	@Override
+	public long getPlaintextLength() {
+		return plaintextLength;
+	}
+
+	@Override
+	public long getEncryptedTextLength() {
+		return encryptedTextLength;
+	}
+
+	@Override
+	public String getEncryptedText() {
+		return encryptedText;
+	}
+
+	@Override
+	public boolean hasError() {
+		return hasError;
+	}
+
+	@Override
+	public String getErrorText() {
+		return errorText;
 	}
 }

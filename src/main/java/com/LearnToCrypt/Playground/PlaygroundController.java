@@ -47,7 +47,8 @@ public class PlaygroundController implements WebMvcConfigurer {
 	}
 
 	@GetMapping("/playground")
-	public String displayPlayground(HttpSession httpSession, ModelMap model) {
+	public String displayPlayground(HttpSession httpSession, ModelMap model,
+									@RequestParam(required = false) String errorText) {
 		logger.info("Loading Playground Page");
 		boolean isUserAuthenticated = authenticationManager.isUserAuthenticated(httpSession);
 		if(!isUserAuthenticated) {
@@ -58,6 +59,9 @@ public class PlaygroundController implements WebMvcConfigurer {
 			model.put("username", username);
 			model.put("leftAlgorithms", algorithms);
 			model.put("rightAlgorithms", algorithms);
+			if (errorText != null && errorText.length() > 0) {
+				model.put("errorText", errorText);
+			}
 		}
 
 		return "playground";
@@ -65,17 +69,26 @@ public class PlaygroundController implements WebMvcConfigurer {
 
 	@PostMapping("/playground")
 	public String compare(HttpSession httpSession,
-						  ModelMap model,
-						  @RequestParam("file")MultipartFile file,
-						  @RequestParam String firstAlgo,
-						  @RequestParam String keyLeft,
-						  @RequestParam String secondAlgo,
-						  @RequestParam String keyRight) {
+								ModelMap model,
+								@RequestParam("file")MultipartFile file,
+								@RequestParam String firstAlgo,
+								@RequestParam String keyLeft,
+								@RequestParam String secondAlgo,
+								@RequestParam String keyRight) {
 
 		logger.info("Starting comparison of algorithms");
-		if (null == firstAlgo || null == file || null == keyLeft || null == secondAlgo || null == keyRight) {
+		if (null == firstAlgo ||
+				null == file ||
+				null == keyLeft ||
+				null == secondAlgo ||
+				null == keyRight ||
+				firstAlgo.length() <= 0 ||
+				keyLeft.length() <=0 ||
+				secondAlgo.length() <= 0 ||
+				keyRight.length() <= 0 ||
+				file.isEmpty()) {
 			logger.error("Empty Input Parameter(s)");
-			return "playground";
+			return "redirect:/playground?errorText=Empty Input Parameter(s)";
 		}
 		logger.info("Received parameters: firstAlgo = " + firstAlgo +
 				"; keyLeft = " + keyLeft +
@@ -89,6 +102,14 @@ public class PlaygroundController implements WebMvcConfigurer {
 		comparisonParameters.addAlgorithm(firstAlgorithm, keyLeft, firstAlgo);
 		comparisonParameters.addAlgorithm(secondAlgorithm, keyRight, secondAlgo);
 		comparisonResultSet = compare.compareAlgorithms(comparisonParameters);
-		return "playground";
+		while (comparisonResultSet.hasNextResult()) {
+			IComparisonResult result = comparisonResultSet.getNextResult();
+			if (result.hasError()) {
+				String error = result.getErrorText();
+				return "redirect:/playground?errorText=" + error;
+			}
+		}
+		httpSession.setAttribute("resultSet", comparisonResultSet);
+		return "redirect:/comparison";
 	}
 }
