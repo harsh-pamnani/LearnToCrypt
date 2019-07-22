@@ -11,12 +11,18 @@ import com.LearnToCrypt.BusinessModels.User;
 public class PasswordUpperCaseValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(PasswordUpperCaseValidation.class);
-
-	public static final Pattern UPPERCASE_REGEX = Pattern.compile(".*[A-Z].*");
+	private String ruleValue;
 	
 	@Override
+	public void setValue(String ruleValue) {
+		this.ruleValue = ruleValue;
+	}
+		
+	@Override
 	public boolean isValid(User user, String confirmPassword) {
-		Matcher upperCaseMatcher = UPPERCASE_REGEX.matcher(user.getPassword());
+		Pattern upppcaseRegx = Pattern.compile(this.ruleValue);
+		Matcher upperCaseMatcher = upppcaseRegx.matcher(user.getPassword());
+		
 		boolean result = upperCaseMatcher.find();
 		logger.info("Password uppercase validation for user : " + user.getEmail() + ". Result : " + result);
 		return result;

@@ -8,16 +8,26 @@ import com.LearnToCrypt.BusinessModels.User;
 public class NameEmptyValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(NameEmptyValidation.class);
-
+	private String ruleValue;
+	
+	@Override
+	public void setValue(String ruleValue) {
+		this.ruleValue = ruleValue;
+	}
+	
 	@Override
 	public boolean isValid(User user, String confirmPassword) {
-		String username = user.getName();
-		if (username != null) {
-			boolean result = !username.equals("");
-			logger.info("Name empty validation for user : " + user.getEmail() + ". Result : " + result);
-			return result;
+		boolean result = true;
+		
+		if (this.ruleValue.equalsIgnoreCase("Yes")) {
+			String username = user.getName();
+			if (username != null) {
+				result = !username.equals("");
+				logger.info("Name empty validation for user : " + user.getEmail() + ". Result : " + result);
+			}
 		}
-		return false;
+
+		return result;
 	}
 
 	@Override

@@ -11,12 +11,18 @@ import com.LearnToCrypt.BusinessModels.User;
 public class PasswordLowerCaseValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(PasswordLowerCaseValidation.class);
-
-	public static final Pattern LOWERCASE_REGEX = Pattern.compile(".*[a-z].*");
+	private String ruleValue;
 	
 	@Override
+	public void setValue(String ruleValue) {
+		this.ruleValue = ruleValue;
+	}
+		
+	@Override
 	public boolean isValid(User user, String confirmPassword) {
-		Matcher passwordLowerCaseMatcher = LOWERCASE_REGEX.matcher(user.getPassword());
+		Pattern lowercaseRegx = Pattern.compile(this.ruleValue);
+		Matcher passwordLowerCaseMatcher = lowercaseRegx.matcher(user.getPassword());
+		
 		boolean result = passwordLowerCaseMatcher.find();
 		logger.info("Password lowercase validation for user : " + user.getEmail() + ". Result : " + result);
 		return result;
