@@ -1,28 +1,36 @@
 package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
+import java.security.NoSuchAlgorithmException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class AlgorithmFactory implements IAlgorithmFactory{
+	
+    private static final Logger logger = LogManager.getLogger(AlgorithmFactory.class);
+	
     @Override
-    public IEncryptionAlgorithm createAlgorithm(String name) {
-        IEncryptionAlgorithm algorithm = null;
+    public IEncryptionAlgorithmStrategy createAlgorithm(String name) throws NoSuchAlgorithmException {
+        IEncryptionAlgorithmStrategy algorithm = null;
         switch(name) {
             case "Caesar Cipher":
-                algorithm = new CaesarCipher();
+                algorithm = new CaesarCipherStrategy();
                 break;
             case "Vigenere Cipher":
-                algorithm = new VigenereCipher();
+                algorithm = new VigenereCipherStrategy();
                 break;
             case "Matrix Transposition Cipher":
-                algorithm = new MatrixTransposeCipher();
+                algorithm = new MatrixTransposeCipherStrategy();
                 break;
             case "Playfair Cipher":
-                algorithm = new PlayFairCipher();
+                algorithm = new PlayFairCipherStrategy();
                 break;
             case "Rail Fence Cipher":
-            	algorithm = new RailFenceCipher();
+            	algorithm = new RailFenceCipherStrategy();
                 break;
             default:
-                return null;
-
+            	logger.error("Unknown algorithm request : " + name);
+                throw new NoSuchAlgorithmException();
         }
         return algorithm;
     }

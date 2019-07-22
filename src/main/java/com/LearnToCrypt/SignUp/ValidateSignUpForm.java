@@ -2,6 +2,9 @@ package com.LearnToCrypt.SignUp;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.Validations.IValidation;
 import com.LearnToCrypt.Validations.SignUpValidationRules;
@@ -9,7 +12,8 @@ import com.LearnToCrypt.Validations.SignUpValidationRules;
 public class ValidateSignUpForm {
 	
 	private SignUpValidationRules validationRules = null;
-	
+	private static final Logger logger = LogManager.getLogger(ValidateSignUpForm.class);
+
 	public ValidateSignUpForm() {
 		validationRules = new SignUpValidationRules();
 	}
@@ -22,6 +26,7 @@ public class ValidateSignUpForm {
 		for (IValidation rule: rules) {
 			if(!rule.isValid(user, confirmPassword)) {
 				formError = rule.getError();
+				logger.error("Registration failed with error : " + formError);
 				break;
 			}
 		}

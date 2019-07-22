@@ -5,26 +5,26 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CaesarCipherTest {
+public class CaesarCipherStrategyTest {
 
     UserInput userInput;
-    IEncryptionAlgorithm caesarCipher;
+    IEncryptionAlgorithmStrategy caesarCipher;
 
-    public CaesarCipherTest() {
-        caesarCipher = new CaesarCipher();
+    public CaesarCipherStrategyTest() {
+        caesarCipher = new CaesarCipherStrategy();
         userInput = new UserInput();
     }
 
     @Test
     public void testEncode() {
-        IEncryptionAlgorithm cipher = new CaesarCipher();
+        IEncryptionAlgorithmStrategy cipher = new CaesarCipherStrategy();
         String result = cipher.encode("3","AbCd");
         assertEquals("DeFg",result);
     }
 
     @Test
     public void testGetResult() {
-        IEncryptionAlgorithm cipher = new CaesarCipher();
+        IEncryptionAlgorithmStrategy cipher = new CaesarCipherStrategy();
         cipher.encode("3","AbCd");
         String result = cipher.getResult();
         assertEquals("AbCd\nDeFg",result);
@@ -32,7 +32,7 @@ public class CaesarCipherTest {
 
     @Test
     public void testGetSteps() {
-        IEncryptionAlgorithm cipher = new CaesarCipher();
+        IEncryptionAlgorithmStrategy cipher = new CaesarCipherStrategy();
         cipher.encode("3","AbCd");
         String result = cipher.getSteps();
         assertEquals( "A ----> D\nb ----> e\nC ----> F\nd ----> g\n",result);

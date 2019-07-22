@@ -7,13 +7,13 @@ import org.junit.Test;
 
 import com.LearnToCrypt.Algorithm.UserInput;
 
-public class RailFenceCipherTest {
+public class RailFenceCipherStrategyTest {
 
-	IEncryptionAlgorithm railFenceCipher;
+	IEncryptionAlgorithmStrategy railFenceCipher;
 	UserInput userInput;
 	
-	public RailFenceCipherTest() {
-		railFenceCipher = new RailFenceCipher();
+	public RailFenceCipherStrategyTest() {
+		railFenceCipher = new RailFenceCipherStrategy();
 		userInput = new UserInput();
 	}
 	

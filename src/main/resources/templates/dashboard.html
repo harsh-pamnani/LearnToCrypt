@@ -2,109 +2,70 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
 
-	<link rel="stylesheet" type="text/css" href="/css/main.css">
+<link rel="stylesheet" type="text/css" href="/css/main.css">
 
-    <style type="text/css">
-        .dashboard {
-            margin-top: 7rem;
-            margin-bottom: 7rem;
-        }
-    </style>
+<style type="text/css">
+.dashboard {
+	margin-top: 7rem;
+	margin-bottom: 7rem;
+}
+</style>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+	integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+	crossorigin="anonymous">
 
-    <title> LearnToCrypt Home </title>
+<title>LearnToCrypt Home</title>
 </head>
 
 <body>
 	<div th:replace="fragments/navbarLoggedIn"></div>
 
-    <div class="container dashboard">
-        <hr>
-        <h2>Basic encryption algorithm</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Caesar Cipher</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Basic substitution cipher</h6>
-                        <p class="card-text">The action of a Caesar cipher is to replace each plaintext letter with a
-                            different one a fixed number of places down the alphabet.</p>
-                        <a href="/algorithm?alg=Caesar Cipher" class="card-link">Test it!</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title"> Rail Fence Cipher </h5>
-                        <h6 class="card-subtitle mb-2 text-muted"> Basic transposition cipher </h6>
-                        <p class="card-text"> The rail fence cipher is a transposition cipher 
-							that jumbles up the order of the letters of a message using a basic algorithm. </p>
-                        <a href="/algorithm?alg=Rail Fence Cipher" class="card-link"> Test it! </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
-        <hr>
-        <h2>Intermediate encryption algorithm</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title"> Playfair Cipher </h5>
-                        <h6 class="card-subtitle mb-2 text-muted"> Polyalphabetic substitution cipher </h6>
-                        <p class="card-text"> The Playfair cipher encrypts pairs of letters (digraphs), 
-                        instead of single letters as is the case with simpler substitution ciphers such 
-                        as the Caesar Cipher.  </p>
-                        <a href="/algorithm?alg=Playfair Cipher" class="card-link"> Test it! </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Vigenere Cipher</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Poly-alphabetic Substitution Cipher</h6>
-                        <p class="card-text">Vigenere cipher uses a table known as the vigenere table for encryption
-                            by using the plaintext and key as indices in the table.</p>
-                        <a href="/algorithm?alg=Vigenere Cipher" class="card-link"> Test it! </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Matrix Transposition Cipher</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Transposition Cipher</h6>
-                        <p class="card-text">The Matrix Transposition cipher converts the input text into a matrix and
-                        then reads it column-wise based on the key specified.</p>
-                        <a href="/algorithm?alg=Matrix Transposition Cipher" class="card-link"> Test it! </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container dashboard">
+		<hr>
+		<h2 th:text="${subtitle1}"></h2>
+		<div class="row">
+			<div class="col-md-4" th:each="basicAlgorithm:${basic}">
+				<div class="card" style="width: 18rem;">
+					<div class="card-body">
+						<h5 class="card-title" th:text="${basicAlgorithm.name}"></h5>
+						<h6 class="card-subtitle mb-2 text-muted"
+							th:text="${basicAlgorithm.type}"></h6>
+						<p class="card-text" th:text="${basicAlgorithm.descriptionShort}"></p>
+						<a th:href="@{/algorithm?alg={alg}(alg=${basicAlgorithm.name})}"
+							class="card-link">Test it!</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<hr>
+		<h2 th:text="${subtitle2}"></h2>
+		<div class="row">
+			<div class="col-md-4" th:each="intermediateAlgorithm:${intermediate}">
+				<div class="card" style="width: 18rem;">
+					<div class="card-body">
+						<h5 class="card-title" th:text="${intermediateAlgorithm.name}"></h5>
+						<h6 class="card-subtitle mb-2 text-muted"
+							th:text="${intermediateAlgorithm.type}"></h6>
+						<p class="card-text"
+							th:text="${intermediateAlgorithm.descriptionShort}"></p>
+						<a
+							th:href="@{/algorithm?alg={alg}(alg=${intermediateAlgorithm.name})}"
+							class="card-link">Test it!</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div th:replace="fragments/footer"></div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-
 </body>
 
 </html>

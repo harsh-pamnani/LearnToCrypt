@@ -1,6 +1,7 @@
 package com.LearnToCrypt.SignUp;
 
-import com.LearnToCrypt.SignIn.LoginController;
+import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -17,61 +18,68 @@ import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IDAOAbstractFactory;
 import com.LearnToCrypt.DAO.IUserDAO;
+import com.LearnToCrypt.SignIn.AuthenticationManager;
 
 @Controller
 public class SignUpController implements WebMvcConfigurer {
-	
-	IDAOAbstractFactory abstractFactory;
+
+	IDAOAbstractFactory daoAbstractFactory;
 	ValidateSignUpForm validateSignUpForm;
 	IBusinessModelAbstractFactory businessModelAbstractFactory;
 
-	private static final Logger logger = LogManager.getLogger(LoginController.class);
-
+	private static final Logger logger = LogManager.getLogger(SignUpController.class);
+	AuthenticationManager authenticationManager;
 
 	public SignUpController() {
-		 abstractFactory = new DAOAbstractFactory();
-		 validateSignUpForm = new ValidateSignUpForm();
-		 businessModelAbstractFactory = new BusinessModelAbstractFactory();
+		daoAbstractFactory = new DAOAbstractFactory();
+		validateSignUpForm = new ValidateSignUpForm();
+		businessModelAbstractFactory = new BusinessModelAbstractFactory();
+		authenticationManager = AuthenticationManager.instance();
 	}
-	
-	@GetMapping("/signup")
-    public String displaySignUp(ModelMap model) {
-		
-		model.addAttribute("user", businessModelAbstractFactory.createUser());
 
+	@GetMapping("/signup")
+	public String displaySignUp(ModelMap model, HttpSession httpSession) {
+		if (authenticationManager.isUserAuthenticated(httpSession)) {
+			logger.info("/signup redirecting to dashboard as the user " + authenticationManager.getEmail(httpSession)
+					+ " is already logged in");
+			return "redirect:/dashboard";
+		}
+
+		model.addAttribute("user", businessModelAbstractFactory.createUser());
 		return "registration.html";
-    }
-	
+	}
+
 	@PostMapping("/signup")
-    public String showDashboard(ModelMap model,User user,@RequestParam String confirmPassword,RedirectAttributes redirectAttributes) {
-		
+	public String showDashboard(ModelMap model, User user, @RequestParam String confirmPassword,
+			RedirectAttributes redirectAttributes) {
+
 		String formError = validateSignUpForm.validateFormDetails(user, confirmPassword);
-		
-		if( formError.equals("") ) {		
-			IUserDAO userDAOValidation = abstractFactory.createUserDAO();
-			boolean isUserRegistered = userDAOValidation.isUserRegistered(user);
-			
+
+		if (formError.equals("")) {
+			IUserDAO userDAOValidation = daoAbstractFactory.createUserDAO();
+			boolean isUserRegistered = userDAOValidation.isUserRegistered(user.getEmail());
+
 			if (isUserRegistered) {
 				model.put("invalidSignup", "Email id is already registered. Registration Failed.");
-				logger.error("Email id \""+user.getEmail()+"\" is already registered. Registration Failed.");
+				logger.error("Email id \"" + user.getEmail() + "\" is already registered. Registration Failed.");
 				return "registration.html";
 			} else {
-				IUserDAO userDAORegistration = abstractFactory.createUserDAO();
+				IUserDAO userDAORegistration = daoAbstractFactory.createUserDAO();
 				userDAORegistration.createUser(user);
-				logger.info("\""+user.getEmail()+"\" registration success.");
+				logger.info(user.getEmail() + " registration success.");
 			}
 		} else {
 			model.put("invalidSignup", formError + " Registration Failed.");
-			logger.error(formError+" Registration Failed.");
+			logger.error(formError + " Registration Failed.");
 			return "registration.html";
 		}
-		
-		IUserDAO userDAOName = abstractFactory.createUserDAO();
+
+		IUserDAO userDAOName = daoAbstractFactory.createUserDAO();
 		String userName = userDAOName.getUserName(user.getEmail());
-		
+
 		// This logic will be updated to get the user's name from database.
 		redirectAttributes.addFlashAttribute("username", userName);
-		
-        return "redirect:/dashboard";
-    }
+
+		return "redirect:/dashboard";
+	}
 }

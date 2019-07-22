@@ -7,13 +7,13 @@ import org.junit.Test;
 
 import com.LearnToCrypt.Algorithm.UserInput;
 
-public class PlayFairCipherTest {
+public class PlayFairCipherStrategyTest {
 
-	IEncryptionAlgorithm playFairCipher;
+	IEncryptionAlgorithmStrategy playFairCipher;
 	UserInput userInput;
 	
-	public PlayFairCipherTest() {
-		playFairCipher = new PlayFairCipher();
+	public PlayFairCipherStrategyTest() {
+		playFairCipher = new PlayFairCipherStrategy();
 		userInput = new UserInput();
 	}
 	

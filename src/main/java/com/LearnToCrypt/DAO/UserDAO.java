@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.LearnToCrypt.HashingAlgorithm.MD5;
-import com.LearnToCrypt.BusinessModels.User;
-import com.LearnToCrypt.DatabaseConnection.DBConnection;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.LearnToCrypt.BusinessModels.User;
+import com.LearnToCrypt.DatabaseConnection.DBConnection;
+import com.LearnToCrypt.HashingAlgorithm.MD5;
 
 public class UserDAO implements IUserDAO {
 
@@ -20,7 +20,7 @@ public class UserDAO implements IUserDAO {
 	ResultSet resultSet;
 	MD5 md5Algorithm;
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(UserDAO.class);
 	
 	public UserDAO() {
 		dbConnectionInstance = DBConnection.instance();
@@ -41,7 +41,7 @@ public class UserDAO implements IUserDAO {
 			resultSet = statement.executeQuery();
 			
 		} catch (SQLException e) {
-			logger.error("Error in creating a new user.", e);
+			logger.error("Error in creating a new user: " + user.getEmail(), e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}
@@ -56,9 +56,9 @@ public class UserDAO implements IUserDAO {
 		String query = "CALL count_user(\""+ user.getEmail() + "\",\"" + hashedPassword + "\");";
 		
 		try {
-			isValid = isRegistered(isValid, query);
+			isValid = isRegistered(query);
 		} catch (SQLException e) {
-			logger.error("Error in fetching the user credentials.", e);
+			logger.error("Error in fetching the user credentials for user: " + user.getEmail(), e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}	
@@ -67,15 +67,36 @@ public class UserDAO implements IUserDAO {
 	}
 	
 	@Override
-	public boolean isUserRegistered(User user) {		
-		boolean isRegistered = false;
+	public boolean deleteUser(String email) {
+		boolean isDeleted = false;
 		
-		String query = "CALL count_registered_user(\""+ user.getEmail() + "\");";
+		String query = "CALL delete_user(\""+ email + "\");";
 		
 		try {
-			isRegistered = isRegistered(isRegistered, query);
+			dbConnection = dbConnectionInstance.getConnection();
+			
+			statement = dbConnection.prepareStatement(query);		
+			resultSet = statement.executeQuery();
+			isDeleted = true;
 		} catch (SQLException e) {
-			logger.error("Error in fetching the user registration details.", e);
+			logger.error("Error in deleting the user user: " + email, e);
+		} finally {
+			dbConnectionInstance.closeConnection();
+		}	
+		
+		return isDeleted;
+	}
+	
+	@Override
+	public boolean isUserRegistered(String email) {		
+		boolean isRegistered = false;
+		
+		String query = "CALL count_registered_user(\""+ email + "\");";
+		
+		try {
+			isRegistered = isRegistered(query);
+		} catch (SQLException e) {
+			logger.error("Error in fetching the user registration details for user: " + email, e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}	
@@ -123,7 +144,7 @@ public class UserDAO implements IUserDAO {
 				}
 			}
 		}catch (SQLException e){
-			logger.error("Error in fetching the user progress.", e);
+			logger.error("Error in fetching the user progress for user: " + email, e);
 		}finally {
 			dbConnectionInstance.closeConnection();
 		}
@@ -150,11 +171,30 @@ public class UserDAO implements IUserDAO {
 				statement = dbConnection.prepareStatement(query);
 				statement.executeQuery();
 			} catch (SQLException e) {
-				logger.error("Error in updating the user progress.", e);
+				logger.error("Error in updating the user progress for user: " + email, e);
 			} finally {
 				dbConnectionInstance.closeConnection();
 			}
 		}
+	}
+
+	@Override
+	public String getUserClass(String email) {
+		String userClass = "";
+		String query = "call CSCI5308_7_TEST.get_user_class('"+email+"');";
+		try {
+			dbConnection = dbConnectionInstance.getConnection();
+			statement = dbConnection.prepareStatement(query);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()){
+				userClass = resultSet.getString("class");
+			}
+		} catch (SQLException e) {
+			logger.error("Error in fetching the user class.", e);
+		} finally {
+			dbConnectionInstance.closeConnection();
+		}
+		return userClass;
 	}
 
 	private boolean isAlreadyTested(String[] userProgress, String newProgress){
@@ -168,7 +208,9 @@ public class UserDAO implements IUserDAO {
 		return false;
 	}
 
-	private boolean isRegistered(boolean isRegistered, String query) throws SQLException {
+	private boolean isRegistered(String query) throws SQLException {
+		boolean isRegistered = false;
+		
 		dbConnection = dbConnectionInstance.getConnection();
 
 		statement = dbConnection.prepareStatement(query);
@@ -201,7 +243,7 @@ public class UserDAO implements IUserDAO {
 				userName = resultSet.getString(1);
 			}
 		} catch (SQLException e) {
-			logger.error("Error in fetching the user registration details.", e);
+			logger.error("Error in fetching the user registration details for user: " + email, e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}	
@@ -235,7 +277,7 @@ public class UserDAO implements IUserDAO {
 				user.setRole(role);
 			}
 		} catch (SQLException e) {
-			System.out.println("Error : " + e.getMessage());
+			logger.error("Error in generating user object for user : " + email, e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}

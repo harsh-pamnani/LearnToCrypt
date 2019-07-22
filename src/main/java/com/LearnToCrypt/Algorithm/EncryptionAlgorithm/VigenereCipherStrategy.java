@@ -1,11 +1,11 @@
 package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
-import com.LearnToCrypt.Algorithm.UserInput;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class VigenereCipher implements IEncryptionAlgorithm {
+import com.LearnToCrypt.Algorithm.UserInput;
+
+public class VigenereCipherStrategy implements IEncryptionAlgorithmStrategy {
 	private final char startChar = 'A';
 	private final char endChar = 'Z';
 	private final String resultTxt = "Cipher Text: ";
@@ -13,7 +13,13 @@ public class VigenereCipher implements IEncryptionAlgorithm {
 	private String unencryptedPlaintext = null;
 	private String encryptionKey = null;
 	private String encryptedCipherText = null;
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(VigenereCipherStrategy.class);
+	private static final String ALGORITHM_NAME = "Vigenere Cipher";
+
+	@Override
+	public String getName() {
+		return ALGORITHM_NAME;
+	}
 
 	@Override
 	public String encode(String key, String plaintext) {
@@ -31,9 +37,14 @@ public class VigenereCipher implements IEncryptionAlgorithm {
 			int textCharAscii = (int) textChar;
 			int keyAscii = (int) keyChar;
 			int keyCharFromA = keyAscii - (int)startChar;
-			int encryptedCharAscii = textCharAscii + keyCharFromA;
-			if (encryptedCharAscii > (int) endChar) {
-				encryptedCharAscii -= ((int)endChar - (int) startChar);
+			int encryptedCharAscii;
+			if (textCharAscii >= (int)startChar && textCharAscii <= (int)endChar) {
+				encryptedCharAscii = textCharAscii + keyCharFromA;
+				if (encryptedCharAscii > (int) endChar) {
+					encryptedCharAscii -= ((int)endChar - (int) startChar);
+				}
+			} else {
+				encryptedCharAscii = textCharAscii;
 			}
 			char encryptedChar = (char) encryptedCharAscii;
 			encryptedChars[textIndex] = encryptedChar;
@@ -65,11 +76,11 @@ public class VigenereCipher implements IEncryptionAlgorithm {
 		if (userInput.getKey().isEmpty()) {
 			formError = "Key can't be empty";
 		} else if (!userInput.getKey().matches("[A-Za-z ]+")) {
-			formError = "Enter only A-Z charachters in key.";
+			formError = "Enter only A-Z characters in key.";
 		} else if (userInput.getPlaintext().isEmpty()) {
 			formError = "Plain text can't be empty";
 		} else if (!userInput.getPlaintext().matches("[A-Za-z ]+")) {
-			formError = "Enter only A-Z charachters in plain text.";
+			formError = "Enter only A-Z characters in plain text.";
 		}
 
 		if (formError == null) {

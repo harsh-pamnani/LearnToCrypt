@@ -1,19 +1,28 @@
 package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
 import com.LearnToCrypt.Algorithm.UserInput;
+import com.LearnToCrypt.app.LearnToCryptApplication;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
-import com.LearnToCrypt.Algorithm.UserInput;
-
-public class CaesarCipher implements IEncryptionAlgorithm {
+public class CaesarCipherStrategy implements IEncryptionAlgorithmStrategy {
 
     private String result = "";
     private String plaintext = null;
     private ArrayList<String> steps = new ArrayList<>();
+    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+    private static final String ALGORITHM_NAME = "Caesar Cipher";
+
+    @Override
+    public String getName() {
+        return ALGORITHM_NAME;
+    }
 
     @Override
     public String encode(String key, String plaintext) {
+        result = "";
         this.plaintext = plaintext;
         int shift = Integer.parseInt(key);
         char temp = ' ';
@@ -42,6 +51,7 @@ public class CaesarCipher implements IEncryptionAlgorithm {
                 result += ' ';
             }
         }
+        logger.info("Caesar Cipher: Encoding done.");
         return result;
     }
 
@@ -68,11 +78,11 @@ public class CaesarCipher implements IEncryptionAlgorithm {
                 stepsString += steps.get(i);
             }
         }
-
+        logger.info("Caesar Cipher: Decoding done.");
         return stepsString;
     }
 
-    @Override
+	@Override
     public String keyPlainTextValidation(UserInput userInput) {
         String formError = null;
 
@@ -88,8 +98,13 @@ public class CaesarCipher implements IEncryptionAlgorithm {
             formError = "The key must smaller than 26.";
         }
 
+        if (formError == null) {
+            logger.info("Caesar Cipher: Key Validated Successfully");
+        } else {
+            logger.error("Caesar Cipher: Key Validation Error: " + formError);
+        }
+
         return formError;
     }
-
 }
 

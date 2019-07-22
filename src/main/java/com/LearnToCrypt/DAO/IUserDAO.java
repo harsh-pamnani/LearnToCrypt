@@ -8,7 +8,7 @@ public interface IUserDAO {
 	
 	public boolean isUserValid(User user);
 	
-	public boolean isUserRegistered(User user);
+	public boolean isUserRegistered(String email);
 	
 	public String getUserName(String email);
 
@@ -19,4 +19,8 @@ public interface IUserDAO {
 	public String[] getProgress(String email);
 
 	public void updateProgress(String email, String newProgress);
+
+	public String getUserClass(String email);
+	
+	public boolean deleteUser(String email);
 }

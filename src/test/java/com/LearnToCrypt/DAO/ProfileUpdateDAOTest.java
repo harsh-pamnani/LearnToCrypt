@@ -28,7 +28,7 @@ public class ProfileUpdateDAOTest {
 		user.setPassword("Test@123");
 		user.setName("Test");
 		user.setRole("Student");
-		if(!userDAO.isUserRegistered(user)) {
+		if(!userDAO.isUserRegistered(user.getEmail())) {
 			userDAO.createUser(user);
 		}
 	}

@@ -2,6 +2,8 @@ package com.LearnToCrypt.SignIn;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -9,7 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class LogoutController {
 
 	AuthenticationManager authenticationManager;
-	
+    private static final Logger logger = LogManager.getLogger(LogoutController.class);
+
 	public LogoutController() {
 		authenticationManager = AuthenticationManager.instance();
 	}
@@ -17,7 +20,9 @@ public class LogoutController {
 	@GetMapping("/logout")
     public String logoutUser(HttpSession httpSession) {
 		if(authenticationManager.isUserAuthenticated(httpSession)) {
-			authenticationManager.removeAuthenticatedUser(httpSession);			
+			logger.info(authenticationManager.getEmail(httpSession) + " user logged out.");
+			
+			authenticationManager.removeAuthenticatedUser(httpSession);
 		}
 		return "redirect:/homepage";
     }

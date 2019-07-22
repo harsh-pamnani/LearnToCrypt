@@ -23,7 +23,7 @@ public class UserProfileTest {
         user.setPassword("Profile@123");
         user.setName("Profile");
         user.setRole("Student");
-        if(!userDAO.isUserRegistered(user)) {
+        if(!userDAO.isUserRegistered(user.getEmail())) {
             userDAO.createUser(user);
         }
         profile = new UserProfile(user.getEmail());

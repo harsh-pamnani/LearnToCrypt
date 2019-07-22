@@ -1,15 +1,9 @@
 package com.LearnToCrypt.Algorithm;
 
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmFactory;
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.CaesarCipher;
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithm;
-import com.LearnToCrypt.BusinessModels.Algorithm;
-import com.LearnToCrypt.DAO.DAOAbstractFactory;
-import com.LearnToCrypt.DAO.IAlgorithmDAO;
-import com.LearnToCrypt.DAO.IDAOAbstractFactory;
-import com.LearnToCrypt.DAO.IUserDAO;
-import com.LearnToCrypt.SignIn.AuthenticationManager;
-import com.LearnToCrypt.app.LearnToCryptApplication;
+import java.security.NoSuchAlgorithmException;
+
+import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -20,98 +14,95 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.http.HttpSession;
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmContext;
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmFactory;
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithmStrategy;
+import com.LearnToCrypt.BusinessModels.Algorithm;
+import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.DAO.IAlgorithmDAO;
+import com.LearnToCrypt.SignIn.AuthenticationManager;
 
 @Controller
 public class AlgorithmController implements WebMvcConfigurer {
 
-    private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(AlgorithmController.class);
 
-    private AuthenticationManager authenticationManager;
-    private DAOAbstractFactory abstractFactory;
-    private IUserDAO userDAO;
-    private IAlgorithmDAO algorithmDAO;
+	private AuthenticationManager authenticationManager;
+	private DAOAbstractFactory abstractFactory;
+	private IAlgorithmDAO algorithmDAO;
 
-    private String username;
-    private String useremail;
-    private String algorithmName;
-    private String algorithmDescription;
-    private String algorithmImage;
+	private String username;
+	private String useremail;
+	private String algorithmName;
+	private String algorithmDescription;
+	private String algorithmImage;
 
-    public AlgorithmController(){
-        authenticationManager = AuthenticationManager.instance();
-        abstractFactory = new DAOAbstractFactory();
-        userDAO = abstractFactory.createUserDAO();
-        algorithmDAO = abstractFactory.createAlgorithmDAO();
-    }
+	public AlgorithmController() {
+		authenticationManager = AuthenticationManager.instance();
+		abstractFactory = new DAOAbstractFactory();
+		algorithmDAO = abstractFactory.createAlgorithmDAO();
+	}
 
-    @GetMapping("/algorithm")
-    public String getAlgorithmPage(HttpSession httpSession,
-            @RequestParam(name = "alg", required=false, defaultValue="Algorithm")String alg, Model model){
+	@GetMapping("/algorithm")
+	public String getAlgorithmPage(HttpSession httpSession,
+			@RequestParam(name = "alg", required = false, defaultValue = "Algorithm") String alg, Model model) {
 
-        boolean isUserAuthenticated = authenticationManager.isUserAuthenticated(httpSession);
-        if(!isUserAuthenticated) {
-            return "redirect:/login";
-        }
-        username = authenticationManager.getUsername(httpSession);
+		boolean isUserAuthenticated = authenticationManager.isUserAuthenticated(httpSession);
+		if (!isUserAuthenticated) {
+			return "redirect:/login";
+		}
+		username = authenticationManager.getUsername(httpSession);
 
-        Algorithm algorithm = algorithmDAO.getAlgorithm(alg);
-        logger.info("user \""+username+"\" accessed "+algorithm.getName());
-        if(algorithm.getName() == null) {
-        	setModelAttributes(model);
-        	return "dashboard";
-        }
+		Algorithm algorithm = algorithmDAO.getAlgorithm(alg);
+		logger.info("user \"" + username + "\" accessed " + algorithm.getName());
+		if (algorithm.getName() == null) {
+			setModelAttributes(model);
+			return "dashboard";
+		}
 
-        algorithmName = algorithm.getName();
-        algorithmDescription = algorithm.getDescription();
-        algorithmImage = algorithm.getImage();
-        setModelAttributes(model);
+		algorithmName = algorithm.getName();
+		algorithmDescription = algorithm.getDescription();
+		algorithmImage = algorithm.getImage();
+		setModelAttributes(model);
 
+		return "algorithm";
+	}
 
+	@PostMapping("/algorithm")
+	public String submit(HttpSession httpSession, @ModelAttribute UserInput userInput, Model model) {
 
-        return "algorithm";
-    }
+		boolean isUserAuthenticated = authenticationManager.isUserAuthenticated(httpSession);
+		if (!isUserAuthenticated) {
+			return "redirect:/login";
+		}
+		username = authenticationManager.getUsername(httpSession);
+		useremail = authenticationManager.getEmail(httpSession);
+		setModelAttributes(model);
 
-    @PostMapping("/algorithm")
-    public String submit(HttpSession httpSession, @ModelAttribute UserInput userInput, Model model) {
+		AlgorithmFactory algorithmFactory = new AlgorithmFactory();
+		IEncryptionAlgorithmStrategy cipherStrategy;
 
-        boolean isUserAuthenticated = authenticationManager.isUserAuthenticated(httpSession);
-        if(!isUserAuthenticated) {
-            return "redirect:/login";
-        }
-        username = authenticationManager.getUsername(httpSession);
-        useremail = authenticationManager.getEmail(httpSession);
-        setModelAttributes(model);
+		try {
+			cipherStrategy = algorithmFactory.createAlgorithm(algorithmName);
 
-        AlgorithmFactory algorithmFactory = new AlgorithmFactory();
-        IEncryptionAlgorithm cipher =  algorithmFactory.createAlgorithm(algorithmName);
+			AlgorithmContext algorithmContext = new AlgorithmContext(cipherStrategy);
+			algorithmContext.executeStrategy(userInput, useremail, model);
 
-        String formError = cipher.keyPlainTextValidation(userInput);
+			logger.info("user \"" + username + "\" tested " + algorithmName);
+			return "algorithm";
+		} catch (NoSuchAlgorithmException e) {
+			logger.error("Unknown algorithm request : " + algorithmName);
+		}
 
-        if(formError == null) {
-        	cipher.encode(userInput.getKey()+"",userInput.getPlaintext());
+		return "redirect:/dashboard";
+	}
 
-            String result = cipher.getResult();
-            model.addAttribute("result",result);
+	private void setModelAttributes(Model model) {
+		model.addAttribute("username", username);
+		model.addAttribute("userInput", new UserInput());
 
-            String steps = cipher.getSteps();
-            model.addAttribute("steps",steps);
-            
-            userDAO.updateProgress(useremail,algorithmName);
-        } else {
-        	model.addAttribute("invalidInput", formError);
-        }
-        
-        logger.info("user \""+username+"\" tested "+algorithmName);
-        return "algorithm";
-    }
-
-    private void setModelAttributes(Model model) {
-    	model.addAttribute("username", username);
-        model.addAttribute("userInput", new UserInput());
-
-        model.addAttribute("alg", algorithmName);
-        model.addAttribute("url", "images/"+algorithmImage);
-        model.addAttribute("description",algorithmDescription);
-    }
+		model.addAttribute("alg", algorithmName);
+		model.addAttribute("url", "images/" + algorithmImage);
+		model.addAttribute("description", algorithmDescription);
+	}
 }

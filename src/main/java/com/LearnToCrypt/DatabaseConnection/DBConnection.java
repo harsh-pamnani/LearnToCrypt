@@ -8,7 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.LearnToCrypt.ConfigurationLoader.DBConfigLoader;
-import com.LearnToCrypt.app.LearnToCryptApplication;
 
 
 public class DBConnection {
@@ -22,7 +21,7 @@ public class DBConnection {
 	private String port;
 	private String dbConnectionURL;
 
-	private static final Logger logger = LogManager.getLogger(LearnToCryptApplication.class);
+	private static final Logger logger = LogManager.getLogger(DBConnection.class);
 
 	public static DBConnection instance() {
 		if (null == dbConnectionUniqueInstance) {
@@ -44,7 +43,7 @@ public class DBConnection {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			this.dbConnection = DriverManager.getConnection(dbConnectionURL, username, password);
 		} catch (Exception e) {
-			logger.error("Some error occured in loading the DB connection. ",e);
+			logger.fatal("Some error occured in loading the DB connection. ",e);
 		}
 	}
 

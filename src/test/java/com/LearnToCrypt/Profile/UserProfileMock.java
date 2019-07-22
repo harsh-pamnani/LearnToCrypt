@@ -4,21 +4,18 @@ import com.LearnToCrypt.BusinessModels.BusinessModelAbstractFactory;
 import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IDAOAbstractFactory;
-import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.HashingAlgorithm.MD5;
 
 public class UserProfileMock implements IUserProfileBridge {
 
     BusinessModelAbstractFactory businessModelAbstractFactory;
     IDAOAbstractFactory abstractFactory;
-    IUserDAO userDAO;
     User user;
     MD5 md5;
 
     public UserProfileMock() {
         businessModelAbstractFactory = new BusinessModelAbstractFactory();
         abstractFactory = new DAOAbstractFactory();
-        userDAO = abstractFactory.createUserDAO();
         user = businessModelAbstractFactory.createUser();
         md5 = new MD5();
         user.setEmail("test@profile.com");

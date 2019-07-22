@@ -7,9 +7,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
 public class DBConfigLoaderTest {
+
+    private static final Logger logger = LogManager.getLogger(DBConfigLoaderTest.class);
 
 	DBConfigLoader dbConfigLoader;
 	String database;
@@ -23,7 +27,7 @@ public class DBConfigLoaderTest {
 		
 		try {
 			Properties DatabaseCredentialsProperties = new Properties();
-			String configFile = "DatabaseConfigurationProd.properties";
+			String configFile = "DatabaseConfigurationTest.properties";
 			InputStream input = getClass().getClassLoader().getResourceAsStream(configFile);
 			DatabaseCredentialsProperties.load(input);
 			
@@ -34,8 +38,7 @@ public class DBConfigLoaderTest {
 			port = DatabaseCredentialsProperties.getProperty("port");
 			
 		} catch (IOException e) {
-			System.out.println("Error occured in accessing the config file");
-			System.out.println("Error : " + e.getMessage());
+			logger.fatal("Error occured in accessing the config file during test case. Error message: ", e.getMessage());
 		}
 		
 	}

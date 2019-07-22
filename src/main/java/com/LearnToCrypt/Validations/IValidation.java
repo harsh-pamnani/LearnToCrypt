@@ -3,8 +3,9 @@ package com.LearnToCrypt.Validations;
 import com.LearnToCrypt.BusinessModels.User;
 
 public interface IValidation {
+	public void setValue(String ruleValue);
 	
-	public boolean isValid(User user, String confirmPassword);
+	public abstract boolean isValid(User user, String confirmPassword);
 	
-	public String getError();
+	public abstract String getError();
 }
