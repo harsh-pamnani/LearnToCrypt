@@ -30,32 +30,15 @@ public class ProfileUpdateDAO implements IPasswordUpdaterDAO, INameSetterDAO {
         logger.info("Updating Database. Setting Password: " + password);
         String hashedPassword = md5Algorithm.generateMD5HashValue(password);
         String query = "CALL update_password(\""+ email +"\", \""+ hashedPassword + "\");";
-        try {
-            dbConnection = dbConnectionInstance.getConnection();
-            statement = dbConnection.prepareStatement(query);
-            resultSet = statement.executeQuery();
-            logger.info("Updated Database");
-        } catch (SQLException e) {
-            logger.error("Database update error: ", e);
-        } finally {
-            dbConnectionInstance.closeConnection();
-        }
+        updateDatabase(query);
+
     }
 
     @Override
     public void setResetToken(String email, String token) {
         logger.info("Updating Database. Setting token: " + token + " for email: " + email);
         String query = "CALL set_pass_reset(\""+ email +"\", \""+ token + "\");";
-        try {
-            dbConnection = dbConnectionInstance.getConnection();
-            statement = dbConnection.prepareStatement(query);
-            resultSet = statement.executeQuery();
-            logger.info("Updated Database");
-        } catch (SQLException e) {
-            logger.error("Database update error: ", e);
-        } finally {
-            dbConnectionInstance.closeConnection();
-        }
+        updateDatabase(query);
     }
 
     @Override
@@ -84,6 +67,10 @@ public class ProfileUpdateDAO implements IPasswordUpdaterDAO, INameSetterDAO {
     public void setName(String email, String name) {
         logger.info("Updating Database. Setting name: " + name + " for email: " + email);
         String query = "CALL set_username(\""+ email +"\", \""+ name + "\");";
+        updateDatabase(query);
+    }
+
+    private void updateDatabase(String query) {
         try {
             dbConnection = dbConnectionInstance.getConnection();
             statement = dbConnection.prepareStatement(query);
