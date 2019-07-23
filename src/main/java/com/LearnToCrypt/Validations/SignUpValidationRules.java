@@ -42,7 +42,7 @@ public class SignUpValidationRules {
 	
 	public void setValidationRules() {
 		IValidationRulesDAO signUpValidationRulesDAO = daoAbstractFactory.createSignUpValidationRulesDAO();
-		List<String> rules = signUpValidationRulesDAO.getRulesAndValues();
+		List<String> rules = signUpValidationRulesDAO.getRules();
 		
 		try {
 			for(String rule: rules) {

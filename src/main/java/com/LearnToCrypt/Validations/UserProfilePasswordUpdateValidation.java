@@ -39,7 +39,7 @@ public class UserProfilePasswordUpdateValidation {
 	public void setValidationRules() {
 		IValidationRulesDAO profilePasswordUpdateValidationRulesDAO = daoAbstractFactory.createProfilePasswordUpdateValidationRulesDAO();
 
-		List<String> rules = profilePasswordUpdateValidationRulesDAO.getRulesAndValues();
+		List<String> rules = profilePasswordUpdateValidationRulesDAO.getRules();
 
 		try {
 			for(String rule: rules) {

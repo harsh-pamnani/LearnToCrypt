@@ -47,7 +47,7 @@ public class ProfileNameUpdateValidationRulesDAO implements IValidationRulesDAO 
     }
 
     @Override
-	public List<String> getRulesAndValues() {
+	public List<String> getRules() {
 		return rules;
 	}
     

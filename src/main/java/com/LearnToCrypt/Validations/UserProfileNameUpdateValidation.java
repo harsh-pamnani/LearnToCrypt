@@ -36,7 +36,7 @@ public class UserProfileNameUpdateValidation {
 	public void setValidationRules() {
 		IValidationRulesDAO profileNameUpdateValidationRulesDAO = daoAbstractFactory.createProfileNameUpdateValidationRulesDAO();
 
-		List<String> rules = profileNameUpdateValidationRulesDAO.getRulesAndValues();
+		List<String> rules = profileNameUpdateValidationRulesDAO.getRules();
 
 		try {
 			for(String rule: rules) {
