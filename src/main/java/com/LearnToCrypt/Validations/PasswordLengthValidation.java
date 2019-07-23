@@ -17,7 +17,7 @@ public class PasswordLengthValidation implements IValidation {
 	
 	@Override
 	public boolean isValid(User user, String confirmPassword) {
-		boolean result = user.getPassword().length() > Integer.parseInt(this.ruleValue);
+		boolean result = user.getPassword().length() >= Integer.parseInt(this.ruleValue);
 		logger.info("Password length validation for user : " + user.getEmail() + ". Result : " + result);
 		return result;
 	}
