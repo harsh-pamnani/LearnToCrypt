@@ -181,7 +181,7 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public String getUserClass(String email) {
 		String userClass = "";
-		String query = "call CSCI5308_7_TEST.get_user_class('"+email+"');";
+		String query = "call get_user_class('"+email+"');";
 		try {
 			dbConnection = dbConnectionInstance.getConnection();
 			statement = dbConnection.prepareStatement(query);
