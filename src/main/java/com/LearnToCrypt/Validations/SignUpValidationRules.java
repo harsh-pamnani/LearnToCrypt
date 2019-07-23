@@ -42,14 +42,14 @@ public class SignUpValidationRules {
 	
 	public void setValidationRules() {
 		IValidationRulesDAO signUpValidationRulesDAO = daoAbstractFactory.createSignUpValidationRulesDAO();
-		Map<String, String> rulesAndValue = signUpValidationRulesDAO.getRulesAndValues();
+		List<String> rules = signUpValidationRulesDAO.getRulesAndValues();
 		
 		try {
-			for(String key: rulesAndValue.keySet()) {
-				IValidation validationRule = rulesMap.get(key);
+			for(String rule: rules) {
+				IValidation validationRule = rulesMap.get(rule);
 				
 				IValidationRulesDAO signUpRuleValueDAO = daoAbstractFactory.createSignUpValidationRulesDAO();
-				String ruleValue = signUpRuleValueDAO.getRulesValue(key);
+				String ruleValue = signUpRuleValueDAO.getRulesValue(rule);
 				
 				validationRule.setValue(ruleValue);
 				validationRules.add(validationRule);

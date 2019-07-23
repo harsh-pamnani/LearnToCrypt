@@ -36,14 +36,14 @@ public class UserProfileNameUpdateValidation {
 	public void setValidationRules() {
 		IValidationRulesDAO profileNameUpdateValidationRulesDAO = daoAbstractFactory.createProfileNameUpdateValidationRulesDAO();
 
-		Map<String, String> rulesAndValue = profileNameUpdateValidationRulesDAO.getRulesAndValues();
+		List<String> rules = profileNameUpdateValidationRulesDAO.getRulesAndValues();
 
 		try {
-			for(String key: rulesAndValue.keySet()) {
-				IValidation validationRule = rulesMap.get(key);
+			for(String rule: rules) {
+				IValidation validationRule = rulesMap.get(rule);
 				
 				IValidationRulesDAO profileNameRuleValueDAO = daoAbstractFactory.createProfileNameUpdateValidationRulesDAO();
-				String ruleValue = profileNameRuleValueDAO.getRulesValue(key);
+				String ruleValue = profileNameRuleValueDAO.getRulesValue(rule);
 				validationRule.setValue(ruleValue);
 				
 				validationRules.add(validationRule);
