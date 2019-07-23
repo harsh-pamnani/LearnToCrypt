@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+
+<style type="text/css">
+.dashboard {
+	margin-top: 7rem;
+	margin-bottom: 7rem;
+}
+</style>
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+	integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+	crossorigin="anonymous">
+
+<title>LearnToCrypt Home</title>
+</head>
+
+<body>
+	<div th:replace="fragments/navbarLoggedIn"></div>
+
+	<div class="container dashboard">
+		<hr>
+		<h2 th:text="${subtitle1}"></h2>
+		<div class="row">
+			<div class="col-md-4" th:each="basicAlgorithm:${basic}">
+				<div class="card" style="width: 18rem;">
+					<div class="card-body">
+						<h5 class="card-title" th:text="${basicAlgorithm.name}"></h5>
+						<h6 class="card-subtitle mb-2 text-muted"
+							th:text="${basicAlgorithm.type}"></h6>
+						<p class="card-text" th:text="${basicAlgorithm.descriptionShort}"></p>
+						<a th:href="@{/algorithm?alg={alg}(alg=${basicAlgorithm.name})}"
+							class="card-link">Test it!</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<hr>
+		<h2 th:text="${subtitle2}"></h2>
+		<div class="row">
+			<div class="col-md-4" th:each="intermediateAlgorithm:${intermediate}">
+				<div class="card" style="width: 18rem;">
+					<div class="card-body">
+						<h5 class="card-title" th:text="${intermediateAlgorithm.name}"></h5>
+						<h6 class="card-subtitle mb-2 text-muted"
+							th:text="${intermediateAlgorithm.type}"></h6>
+						<p class="card-text"
+							th:text="${intermediateAlgorithm.descriptionShort}"></p>
+						<a
+							th:href="@{/algorithm?alg={alg}(alg=${intermediateAlgorithm.name})}"
+							class="card-link">Test it!</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="fragments/footer"></div>
+</body>
+
+</html>

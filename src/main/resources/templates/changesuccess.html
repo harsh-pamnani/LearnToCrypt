@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+
+<link rel="stylesheet" type="text/css" href="/css/change_password.css">
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+	integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+	crossorigin="anonymous">
+
+<title>LearnToCrypt Password Change</title>
+</head>
+
+<body>
+	<!--- This navigation bar  is the conde snippet from Bootstrap Documentation -->
+	<div th:replace="fragments/navbar"></div>
+
+	<div class="row content" id="">
+		<div class="col-md-4 col-sm-6"></div>
+		<div class="col-md-4 col-sm-6">
+			<div id="profile-form-style" class="card">
+				<div class="card-title card-header">Password Changed
+					Successfully</div>
+				<div class="card-body">
+
+					<div class="card-row text-center">
+						To log into your account click <a
+							class="btn btn-outline-primary nav-link-btn my-sm-0"
+							href="/login"> Login </a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-6"></div>
+	</div>
+
+	<div th:replace="fragments/footer"></div>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+
+<style type="text/css">
+.dashboard {
+	margin-top: 7rem;
+	margin-bottom: 7rem;
+}
+
+.message {
+	width: 400px;
+}
+</style>
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+	integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+	crossorigin="anonymous">
+
+<title>LearnToCrypt Home</title>
+</head>
+
+<body>
+	<nav class="navbar fixed-top navbar-expand-lg navbar-light mb-2"
+		id="navigationHome">
+
+		<a class="navbar-brand" href="/homepage">LearnToCrypt</a>
+
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#optionsCollapsed" aria-controls="optionsCollapsed"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<!--- code snippet for collapsible feature of navbar with responsiveness by using bootstrap classes -->
+		<div class="collapse navbar-collapse" id="optionsCollapsed">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link" href="/dashboard">
+						Dashboard </a></li>
+			</ul>
+			<ul class="navbar-nav ml-auto">
+				<li class="btn-group">
+					<button th:text="${username}" type="button"
+						class="btn btn-dark dropdown-toggle mr-5" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">Some Name</button>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="/profile"> My Profile </a> <a
+							class="dropdown-item" href="/logout"> Logout </a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container dashboard">
+		<form action="/studentManagement" method="post">
+			<h2 class="mb-2">Student Management</h2>
+			<h6 class="mb-2">Enter the email-id of student to be deleted</h6>
+			<div class="form-group w-25">
+				<input name="email" type="email" class="form-control"
+					placeholder="Enter student email id" required>
+			</div>
+			<div th:switch="${isErrorPresent}">
+				<div th:case="No">
+					<div class="text-center alert alert-success message" th:text="${formResponseMessage}"></div>
+				</div>
+				<div th:case="Yes">
+					<div class="text-center alert alert-danger message" th:text="${formResponseMessage}"></div>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary mt-3">Submit</button>
+		</form>
+	</div>
+
+	<div th:replace="fragments/footer"></div>
+</body>
+
+</html>
