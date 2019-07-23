@@ -1,7 +1,8 @@
 package com.LearnToCrypt.DAO;
 
-import java.util.Map;
+import java.util.List;
 
 public interface IValidationRulesDAO {
-	public Map<String, String> getRulesAndValues();
+	public List<String> getRules();
+	public String getRulesValue(String ruleName);
 }

@@ -29,6 +29,8 @@ public class ProfileValidator implements IProfileValidator {
 	@Override
 	public String isNameValid(String name) {
 		logger.info("Validating name: " + name);
+		
+		nameValidationRules.setValidationRules();
 		List<IValidation> rules = nameValidationRules.getValidationRules();
 		String formError = null;
 		user.setName(name);
@@ -45,6 +47,8 @@ public class ProfileValidator implements IProfileValidator {
 	@Override
 	public String isPasswordValid(String password, String confirmPassword) {
 		logger.info("Validating Password");
+		
+		passwordValidationRules.setValidationRules();
 		List<IValidation> rules = passwordValidationRules.getValidationRules();
 		String formError = null;
 		String hashedPassword = md5.generateMD5HashValue(password);

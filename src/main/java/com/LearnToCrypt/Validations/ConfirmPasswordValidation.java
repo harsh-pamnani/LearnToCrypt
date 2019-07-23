@@ -8,11 +8,10 @@ import com.LearnToCrypt.BusinessModels.User;
 public class ConfirmPasswordValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(ConfirmPasswordValidation.class);	
-	private String ruleValue;
 	
 	@Override
 	public void setValue(String ruleValue) {
-		this.ruleValue = ruleValue;
+		return;
 	}
 	
 	@Override

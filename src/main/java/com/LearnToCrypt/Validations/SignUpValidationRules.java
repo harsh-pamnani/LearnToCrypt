@@ -22,7 +22,6 @@ public class SignUpValidationRules {
 		validationRules = new ArrayList<IValidation>();
 		
 		setRulesMap();
-		setValidationRules();
 	}
 	
 	public List<IValidation> getValidationRules() {
@@ -41,15 +40,18 @@ public class SignUpValidationRules {
 		rulesMap.put("RoleValidation", new RoleValidation());
 	}
 	
-	private void setValidationRules() {
+	public void setValidationRules() {
 		IValidationRulesDAO signUpValidationRulesDAO = daoAbstractFactory.createSignUpValidationRulesDAO();
-		
-		Map<String, String> rulesAndValue = signUpValidationRulesDAO.getRulesAndValues();
+		List<String> rules = signUpValidationRulesDAO.getRules();
 		
 		try {
-			for(String key: rulesAndValue.keySet()) {
-				IValidation validationRule = rulesMap.get(key);
-				validationRule.setValue(rulesAndValue.get(key));
+			for(String rule: rules) {
+				IValidation validationRule = rulesMap.get(rule);
+				
+				IValidationRulesDAO signUpRuleValueDAO = daoAbstractFactory.createSignUpValidationRulesDAO();
+				String ruleValue = signUpRuleValueDAO.getRulesValue(rule);
+				
+				validationRule.setValue(ruleValue);
 				validationRules.add(validationRule);
 			}
 		} catch (NullPointerException e) {
