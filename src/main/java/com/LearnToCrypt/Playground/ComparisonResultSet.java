@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 public class ComparisonResultSet implements IComparisonResultSet {
 	private HashMap<String, IComparisonResult> resultMap;
-	Iterator iterator;
+	Iterator<String> iterator;
 
 	public ComparisonResultSet() {
 		resultMap = new HashMap<>();

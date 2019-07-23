@@ -12,7 +12,7 @@ public class ComparisonParameters implements IComparisonParameters{
 	private static final Logger logger = LogManager.getLogger(ComparisonParameters.class);
 	private HashMap<String, String> keyMap;
 	private HashMap<String, IEncryptionAlgorithmStrategy> algorithmMap;
-	private Iterator iterator;
+	private Iterator<String> iterator;
 	private String plaintext;
 
 	public ComparisonParameters() {

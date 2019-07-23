@@ -10,12 +10,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.LearnToCrypt.BusinessModels.Algorithm;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IAlgorithmDAO;
 import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class DashboardController implements WebMvcConfigurer {
@@ -48,8 +49,8 @@ public class DashboardController implements WebMvcConfigurer {
 			IUserDAO userDAO = daoAbstractFactory.createUserDAO();
 			String className = userDAO.getUserClass(email);
 
-			ArrayList basicAlgorithm = algorithmDAO.getAlgorithmByLevelAndClass(1,className);
-			ArrayList intermediateAlgorithm = algorithmDAO.getAlgorithmByLevelAndClass(2,className);
+			List<Algorithm> basicAlgorithm = algorithmDAO.getAlgorithmByLevelAndClass(1,className);
+			List<Algorithm> intermediateAlgorithm = algorithmDAO.getAlgorithmByLevelAndClass(2,className);
 
 			if(!(basicAlgorithm == null) && basicAlgorithm.size()>=1){
 				model.addAttribute("subtitle1","Basic encryption algorithm");
