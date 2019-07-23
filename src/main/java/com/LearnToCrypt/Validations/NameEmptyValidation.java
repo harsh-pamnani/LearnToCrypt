@@ -8,11 +8,10 @@ import com.LearnToCrypt.BusinessModels.User;
 public class NameEmptyValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(NameEmptyValidation.class);
-	private String ruleValue;
 	
 	@Override
 	public void setValue(String ruleValue) {
-		this.ruleValue = ruleValue;
+		return;
 	}
 	
 	@Override
@@ -24,7 +23,6 @@ public class NameEmptyValidation implements IValidation {
 			result = !username.equals("");
 			logger.info("Name empty validation for user : " + user.getEmail() + ". Result : " + result);
 		}
-
 
 		return result;
 	}

@@ -21,7 +21,6 @@ public class UserProfilePasswordUpdateValidation {
 		validationRules = new ArrayList<IValidation>();
 
 		setRulesMap();
-		setValidationRules();
 	}
 
 	private void setRulesMap() {
@@ -37,15 +36,19 @@ public class UserProfilePasswordUpdateValidation {
 		return validationRules;
 	}
 
-	private void setValidationRules() {
+	public void setValidationRules() {
 		IValidationRulesDAO profilePasswordUpdateValidationRulesDAO = daoAbstractFactory.createProfilePasswordUpdateValidationRulesDAO();
 
-		Map<String, String> rulesAndValue = profilePasswordUpdateValidationRulesDAO.getRulesAndValues();
+		List<String> rules = profilePasswordUpdateValidationRulesDAO.getRules();
 
 		try {
-			for(String key: rulesAndValue.keySet()) {
-				IValidation validationRule = rulesMap.get(key);
-				validationRule.setValue(rulesAndValue.get(key));
+			for(String rule: rules) {
+				IValidation validationRule = rulesMap.get(rule);
+
+				IValidationRulesDAO profilePasswordRuleValueDAO = daoAbstractFactory.createProfilePasswordUpdateValidationRulesDAO();
+				String ruleValue = profilePasswordRuleValueDAO.getRulesValue(rule);
+				validationRule.setValue(ruleValue);
+				
 				validationRules.add(validationRule);
 			}
 		} catch (NullPointerException e) {
