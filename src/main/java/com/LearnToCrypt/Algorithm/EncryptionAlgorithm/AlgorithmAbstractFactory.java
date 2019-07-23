@@ -5,9 +5,9 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class AlgorithmFactory implements IAlgorithmFactory{
+public class AlgorithmAbstractFactory implements IAlgorithmFactory{
 	
-    private static final Logger logger = LogManager.getLogger(AlgorithmFactory.class);
+    private static final Logger logger = LogManager.getLogger(AlgorithmAbstractFactory.class);
 	
     @Override
     public IEncryptionAlgorithmStrategy createAlgorithm(String name) throws NoSuchAlgorithmException {
