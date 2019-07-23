@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmContext;
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmFactory;
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmAbstractFactory;
 import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithmStrategy;
 import com.LearnToCrypt.BusinessModels.Algorithm;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
@@ -79,7 +79,7 @@ public class AlgorithmController implements WebMvcConfigurer {
 		useremail = authenticationManager.getEmail(httpSession);
 		setModelAttributes(model);
 
-		AlgorithmFactory algorithmFactory = new AlgorithmFactory();
+		AlgorithmAbstractFactory algorithmFactory = new AlgorithmAbstractFactory();
 		IEncryptionAlgorithmStrategy cipherStrategy;
 
 		try {

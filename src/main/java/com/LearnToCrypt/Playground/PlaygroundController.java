@@ -1,6 +1,6 @@
 package com.LearnToCrypt.Playground;
 
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmFactory;
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmAbstractFactory;
 import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IAlgorithmFactory;
 import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithmStrategy;
 import com.LearnToCrypt.DAO.AlgorithmDAO;
@@ -38,7 +38,7 @@ public class PlaygroundController implements WebMvcConfigurer {
 	public PlaygroundController() {
 		authenticationManager = AuthenticationManager.instance();
 		algorithmDAO = new AlgorithmDAO();
-		algorithmFactory = new AlgorithmFactory();
+		algorithmFactory = new AlgorithmAbstractFactory();
 		algorithmList = new ListAlgorithms(algorithmDAO, algorithmFactory);
 		algorithms = algorithmList.getAvailableAlgorithms();
 		fileToString = new FileToString();
