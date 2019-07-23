@@ -50,4 +50,27 @@ public class SignUpValidationRulesDAO implements IValidationRulesDAO {
 	public Map<String, String> getRulesAndValues() {
 		return rulesAndValues;
 	}
+	
+	@Override
+	public String getRulesValue(String ruleName) {
+		String ruleValue = "";
+		String query = "CALL get_sign_up_rules_value(\"" + ruleName + "\");";
+		
+		try {
+			dbConnection = dbConnectionInstance.getConnection();
+			
+			statement = dbConnection.prepareStatement(query);		
+			resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				ruleValue = resultSet.getString(1);
+			}
+		} catch (SQLException e) {
+			logger.error("Error in getting the value for sign up validation rule name : " + ruleName, e);
+		} finally {
+			dbConnectionInstance.closeConnection();
+		}
+		
+		return ruleValue;
+	}
 }

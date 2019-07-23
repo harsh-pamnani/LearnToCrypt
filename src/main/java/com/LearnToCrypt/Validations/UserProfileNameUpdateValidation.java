@@ -22,7 +22,6 @@ public class UserProfileNameUpdateValidation {
 		validationRules = new ArrayList<IValidation>();
 
 		setRulesMap();
-		setValidationRules();
 	}
 
 	private void setRulesMap() {
@@ -34,7 +33,7 @@ public class UserProfileNameUpdateValidation {
 		return validationRules;
 	}
 
-	private void setValidationRules() {
+	public void setValidationRules() {
 		IValidationRulesDAO profileNameUpdateValidationRulesDAO = daoAbstractFactory.createProfileNameUpdateValidationRulesDAO();
 
 		Map<String, String> rulesAndValue = profileNameUpdateValidationRulesDAO.getRulesAndValues();
@@ -42,7 +41,11 @@ public class UserProfileNameUpdateValidation {
 		try {
 			for(String key: rulesAndValue.keySet()) {
 				IValidation validationRule = rulesMap.get(key);
-				validationRule.setValue(rulesAndValue.get(key));
+				
+				IValidationRulesDAO profileNameRuleValueDAO = daoAbstractFactory.createProfileNameUpdateValidationRulesDAO();
+				String ruleValue = profileNameRuleValueDAO.getRulesValue(key);
+				validationRule.setValue(ruleValue);
+				
 				validationRules.add(validationRule);
 			}
 		} catch (NullPointerException e) {
