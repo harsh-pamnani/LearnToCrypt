@@ -71,11 +71,11 @@ public class RailFenceCipherStrategy implements IEncryptionAlgorithmStrategy {
 		String formError = null;
 
     	if(userInput.getKey().isEmpty()) {
-    		formError ="Key can't be empty";
+    		formError = ERROR_KEY_EMPTY;
     	} else if(!userInput.getKey().matches("[0-9]+")) {
-    		formError = "Enter only digits in the key";
+    		formError = ERROR_KEY_ONLY_DIGITS;
     	} else if(userInput.getPlaintext().isEmpty()) {
-    		formError = "Plain text can't be empty";
+    		formError = ERROR_PLAIN_TEXT_EMPTY;
     	}
 
     	if (formError == null) {

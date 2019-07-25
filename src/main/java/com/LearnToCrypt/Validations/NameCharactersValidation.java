@@ -8,6 +8,7 @@ import com.LearnToCrypt.BusinessModels.User;
 public class NameCharactersValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(NameCharactersValidation.class);
+	public static final String ERROR = "Name can not contain any digits or special characters.";
 	private String ruleValue;
 	
 	@Override
@@ -25,6 +26,6 @@ public class NameCharactersValidation implements IValidation {
 
 	@Override
 	public String getError() {
-		return "Name can not contain any digits or special characters.";
+		return ERROR;
 	}
 }

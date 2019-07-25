@@ -8,6 +8,7 @@ import com.LearnToCrypt.BusinessModels.User;
 public class RoleValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(RoleValidation.class);
+	public static final String ERROR = "Role can not be empty.";
 	private String ruleValue;
 	
 	@Override
@@ -29,7 +30,7 @@ public class RoleValidation implements IValidation {
 
 	@Override
 	public String getError() {
-		return "Role can not be empty.";
+		return ERROR;
 	}
 
 }

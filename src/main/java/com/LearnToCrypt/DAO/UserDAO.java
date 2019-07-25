@@ -14,6 +14,7 @@ import com.LearnToCrypt.HashingAlgorithm.MD5;
 
 public class UserDAO implements IUserDAO {
 
+	public static final String ROLE_STUDENT = "Student";
 	DBConnection dbConnectionInstance = null;
 	Connection dbConnection = null;
 	private PreparedStatement statement;
@@ -29,7 +30,7 @@ public class UserDAO implements IUserDAO {
 	
 	@Override
 	public void createUser(User user) {
-		int role = ( user.getRole().equals("Student") ) ? 1 : 2;
+		int role = ( user.getRole().equals(ROLE_STUDENT) ) ? 1 : 2;
 		
 		String hashedPassword = md5Algorithm.generateMD5HashValue(user.getPassword());
 		String query = "CALL create_user(\""+user.getEmail()+"\", \""+ user.getName() + "\", \"" + hashedPassword + "\", "+ role + ");";

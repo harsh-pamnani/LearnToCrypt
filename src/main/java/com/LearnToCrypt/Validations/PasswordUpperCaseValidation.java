@@ -11,6 +11,7 @@ import com.LearnToCrypt.BusinessModels.User;
 public class PasswordUpperCaseValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(PasswordUpperCaseValidation.class);
+	public static final String ERROR = "Password must contain at least 1 uppercase letter.";
 	private String ruleValue;
 	
 	@Override
@@ -30,6 +31,6 @@ public class PasswordUpperCaseValidation implements IValidation {
 
 	@Override
 	public String getError() {
-		return "Password must contain at least 1 uppercase letter.";
+		return ERROR;
 	}
 }

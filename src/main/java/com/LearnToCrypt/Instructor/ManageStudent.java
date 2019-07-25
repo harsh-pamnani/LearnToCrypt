@@ -5,12 +5,9 @@ import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.ui.ModelMap;
-
-import javax.servlet.http.HttpSession;
 
 public class ManageStudent {
-    private static final Logger logger = LogManager.getLogger(StudentManagementController.class);
+    private static final Logger logger = LogManager.getLogger(ManageStudent.class);
     public static final String RESPONSE_USER_DELETED = "User successfully deleted";
     public static final String RESPONSE_ERROR = "Some error occured in deleting the user. Please try again.";
     public static final String RESPONSE_SAME_EMAIL = "Please enter email address other than your email.";

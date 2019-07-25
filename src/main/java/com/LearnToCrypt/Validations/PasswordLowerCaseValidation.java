@@ -11,6 +11,7 @@ import com.LearnToCrypt.BusinessModels.User;
 public class PasswordLowerCaseValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(PasswordLowerCaseValidation.class);
+	public static final String ERROR = "Password must contain at least 1 lowercase letter.";
 	private String ruleValue;
 	
 	@Override
@@ -30,7 +31,7 @@ public class PasswordLowerCaseValidation implements IValidation {
 
 	@Override
 	public String getError() {
-		return "Password must contain at least 1 lowercase letter.";
+		return ERROR;
 	}
 
 }
