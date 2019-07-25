@@ -23,6 +23,8 @@ import com.LearnToCrypt.SignIn.AuthenticationManager;
 @Controller
 public class SignUpController implements WebMvcConfigurer {
 
+	public static final String ERROR_ALREADY_REGISTERED = "Email id is already registered. Registration Failed.";
+	public static final String ERROR_REGISTRATION_FAILED = " Registration Failed.";
 	IDAOAbstractFactory daoAbstractFactory;
 	ValidateSignUpForm validateSignUpForm;
 	IBusinessModelAbstractFactory businessModelAbstractFactory;
@@ -54,13 +56,13 @@ public class SignUpController implements WebMvcConfigurer {
 			RedirectAttributes redirectAttributes) {
 
 		String formError = validateSignUpForm.validateFormDetails(user, confirmPassword);
+		IUserDAO userDAO = daoAbstractFactory.createUserDAO();
 
 		if (formError.equals("")) {
-			IUserDAO userDAOValidation = daoAbstractFactory.createUserDAO();
-			boolean isUserRegistered = userDAOValidation.isUserRegistered(user.getEmail());
+			boolean isUserRegistered = userDAO.isUserRegistered(user.getEmail());
 
 			if (isUserRegistered) {
-				model.put("invalidSignup", "Email id is already registered. Registration Failed.");
+				model.put("invalidSignup", ERROR_ALREADY_REGISTERED);
 				logger.error("Email id \"" + user.getEmail() + "\" is already registered. Registration Failed.");
 				return "registration.html";
 			} else {
@@ -69,17 +71,13 @@ public class SignUpController implements WebMvcConfigurer {
 				logger.info(user.getEmail() + " registration success.");
 			}
 		} else {
-			model.put("invalidSignup", formError + " Registration Failed.");
-			logger.error(formError + " Registration Failed.");
+			model.put("invalidSignup", formError + ERROR_REGISTRATION_FAILED);
+			logger.error(formError + ERROR_REGISTRATION_FAILED);
 			return "registration.html";
 		}
 
-		IUserDAO userDAOName = daoAbstractFactory.createUserDAO();
-		String userName = userDAOName.getUserName(user.getEmail());
-
-		// This logic will be updated to get the user's name from database.
+		String userName = userDAO.getUserName(user.getEmail());
 		redirectAttributes.addFlashAttribute("username", userName);
-
 		return "redirect:/dashboard";
 	}
 }

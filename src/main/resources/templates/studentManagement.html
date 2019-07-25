@@ -18,6 +18,11 @@
 .message {
 	width: 400px;
 }
+
+.btn-danger {
+	background: #ff0000 !important;
+	color: #000000 !important;;
+}
 </style>
 
 <link rel="stylesheet"
@@ -76,7 +81,7 @@
 					<div class="text-center alert alert-danger message" th:text="${formResponseMessage}"></div>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary mt-3">Submit</button>
+			<button type="submit" class="btn btn-danger mt-3"> Delete </button>
 		</form>
 	</div>
 
