@@ -3,6 +3,7 @@ package com.LearnToCrypt.ConfigurationLoader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
@@ -11,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 public class MailConfigLoader {
 	private static MailConfigLoader mailConfigInstance = null;
 
-	private HashMap<String, String> mailConfig;
+	private Map<String, String> mailConfig;
 	private static final Logger logger = LogManager.getLogger(MailConfigLoader.class);
 	private Properties javaMailProperties;
 

@@ -7,8 +7,9 @@ import com.LearnToCrypt.BusinessModels.User;
 
 public class ConfirmPasswordValidation implements IValidation {
 
-	private static final Logger logger = LogManager.getLogger(ConfirmPasswordValidation.class);	
-	
+	private static final Logger logger = LogManager.getLogger(ConfirmPasswordValidation.class);
+	public static final String ERROR = "Confirm Password doesn't match.";
+
 	@Override
 	public void setValue(String ruleValue) {
 		return;
@@ -23,6 +24,6 @@ public class ConfirmPasswordValidation implements IValidation {
 
 	@Override
 	public String getError() {
-		return "Confirm Password doesn't match.";
+		return ERROR;
 	}
 }

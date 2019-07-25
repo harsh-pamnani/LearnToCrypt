@@ -11,6 +11,7 @@ import com.LearnToCrypt.BusinessModels.User;
 public class PasswordSpecialCharValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(PasswordSpecialCharValidation.class);
+	public static final String ERROR = "Password must contain at least 1 special charachter.";
 	private String ruleValue;
 	
 	@Override
@@ -30,6 +31,6 @@ public class PasswordSpecialCharValidation implements IValidation {
 
 	@Override
 	public String getError() {
-		return "Password must contain at least 1 special charachter.";
+		return ERROR;
 	}
 }

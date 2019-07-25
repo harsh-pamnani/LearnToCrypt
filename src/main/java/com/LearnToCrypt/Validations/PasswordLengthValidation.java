@@ -8,6 +8,8 @@ import com.LearnToCrypt.BusinessModels.User;
 public class PasswordLengthValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(PasswordLengthValidation.class);
+	public static final String ERROR_START = "Password must be at least ";
+	public static final String ERROR_END = " characters long.";
 	private String ruleValue;
 	
 	@Override
@@ -24,7 +26,7 @@ public class PasswordLengthValidation implements IValidation {
 
 	@Override
 	public String getError() {
-		return "Password must be at least " + this.ruleValue + " characters long.";
+		return ERROR_START + this.ruleValue + ERROR_END;
 	}
 	
 }

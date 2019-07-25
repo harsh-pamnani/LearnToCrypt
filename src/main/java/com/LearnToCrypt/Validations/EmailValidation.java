@@ -11,6 +11,7 @@ import com.LearnToCrypt.BusinessModels.User;
 public class EmailValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(EmailValidation.class);
+	public static final String ERROR = "Email id is not valid.";
 	private String ruleValue;
 	
 	@Override
@@ -32,6 +33,6 @@ public class EmailValidation implements IValidation {
 
 	@Override
 	public String getError() {
-		return "Email id is not valid.";
+		return ERROR;
 	}
 }

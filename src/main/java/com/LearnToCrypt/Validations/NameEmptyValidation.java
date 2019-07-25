@@ -8,7 +8,8 @@ import com.LearnToCrypt.BusinessModels.User;
 public class NameEmptyValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(NameEmptyValidation.class);
-	
+	public static final String ERROR = "Name can not be empty.";
+
 	@Override
 	public void setValue(String ruleValue) {
 		return;
@@ -29,6 +30,6 @@ public class NameEmptyValidation implements IValidation {
 
 	@Override
 	public String getError() {
-		return "Name can not be empty.";
+		return ERROR;
 	}
 }
