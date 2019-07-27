@@ -1,5 +1,7 @@
 package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.ui.Model;
 
 import com.LearnToCrypt.Algorithm.UserInput;
@@ -12,6 +14,7 @@ public class AlgorithmContext {
 	private DAOAbstractFactory abstractFactory;
 
 	private IEncryptionAlgorithmStrategy encryptionAlgorithmStrategy;
+	private static final Logger logger = LogManager.getLogger(AlgorithmContext.class);
 
 	public AlgorithmContext(IEncryptionAlgorithmStrategy encryptionAlgorithmStrategy) {
 		this.encryptionAlgorithmStrategy = encryptionAlgorithmStrategy;
@@ -20,9 +23,9 @@ public class AlgorithmContext {
 	}
 
 	public void executeStrategy(UserInput userInput, String useremail, Model model) {
-		String formError = encryptionAlgorithmStrategy.keyPlainTextValidation(userInput);
+		try {
+			encryptionAlgorithmStrategy.keyPlainTextValidation(userInput);
 
-		if (formError == null) {
 			encryptionAlgorithmStrategy.encode(userInput.getKey() + "", userInput.getPlaintext());
 
 			String result = encryptionAlgorithmStrategy.getResult();
@@ -32,8 +35,9 @@ public class AlgorithmContext {
 			model.addAttribute("steps", steps);
 
 			userDAO.updateProgress(useremail, this.encryptionAlgorithmStrategy.getName());
-		} else {
-			model.addAttribute("invalidInput", formError);
+		} catch (KeyPlaintextFailureException e) {
+			model.addAttribute("invalidInput", e.getMessage());
+			logger.error("Key Validation Error: " + e.getMessage());
 		}
 	}
 }

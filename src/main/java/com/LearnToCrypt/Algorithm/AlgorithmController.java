@@ -82,6 +82,7 @@ public class AlgorithmController implements WebMvcConfigurer {
 		AlgorithmAbstractFactory algorithmFactory = new AlgorithmAbstractFactory();
 		IEncryptionAlgorithmStrategy cipherStrategy;
 
+		String pageToDisplay;
 		try {
 			cipherStrategy = algorithmFactory.createAlgorithm(algorithmName);
 
@@ -89,12 +90,13 @@ public class AlgorithmController implements WebMvcConfigurer {
 			algorithmContext.executeStrategy(userInput, useremail, model);
 
 			logger.info("user \"" + username + "\" tested " + algorithmName);
-			return "algorithm";
+			pageToDisplay =  "algorithm";
 		} catch (NoSuchAlgorithmException e) {
+			pageToDisplay = "redirect:/dashboard";
 			logger.error("Unknown algorithm request : " + algorithmName);
 		}
 
-		return "redirect:/dashboard";
+		return pageToDisplay;
 	}
 
 	private void setModelAttributes(Model model) {
