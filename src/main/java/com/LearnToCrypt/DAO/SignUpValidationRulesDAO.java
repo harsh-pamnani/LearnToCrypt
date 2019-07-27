@@ -20,10 +20,11 @@ public class SignUpValidationRulesDAO implements IValidationRulesDAO {
 	ResultSet resultSet;
 
 	private static final Logger logger = LogManager.getLogger(SignUpValidationRulesDAO.class);
-	private List<String> rules = new ArrayList<String>();
+	private List<String> rules;
 	
 	public SignUpValidationRulesDAO() {
 		dbConnectionInstance = DBConnection.instance();
+		rules = new ArrayList<String>();
 		loadRulesFromDB();
 	}
 	
