@@ -26,22 +26,22 @@ public class EmailValidationTest {
 	
 	@Test
 	public void testIsValid() {
-		assertTrue(emailValidation.isValid(user, "Hars@123"));
+		assertTrue(emailValidation.isValid(user));
 		
 		user.setEmail("harsh@gmail");
-		assertFalse(emailValidation.isValid(user, "Hars@123"));
+		assertFalse(emailValidation.isValid(user));
 		
 		user.setEmail("harsh@");
-		assertFalse(emailValidation.isValid(user, "Hars@123"));
+		assertFalse(emailValidation.isValid(user));
 		
 		user.setEmail("harshgmail.com");
-		assertFalse(emailValidation.isValid(user, "Hars@123"));
+		assertFalse(emailValidation.isValid(user));
 		
 		user.setEmail("harsh pam@gmail.com");
-		assertFalse(emailValidation.isValid(user, "Hars@123"));
+		assertFalse(emailValidation.isValid(user));
 		
 		user.setEmail("harsh@gmail.");
-		assertFalse(emailValidation.isValid(user, "Hars@123"));	
+		assertFalse(emailValidation.isValid(user));
 	}
 	
 	@Test

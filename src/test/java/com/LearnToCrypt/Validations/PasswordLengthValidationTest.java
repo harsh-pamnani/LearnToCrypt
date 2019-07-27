@@ -26,10 +26,10 @@ public class PasswordLengthValidationTest {
 	
 	@Test
 	public void testIsValid() {
-		assertTrue(passwordLengthValidation.isValid(user, "Armel@87633"));
+		assertTrue(passwordLengthValidation.isValid(user));
 		
 		user.setPassword("Armel@4");
-		assertFalse(passwordLengthValidation.isValid(user, "Armel@4"));
+		assertFalse(passwordLengthValidation.isValid(user));
 	}
 	
 	@Test

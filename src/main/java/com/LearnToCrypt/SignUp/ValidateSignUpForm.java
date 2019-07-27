@@ -25,7 +25,7 @@ public class ValidateSignUpForm {
 		List<IValidation> rules = validationRules.getValidationRules();
 		
 		for (IValidation rule: rules) {
-			if(!rule.isValid(user, confirmPassword)) {
+			if(!rule.isValid(user)) {
 				formError = rule.getError();
 				logger.error("Registration failed with error : " + formError);
 				break;

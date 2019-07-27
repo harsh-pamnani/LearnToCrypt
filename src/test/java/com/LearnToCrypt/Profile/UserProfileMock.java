@@ -19,7 +19,7 @@ public class UserProfileMock implements IUserProfileBridge {
         user = businessModelAbstractFactory.createUser();
         md5 = new MD5();
         user.setEmail("test@profile.com");
-        user.setPassword(md5.generateMD5HashValue("Profile@123"));
+        user.setPassword(md5.generateHashValue("Profile@123"));
         user.setName("Profile");
         user.setRole("Student");
     }
@@ -40,7 +40,7 @@ public class UserProfileMock implements IUserProfileBridge {
     }
 
     @Override
-    public User getUser() {
-        return user;
+    public String getHashedPassword() {
+        return null;
     }
 }

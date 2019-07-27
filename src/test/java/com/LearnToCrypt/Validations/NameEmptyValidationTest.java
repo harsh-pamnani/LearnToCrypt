@@ -26,13 +26,13 @@ public class NameEmptyValidationTest {
 	
 	@Test
 	public void testIsValid() {		
-		assertTrue(nameEmptyValidation.isValid(user, "Hars@123"));
+		assertTrue(nameEmptyValidation.isValid(user));
 		
 		user.setName("");
-		assertFalse(nameEmptyValidation.isValid(user, "Hars@123"));
+		assertFalse(nameEmptyValidation.isValid(user));
 		
 		user.setName(null);
-		assertFalse(nameEmptyValidation.isValid(user, "Hars@123"));
+		assertFalse(nameEmptyValidation.isValid(user));
 	}
 	
 	@Test

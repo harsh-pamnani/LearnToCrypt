@@ -26,16 +26,16 @@ public class RoleValidationTest {
 	
 	@Test
 	public void testIsValid() {
-		assertTrue(roleValidation.isValid(user, "Marta@53452"));
+		assertTrue(roleValidation.isValid(user));
 		
 		user.setRole("Student");
-		assertTrue(roleValidation.isValid(user, "Marta@53452"));
+		assertTrue(roleValidation.isValid(user));
 		
 		user.setRole("");
-		assertFalse(roleValidation.isValid(user, "Marta@53452"));
+		assertFalse(roleValidation.isValid(user));
 		
 		user.setRole("XYZ");
-		assertFalse(roleValidation.isValid(user, "Marta@53452"));
+		assertFalse(roleValidation.isValid(user));
 	}
 	
 	@Test

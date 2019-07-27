@@ -26,10 +26,10 @@ public class PasswordLowerCaseValidationTest {
 	
 	@Test
 	public void testIsValid() {
-		assertTrue(passwordLowerCaseValidation.isValid(user, "Balbino@76543"));
+		assertTrue(passwordLowerCaseValidation.isValid(user));
 		
 		user.setPassword("BALBINO@76543");
-		assertFalse(passwordLowerCaseValidation.isValid(user, "BALBINO@76543"));
+		assertFalse(passwordLowerCaseValidation.isValid(user));
 	}
 	
 	@Test

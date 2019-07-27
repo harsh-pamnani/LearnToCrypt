@@ -20,13 +20,13 @@ public class ProfileValidatorTest {
 
 	@Test
 	public void testIsNameValid() {
-		assertNull(profileValidator.isNameValid(user.getName()));
-		assertNotNull(profileValidator.isNameValid("12347"));
+		assertNull(profileValidator.validateName(user.getName()));
+		assertNotNull(profileValidator.validateName("12347"));
 	}
 
 //	@Test
 //	public void testIsPasswordValid() {
-//		assertNull(profileValidator.isPasswordValid(user.getPassword(), user.getPassword()));
-//		assertNotNull(profileValidator.isPasswordValid("Invalid", "Invalid"));
+//		assertNull(profileValidator.validatePassword(user.getPassword(), user.getPassword()));
+//		assertNotNull(profileValidator.validatePassword("Invalid", "Invalid"));
 //	}
 }

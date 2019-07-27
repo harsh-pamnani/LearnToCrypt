@@ -1,5 +1,7 @@
 package com.LearnToCrypt.Profile;
 
+import com.LearnToCrypt.HashingAlgorithm.IHash;
+import com.LearnToCrypt.HashingAlgorithm.MD5;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,9 @@ import com.LearnToCrypt.DAO.DAOAbstractFactory;
 import com.LearnToCrypt.DAO.IDAOAbstractFactory;
 import com.LearnToCrypt.DAO.IPasswordUpdaterDAO;
 
+import javax.xml.bind.ValidationException;
+import java.sql.SQLException;
+
 @Controller
 public class PasswordChangeController implements WebMvcConfigurer {
 
@@ -20,14 +25,16 @@ public class PasswordChangeController implements WebMvcConfigurer {
 	private String resetToken;
 	private IProfileValidator profileValidator;
 	private IUserProfileBridge profile;
-	private IPasswordUpdaterDAO passwordUpdaterDAO;
 	private IDAOAbstractFactory abstractFactory;
 	private IPasswordChanger passwordChanger;
+	private IUserNameChanger nameChanger;
+	private IHash hash;
 
 	public PasswordChangeController() {
 		abstractFactory = new DAOAbstractFactory();
-		passwordUpdaterDAO = abstractFactory.createPasswordSetterDAO();
-		passwordChanger = new ProfileUpdater();
+		passwordChanger = new PasswordChanger(abstractFactory);
+		nameChanger = new UserNameChanger(abstractFactory);
+		hash = new MD5();
 	}
 
 	@GetMapping("/passwordchange")
@@ -59,18 +66,29 @@ public class PasswordChangeController implements WebMvcConfigurer {
 			return ("passwordchange");
 		}
 		else {
-			String email = passwordUpdaterDAO.getEmailFromToken(resetToken);
-			profile = new UserProfile(email);
-			profileValidator = new ProfileValidator(profile);
-			String error = profileValidator.isPasswordValid(newPass, confirmPass);
-			if (null == error) {
-				passwordChanger.changePassword(email, newPass);
-				logger.info("Password changed successfully");
+			try {
+				String email = passwordChanger.getEmailFromToken(resetToken);
+				profile = new UserProfile(email, abstractFactory);
+				profileValidator = new ProfileValidator(profile, hash);
+				IUpdateProfile updater = new ProfileUpdater(profileValidator, nameChanger, passwordChanger);
+				updater.update(profile, null, newPass, confirmPass);
+				logger.info("Password Changed Successfully");
 				return ("redirect:/changesuccess?isPasswordChanged=yes");
-			}
-			else {
-				logger.error("Error processing request: " + error);
-				model.put("errorText", error);
+
+			} catch (SQLException e) {
+
+				logger.error("Error Connecting to database: " + e.getMessage());
+				logger.error("SQL State: " + e.getSQLState());
+				logger.error(e.getStackTrace());
+				logger.info("Redirecting with error message: " + e.getMessage());
+				model.put("errorText", e.getMessage());
+				return ("passwordchange");
+
+			} catch (ValidationException e) {
+				logger.error("Validation Error: " + e.getMessage());
+				logger.error(e.getStackTrace());
+				logger.info("Redirecting with error message: " + e.getMessage());
+				model.put("errorText", e.getMessage());
 				return ("passwordchange");
 			}
 		}

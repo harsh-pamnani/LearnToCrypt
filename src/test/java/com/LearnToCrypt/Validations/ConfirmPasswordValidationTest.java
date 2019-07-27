@@ -26,13 +26,13 @@ public class ConfirmPasswordValidationTest {
 	
 	@Test
 	public void testIsValid() {
-		assertTrue(confrimPasswordValidation.isValid(user, "Aman!123"));
+		assertTrue(confrimPasswordValidation.isValid(user));
 		
-		assertFalse(confrimPasswordValidation.isValid(user, "Qwe#1612"));
+		assertFalse(confrimPasswordValidation.isValid(user));
 		
-		assertFalse(confrimPasswordValidation.isValid(user, ""));
+		assertFalse(confrimPasswordValidation.isValid(user));
 		
-		assertFalse(confrimPasswordValidation.isValid(user, null));
+		assertFalse(confrimPasswordValidation.isValid(user));
 	}
 	
 	@Test

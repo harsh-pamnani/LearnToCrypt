@@ -6,8 +6,6 @@ import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.LearnToCrypt.BusinessModels.User;
-
 public class PasswordSpecialCharValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(PasswordSpecialCharValidation.class);
@@ -20,12 +18,13 @@ public class PasswordSpecialCharValidation implements IValidation {
 	}
 	
 	@Override
-	public boolean isValid(User user, String confirmPassword) {
+	public boolean isValid(IValidationParams params) {
+		String password = params.getPassword();
 		Pattern specialCharRegx = Pattern.compile(this.ruleValue);
-		Matcher specialCharachterMatcher = specialCharRegx.matcher(user.getPassword());
+		Matcher specialCharachterMatcher = specialCharRegx.matcher(password);
 		
 		boolean result = specialCharachterMatcher.find();
-		logger.info("Password special character validation for user : " + user.getEmail() + ". Result : " + result);
+		logger.info("Password special character validation. Result : " + result);
 		return result;
 	}
 

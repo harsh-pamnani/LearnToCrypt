@@ -26,10 +26,10 @@ public class PasswordUpperCaseValidationTest {
 	
 	@Test
 	public void testIsValid() {
-		assertTrue(passwordUpperCaseValidation.isValid(user, "Dorinel@911"));
+		assertTrue(passwordUpperCaseValidation.isValid(user));
 		
 		user.setPassword("dorinel@911");
-		assertFalse(passwordUpperCaseValidation.isValid(user, "dorinel@911"));
+		assertFalse(passwordUpperCaseValidation.isValid(user));
 	}
 	
 	@Test

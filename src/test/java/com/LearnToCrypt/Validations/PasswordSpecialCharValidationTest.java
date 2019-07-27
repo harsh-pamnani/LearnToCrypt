@@ -26,10 +26,10 @@ public class PasswordSpecialCharValidationTest {
 	
 	@Test
 	public void testIsValid() {
-		assertTrue(passwordSpecialCharValidation.isValid(user, "Anda@11111"));
+		assertTrue(passwordSpecialCharValidation.isValid(user));
 		
 		user.setPassword("Anda11111");
-		assertFalse(passwordSpecialCharValidation.isValid(user, "Anda11111"));
+		assertFalse(passwordSpecialCharValidation.isValid(user));
 	}
 	
 	@Test

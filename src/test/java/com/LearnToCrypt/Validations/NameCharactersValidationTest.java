@@ -25,13 +25,13 @@ public class NameCharactersValidationTest {
 	
 	@Test
 	public void testIsValid() {		
-		assertTrue(nameCharactersValidation.isValid(user, "Linus@666"));
+		assertTrue(nameCharactersValidation.isValid(user));
 		
 		user.setName("Avgust Linus 1");
-		assertFalse(nameCharactersValidation.isValid(user, "Linus@666"));
+		assertFalse(nameCharactersValidation.isValid(user));
 		
 		user.setName("Avgust Linus @");
-		assertFalse(nameCharactersValidation.isValid(user, "Linus@666"));
+		assertFalse(nameCharactersValidation.isValid(user));
 	}
 	
 	@Test
