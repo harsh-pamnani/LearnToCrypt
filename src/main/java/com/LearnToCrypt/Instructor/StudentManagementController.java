@@ -13,6 +13,7 @@ import com.LearnToCrypt.SignIn.AuthenticationManager;
 @Controller
 public class StudentManagementController {
 
+    public static final String USER_SUCCESSFULLY_DELETED = "User Successfully Deleted";
     private AuthenticationManager authenticationManager;
     private ManageStudent manageStudent;
     
@@ -44,15 +45,15 @@ public class StudentManagementController {
         model.put("username", username);
 
         String sessionEmail = authenticationManager.getEmail(httpSession);
-		String formResponseMessage = manageStudent.deleteStudentAndGetResponse(sessionEmail, email);
+        try {
+            manageStudent.deleteStudent(sessionEmail, email);
+            model.addAttribute("isErrorPresent", "No");
+            model.addAttribute("formResponseMessage", USER_SUCCESSFULLY_DELETED);
+        } catch (DeleteStudentException e) {
+            model.addAttribute("isErrorPresent", "Yes");
+            model.addAttribute("formResponseMessage", e.getMessage());
+        }
 
-		model.addAttribute("formResponseMessage", formResponseMessage);
-		model.addAttribute("isErrorPresent", "Yes");
-		if(ManageStudent.RESPONSE_USER_DELETED.equals(formResponseMessage)) {
-			model.addAttribute("isErrorPresent", "No");
-		}
         return "studentManagement";
 	}
-
-
 }
