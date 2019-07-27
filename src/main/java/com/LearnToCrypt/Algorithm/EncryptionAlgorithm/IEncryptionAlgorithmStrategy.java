@@ -12,6 +12,6 @@ public interface IEncryptionAlgorithmStrategy {
 	public String encode(String key,String plaintext);
     public String getResult();
     public String getSteps();
-    public String keyPlainTextValidation(UserInput userInput);
+    public void keyPlainTextValidation(UserInput userInput) throws KeyPlaintextFailureException;
     public String getName();
 }

@@ -54,30 +54,24 @@ public class SignUpController implements WebMvcConfigurer {
 	@PostMapping("/signup")
 	public String showDashboard(ModelMap model, User user, @RequestParam String confirmPassword,
 			RedirectAttributes redirectAttributes) {
+		try {
+			validateSignUpForm.validateFormDetails(user, confirmPassword);
 
-		String formError = validateSignUpForm.validateFormDetails(user, confirmPassword);
-		IUserDAO userDAO = daoAbstractFactory.createUserDAO();
-
-		if (formError.equals("")) {
-			boolean isUserRegistered = userDAO.isUserRegistered(user.getEmail());
-
-			if (isUserRegistered) {
+			IUserDAO userDAO = daoAbstractFactory.createUserDAO();
+			if (userDAO.isUserRegistered(user.getEmail())) {
 				model.put("invalidSignup", ERROR_ALREADY_REGISTERED);
 				logger.error("Email id \"" + user.getEmail() + "\" is already registered. Registration Failed.");
 				return "registration.html";
 			} else {
-				IUserDAO userDAORegistration = daoAbstractFactory.createUserDAO();
-				userDAORegistration.createUser(user);
+				userDAO.createUser(user);
 				logger.info(user.getEmail() + " registration success.");
 			}
-		} else {
-			model.put("invalidSignup", formError + ERROR_REGISTRATION_FAILED);
-			logger.error(formError + ERROR_REGISTRATION_FAILED);
+
+			return "redirect:/login";
+		} catch (SignUpFailureException e) {
+			model.put("invalidSignup", e.getMessage() + ERROR_REGISTRATION_FAILED);
+			logger.error(e.getMessage() + ERROR_REGISTRATION_FAILED);
 			return "registration.html";
 		}
-
-		String userName = userDAO.getUserName(user.getEmail());
-		redirectAttributes.addFlashAttribute("username", userName);
-		return "redirect:/dashboard";
 	}
 }

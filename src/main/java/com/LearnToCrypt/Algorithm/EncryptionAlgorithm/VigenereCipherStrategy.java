@@ -68,7 +68,7 @@ public class VigenereCipherStrategy implements IEncryptionAlgorithmStrategy {
 	}
 
 	@Override
-	public String keyPlainTextValidation(UserInput userInput) {
+	public void keyPlainTextValidation(UserInput userInput) throws KeyPlaintextFailureException {
 
 		logger.info("Validating key for Vigenere Cipher. Key: " + userInput.getKey());
 		String formError = null;
@@ -87,7 +87,7 @@ public class VigenereCipherStrategy implements IEncryptionAlgorithmStrategy {
 			logger.info("Key Validated Successfully");
 		} else {
 			logger.error("Key Validation Error: " + formError);
+			throw new KeyPlaintextFailureException(formError);
 		}
-		return formError;
 	}
 }

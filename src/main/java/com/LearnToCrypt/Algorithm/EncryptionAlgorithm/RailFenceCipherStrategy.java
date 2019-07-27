@@ -67,7 +67,7 @@ public class RailFenceCipherStrategy implements IEncryptionAlgorithmStrategy {
 	}
 
 	@Override
-	public String keyPlainTextValidation(UserInput userInput) {
+	public void keyPlainTextValidation(UserInput userInput) throws KeyPlaintextFailureException {
 		String formError = null;
 
     	if(userInput.getKey().isEmpty()) {
@@ -78,13 +78,12 @@ public class RailFenceCipherStrategy implements IEncryptionAlgorithmStrategy {
     		formError = ERROR_PLAIN_TEXT_EMPTY;
     	}
 
-    	if (formError == null) {
-			logger.info("Rail Fence Cipher: Key Validated Successfully");
+		if (formError == null) {
+			logger.info("Key Validated Successfully");
 		} else {
-			logger.error("Rail Fence Cipher: Key Validation Error: " + formError);
+			logger.error("Key Validation Error: " + formError);
+			throw new KeyPlaintextFailureException(formError);
 		}
-    	
-    	return formError;
 	}
 	
 	private String formatPlaintext(String plaintext, int keyToEncrypt) {

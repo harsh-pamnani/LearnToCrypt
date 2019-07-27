@@ -15,7 +15,7 @@ public class DashboardAlgorithms {
         daoAbstractFactory = new DAOAbstractFactory();
     }
 
-    public void addAlgorithmsToDashboard(String email, ModelMap model) {
+    protected void addAlgorithmsToDashboard(String email, ModelMap model) {
         IAlgorithmDAO algorithmDAO = daoAbstractFactory.createAlgorithmDAO();
         IUserDAO userDAO = daoAbstractFactory.createUserDAO();
         String className = userDAO.getUserClass(email);

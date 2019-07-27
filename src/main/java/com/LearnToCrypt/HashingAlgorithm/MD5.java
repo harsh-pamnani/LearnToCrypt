@@ -27,7 +27,6 @@ public class MD5 implements IHash {
 			}
 
 			hashedPassword = stringBuilder.toString();
-
 		} catch (NoSuchAlgorithmException e) {
 			logger.error("Error in generating the hash value of password using MD5 algorithm.", e);
 		}

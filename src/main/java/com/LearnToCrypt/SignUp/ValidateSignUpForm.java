@@ -11,27 +11,23 @@ import com.LearnToCrypt.Validations.SignUpValidationRules;
 
 public class ValidateSignUpForm {
 	
-	private SignUpValidationRules validationRules = null;
+	private SignUpValidationRules validationRules;
 	private static final Logger logger = LogManager.getLogger(ValidateSignUpForm.class);
 
 	public ValidateSignUpForm() {
 		validationRules = new SignUpValidationRules();
 	}
 	
-	public String validateFormDetails(User user, String confirmPassword) {
-		String formError = "";
-		
+	public void validateFormDetails(User user, String confirmPassword) throws SignUpFailureException {
 		validationRules.setValidationRules();
 		List<IValidation> rules = validationRules.getValidationRules();
 		
 		for (IValidation rule: rules) {
-			if(!rule.isValid(user)) {
-				formError = rule.getError();
-				logger.error("Registration failed with error : " + formError);
-				break;
+			if(!rule.isValid(user, confirmPassword)) {
+				String error = rule.getError();
+				logger.error("Registration failed with error : " + error);
+				throw new SignUpFailureException(error);
 			}
 		}
-		
-		return formError;
 	}
 }

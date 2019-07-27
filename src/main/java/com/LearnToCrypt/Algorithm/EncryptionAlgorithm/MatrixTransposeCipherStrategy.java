@@ -58,7 +58,7 @@ public class MatrixTransposeCipherStrategy implements IEncryptionAlgorithmStrate
 	}
 
 	@Override
-	public String keyPlainTextValidation(UserInput userInput) {
+	public void keyPlainTextValidation(UserInput userInput) throws KeyPlaintextFailureException {
 		logger.info("Validating key for Matrix Transposition Cipher. Key: " + userInput.getKey());
 		String formError = null;
 
@@ -78,8 +78,8 @@ public class MatrixTransposeCipherStrategy implements IEncryptionAlgorithmStrate
 			logger.info("Key Validated Successfully");
 		} else {
 			logger.error("Key Validation Error: " + formError);
+			throw new KeyPlaintextFailureException(formError);
 		}
-		return formError;
 	}
 
 	private int[] parseKey(String key) {
