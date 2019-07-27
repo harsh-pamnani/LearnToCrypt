@@ -23,6 +23,9 @@ public class AlgorithmContext {
 	}
 
 	public void executeStrategy(UserInput userInput, String useremail, Model model) {
+		// All encryption algorithms will implement keyPlainTextValidation(),
+		// encode(), getResult(), and getSteps() method in its own way.
+		// Encryption algorithm will be decided based on "encryptionAlgorithmStrategy".
 		try {
 			encryptionAlgorithmStrategy.keyPlainTextValidation(userInput);
 
