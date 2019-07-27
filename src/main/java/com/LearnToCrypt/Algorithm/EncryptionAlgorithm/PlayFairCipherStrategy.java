@@ -76,7 +76,7 @@ public class PlayFairCipherStrategy implements IEncryptionAlgorithmStrategy {
 	}
 
 	@Override
-	public String keyPlainTextValidation(UserInput userInput) {
+	public void keyPlainTextValidation(UserInput userInput) throws KeyPlaintextFailureException {
 		String formError = null;
     	
     	if(userInput.getKey().isEmpty()) {
@@ -88,14 +88,13 @@ public class PlayFairCipherStrategy implements IEncryptionAlgorithmStrategy {
     	} else if(!userInput.getPlaintext().matches("[A-Za-z ]+")) {
     		formError = ERROR_PLAIN_TEXT_A_TO_Z;
     	}
-    	
-    	if (formError == null) {
-			logger.info("Playfair Cipher: Key Validated Successfully");
+
+		if (formError == null) {
+			logger.info("Key Validated Successfully");
 		} else {
-			logger.error("Playfair Cipher: Key Validation Error: " + formError);
+			logger.error("Key Validation Error: " + formError);
+			throw new KeyPlaintextFailureException(formError);
 		}
-    	
-    	return formError;
 	}
 
 	// Method to generate the key matrix from the provided key

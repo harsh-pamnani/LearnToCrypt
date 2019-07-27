@@ -3,6 +3,7 @@ package com.LearnToCrypt.Playground;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.KeyPlaintextFailureException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -42,8 +43,10 @@ public class Compare implements ICompare {
 			result.setName(name);
 			input.setKey(key);
 			input.setPlaintext(plaintext);
-			String error = algorithm.keyPlainTextValidation(input);
-			if (error == null) {
+
+			try {
+				algorithm.keyPlainTextValidation(input);
+
 				encryptedText = algorithm.encode(key, plaintext);
 				endTime = LocalDateTime.now();
 				logger.info("Encrypting with " + name + "; end at: " + endTime);
@@ -54,11 +57,12 @@ public class Compare implements ICompare {
 				result.setPlaintextLength(plaintext.length());
 				result.setEncryptedTextLength(encryptedText.length());
 				result.setHasError(false);
-			} else {
-				logger.error("Error in key validation");
+			} catch (KeyPlaintextFailureException e) {
 				result.setHasError(true);
-				result.setErrorText(error);
+				result.setErrorText(e.getMessage());
+				logger.error("Error in key validation");
 			}
+
 			resultSet.add(result);
 		}
 		return resultSet;
