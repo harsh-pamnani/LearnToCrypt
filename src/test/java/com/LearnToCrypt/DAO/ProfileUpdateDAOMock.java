@@ -18,6 +18,7 @@ public class ProfileUpdateDAOMock implements IPasswordUpdaterDAO, INameSetterDAO
 		this.tokens = new HashMap<>();
 		tokens.put("fbaffcc1-99c3-4082-9e40-a3300571bbb6","harshpam1993@gmail.com");
 		tokens.put("fa735525-1bf4-4d3c-a8ff-70908ae10c31","aman.arya@yopmail.com");
+		tokens.put("fa735525-1bf4-4d3c-a8ff-70908ae10c32","update@pass.com");
 		hash = new MD5();
 	}
 

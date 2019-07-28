@@ -14,11 +14,11 @@ import static org.junit.Assert.assertEquals;
 public class UserProfileTest {
 
     private static final Logger logger = LogManager.getLogger(UserProfileTest.class);
-    IUserProfileBridge profile;
-    BusinessModelAbstractFactory businessModelAbstractFactory;
-    IDAOAbstractFactory abstractFactory;
-    IUserDAO userDAO;
-    User user;
+    private IUserProfileBridge profile;
+    private BusinessModelAbstractFactory businessModelAbstractFactory;
+    private IDAOAbstractFactory abstractFactory;
+    private IUserDAO userDAO;
+    private User user;
 
     public UserProfileTest() {
         businessModelAbstractFactory = new BusinessModelAbstractFactory();
