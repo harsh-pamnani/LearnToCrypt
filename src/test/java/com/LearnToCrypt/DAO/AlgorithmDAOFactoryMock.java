@@ -9,7 +9,7 @@ public class AlgorithmDAOFactoryMock implements IAlgorithmDAO {
 
 	ArrayList<Algorithm> algorithms;
 
-	public AlgorithmDAOFactoryMock(List<Algorithm> users) {
+	public AlgorithmDAOFactoryMock() {
 		this.algorithms = new ArrayList<>();
 		addAlgorithm();
 	}

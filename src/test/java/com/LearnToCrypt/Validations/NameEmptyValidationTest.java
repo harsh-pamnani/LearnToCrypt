@@ -7,32 +7,30 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.LearnToCrypt.BusinessModels.User;
-
 public class NameEmptyValidationTest {
 
-	User user;
 	IValidation nameEmptyValidation;
+	IValidationParams params;
 	
 	public NameEmptyValidationTest() {
 		nameEmptyValidation = new NameEmptyValidation();
 		
-		user = new User();
-		user.setEmail("Harsh@gmail.com");
-		user.setName("Harsh Pamnani");
-		user.setPassword("Hars@123");
-		user.setRole("Instructor");
+		params = new ValidationParams();
+		params.setEmail("Harsh@gmail.com");
+		params.setName("Harsh Pamnani");
+		params.setPassword("Hars@123");
+		params.setRole("Instructor");
 	}
 	
 	@Test
 	public void testIsValid() {		
-		assertTrue(nameEmptyValidation.isValid(user));
+		assertTrue(nameEmptyValidation.isValid(params));
 		
-		user.setName("");
-		assertFalse(nameEmptyValidation.isValid(user));
+		params.setName("");
+		assertFalse(nameEmptyValidation.isValid(params));
 		
-		user.setName(null);
-		assertFalse(nameEmptyValidation.isValid(user));
+		params.setName(null);
+		assertFalse(nameEmptyValidation.isValid(params));
 	}
 	
 	@Test

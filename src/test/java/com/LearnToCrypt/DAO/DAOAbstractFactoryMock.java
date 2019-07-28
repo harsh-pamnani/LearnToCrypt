@@ -1,24 +1,37 @@
 package com.LearnToCrypt.DAO;
 
 public class DAOAbstractFactoryMock implements IDAOAbstractFactory {
+
+	IUserDAO userDAO;
+	IAlgorithmDAO algorithmDAO;
+	IPasswordUpdaterDAO passwordUpdaterDAO;
+	INameSetterDAO nameSetterDAO;
+
+	public DAOAbstractFactoryMock() {
+		userDAO = new UserDAOFactoryMock();
+		algorithmDAO = new AlgorithmDAOFactoryMock();
+		passwordUpdaterDAO = new ProfileUpdateDAOMock(userDAO);
+		nameSetterDAO = new ProfileUpdateDAOMock(userDAO);
+	}
+
 	@Override
 	public IUserDAO createUserDAO() {
-		return new UserDAOFactoryMock();
+		return userDAO;
 	}
 
 	@Override
 	public IAlgorithmDAO createAlgorithmDAO() {
-		return new AlgorithmDAOFactoryMock();
+		return algorithmDAO;
 	}
 
 	@Override
 	public IPasswordUpdaterDAO createPasswordSetterDAO() {
-		return null;
+		return passwordUpdaterDAO;
 	}
 
 	@Override
 	public INameSetterDAO createNameSetterDAO() {
-		return null;
+		return nameSetterDAO;
 	}
 
 	@Override

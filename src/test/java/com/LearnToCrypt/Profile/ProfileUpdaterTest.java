@@ -3,30 +3,40 @@ package com.LearnToCrypt.Profile;
 import com.LearnToCrypt.BusinessModels.BusinessModelAbstractFactory;
 import com.LearnToCrypt.BusinessModels.User;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.DAO.DAOAbstractFactoryMock;
 import com.LearnToCrypt.DAO.IDAOAbstractFactory;
 import com.LearnToCrypt.DAO.IUserDAO;
+import com.LearnToCrypt.HashingAlgorithm.IHash;
 import com.LearnToCrypt.HashingAlgorithm.MD5;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
+
+import javax.xml.bind.ValidationException;
+import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class ProfileUpdaterTest {
 
+	private static final Logger logger = LogManager.getLogger(ProfileUpdaterTest.class);
 	BusinessModelAbstractFactory businessModelAbstractFactory;
 	IDAOAbstractFactory abstractFactory;
 	IUserDAO userDAO;
 	User user;
-	MD5 md5;
+	IHash md5;
 	IUserNameChanger userNameChanger;
 	IPasswordChanger passwordChanger;
 	IUserProfileBridge profileBridge;
+	IUpdateProfile updateProfile;
+	IProfileValidator validator;
 
 	public ProfileUpdaterTest() {
+		logger.info("Starting tests");
+		logger.info("Start - test setup");
 		businessModelAbstractFactory = new BusinessModelAbstractFactory();
-		userNameChanger = new ProfileUpdater();
-		passwordChanger = new ProfileUpdater();
-		abstractFactory = new DAOAbstractFactory();
+		abstractFactory = new DAOAbstractFactoryMock();
 		userDAO = abstractFactory.createUserDAO();
 		user = businessModelAbstractFactory.createUser();
 		user.setEmail("update@profile.com");
@@ -37,24 +47,32 @@ public class ProfileUpdaterTest {
 		if(!userDAO.isUserRegistered(user.getEmail())) {
 			userDAO.createUser(user);
 		}
-		profileBridge = new UserProfile(user.getEmail());
+		try {
+			profileBridge = new UserProfile(user.getEmail(), abstractFactory);
+		} catch (SQLException e) {
+			logger.error("Test should not connect to database. Exception: " + e.getMessage());
+		}
+		validator = new ProfileValidator(profileBridge, md5);
+		userNameChanger = new UserNameChanger(abstractFactory);
+		passwordChanger = new PasswordChanger(abstractFactory);
+		updateProfile = new ProfileUpdater(validator, userNameChanger, passwordChanger);
+		logger.info("End - test setup");
 	}
 
 	@Test
-	public void testChangeName() {
-		userNameChanger.changeName(user.getEmail(), "Profile");
-		IUserProfileBridge testProfile = new UserProfile(user.getEmail());
-		userNameChanger.changeName(user.getEmail(), user.getName());
-		assertNotEquals(profileBridge.getUser(), testProfile.getUser());
-		assertEquals("Profile", testProfile.getUserName());
-	}
+	public void testUpdate() {
+		try {
+			updateProfile.update(profileBridge, "Profile",
+					"NewPass@1234",
+					"NewPass@1234");
 
-	@Test
-	public void testChangePassword() {
-		passwordChanger.changePassword(user.getEmail(), "NewPass@123");
-		IUserProfileBridge testProfile = new UserProfile(user.getEmail());
-		passwordChanger.changePassword(user.getEmail(), user.getPassword());
-		assertNotEquals(profileBridge.getUser(), testProfile.getUser());
-		assertEquals(md5.generateHashValue("NewPass@123"), testProfile.getUser().getPassword());
+			User user = userDAO.getUser(profileBridge.getEmail());
+		} catch (ValidationException e) {
+			logger.error("Validation Error in Test: " + e.getMessage());
+		} catch (SQLException e) {
+			logger.error("Test should not connect to database. Exception: " + e.getMessage());
+		}
+		assertEquals("Profile", user.getName());
+		assertEquals(md5.generateHashValue("NewPass@1234"), user.getPassword());
 	}
 }
