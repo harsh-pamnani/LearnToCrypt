@@ -6,8 +6,6 @@ import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.LearnToCrypt.BusinessModels.User;
-
 public class PasswordUpperCaseValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(PasswordUpperCaseValidation.class);
@@ -20,12 +18,13 @@ public class PasswordUpperCaseValidation implements IValidation {
 	}
 		
 	@Override
-	public boolean isValid(User user, String confirmPassword) {
+	public boolean isValid(IValidationParams params) {
+		String password = params.getPassword();
 		Pattern upppcaseRegx = Pattern.compile(this.ruleValue);
-		Matcher upperCaseMatcher = upppcaseRegx.matcher(user.getPassword());
+		Matcher upperCaseMatcher = upppcaseRegx.matcher(password);
 		
 		boolean result = upperCaseMatcher.find();
-		logger.info("Password uppercase validation for user : " + user.getEmail() + ". Result : " + result);
+		logger.info("Password uppercase validation. Result : " + result);
 		return result;
 	}
 

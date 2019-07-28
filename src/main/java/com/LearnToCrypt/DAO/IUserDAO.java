@@ -2,6 +2,8 @@ package com.LearnToCrypt.DAO;
 
 import com.LearnToCrypt.BusinessModels.User;
 
+import java.sql.SQLException;
+
 public interface IUserDAO {
 	
 	public void createUser(User user);
@@ -12,7 +14,7 @@ public interface IUserDAO {
 	
 	public String getUserName(String email);
 
-	public User getUser(String email);
+	public User getUser(String email) throws SQLException;
 	
 	public String getUserRole(String email);
 

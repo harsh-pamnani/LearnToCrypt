@@ -1,7 +1,13 @@
 package com.LearnToCrypt.Profile;
 
+import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.ValidationException;
 
+import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.DAO.IDAOAbstractFactory;
+import com.LearnToCrypt.HashingAlgorithm.IHash;
+import com.LearnToCrypt.HashingAlgorithm.MD5;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -13,6 +19,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.LearnToCrypt.SignIn.AuthenticationManager;
 
+import java.sql.SQLException;
+
 @Controller
 public class ProfileController implements WebMvcConfigurer {
 
@@ -23,11 +31,18 @@ public class ProfileController implements WebMvcConfigurer {
 	private String email;
 	private AuthenticationManager authenticationManager;
 	private IProfileValidator profileValidator;
+	private IProfileCreator profileCreator;
+	private IDAOAbstractFactory abstractFactory;
+	private IHash hash;
+	private IUpdateProfile updater;
 
 	ProfileController() {
-		passwordChanger = new ProfileUpdater();
-		userNameChanger = new ProfileUpdater();
 		authenticationManager = AuthenticationManager.instance();
+		profileCreator = ProfileCreator.getInstance();
+		abstractFactory = new DAOAbstractFactory();
+		passwordChanger = new PasswordChanger(abstractFactory);
+		userNameChanger = new UserNameChanger(abstractFactory);
+		hash = new MD5();
 	}
 
 	@GetMapping("/profile")
@@ -36,12 +51,12 @@ public class ProfileController implements WebMvcConfigurer {
 								 @RequestParam (required = false) String errorText,
 								 @RequestParam (required = false) String successText ) {
 		logger.info("Loading profile page");
-		if (authenticationManager.isUserAuthenticated(httpSession)) {
-			email = authenticationManager.getEmail(httpSession);
-			profile = new UserProfile(email);
-			model.put("username", authenticationManager.getUsername(httpSession));
+		try {
+			profile = profileCreator.getProfile(authenticationManager, httpSession, abstractFactory);
+			model.put("username", profile.getUserName());
 			model.put("email", profile.getEmail());
 			model.put("role", profile.getRole());
+
 			if (null != errorText) {
 				logger.error("Validation Error: " + errorText);
 				model.put("errorText", errorText);
@@ -51,9 +66,18 @@ public class ProfileController implements WebMvcConfigurer {
 				model.put("successText", successText);
 			}
 			return ("profile");
-		}
-		else {
+
+		} catch (AuthenticationException e) {
+			logger.error(e.getMessage());
+			logger.error(e.getStackTrace());
+			logger.info("Redirecting to login page");
 			return ("redirect:/login");
+
+		} catch (SQLException e) {
+			logger.error("Error Connecting to database: " + e.getMessage());
+			logger.error("SQL State: " + e.getSQLState());
+			logger.error(e.getStackTrace());
+			return ("profile");
 		}
 	}
 
@@ -65,32 +89,32 @@ public class ProfileController implements WebMvcConfigurer {
 								@RequestParam String confirmPass) {
 		logger.info("Processing profile update request");
 		email = authenticationManager.getEmail(httpSession);
-		profile = new UserProfile(email);
-		profileValidator = new ProfileValidator(profile);
-		if(null != username && !username.equals(profile.getUserName())) {
-			logger.info("Processing Request to update username to " + username);
-			String error = profileValidator.isNameValid(username);
-			if (null == error) {
-				userNameChanger.changeName(email, username);
-			}
-			else {
-				logger.error("Error processing request: " + error);
-				return ("redirect:/profile?errorText=" + error);
-			}
-		}
+		try {
 
-		if(null != newPass && !newPass.equals("")) {
-			logger.info("Processing request to update password");
-			String error = profileValidator.isPasswordValid(newPass, confirmPass);
-			if (null == error) {
-				email = authenticationManager.getEmail(httpSession);
-				passwordChanger.changePassword(email, newPass);
-			}
-			else {
-				logger.error("Error processing request: " + error);
-				return ("redirect:/profile?errorText=" + error);
-			}
+			profile = profileCreator.getProfile(authenticationManager, httpSession, abstractFactory);
+			profileValidator = new ProfileValidator(profile, hash);
+			updater = new ProfileUpdater(profileValidator, userNameChanger, passwordChanger);
+			updater.update(profile, username, newPass, confirmPass);
+			return ("redirect:/profile?successText=Profile Updated Successfully");
+
+		} catch (SQLException e) {
+			logger.error("Error Connecting to database: " + e.getMessage());
+			logger.error("SQL State: " + e.getSQLState());
+			logger.error(e.getStackTrace());
+			logger.info("Redirecting with error message: " + e.getMessage());
+			return ("redirect:/profile?errorText=" + e.getMessage());
+
+		} catch (AuthenticationException e) {
+			logger.error(e.getMessage());
+			logger.error(e.getStackTrace());
+			logger.info("Redirecting to login page");
+			return ("redirect:/login");
+
+		} catch (ValidationException e) {
+			logger.error("Validation Error: " + e.getMessage());
+			logger.error(e.getStackTrace());
+			logger.info("Redirecting with error message: " + e.getMessage());
+			return ("redirect:/profile?errorText=" + e.getMessage());
 		}
-		return ("redirect:/profile?successText=Profile Updated Successfully");
 	}
 }

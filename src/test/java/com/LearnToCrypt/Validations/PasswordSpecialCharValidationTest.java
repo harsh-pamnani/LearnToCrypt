@@ -11,25 +11,25 @@ import com.LearnToCrypt.BusinessModels.User;
 
 public class PasswordSpecialCharValidationTest {
 
-	User user;
 	IValidation passwordSpecialCharValidation;
+	IValidationParams params;
 	
 	public PasswordSpecialCharValidationTest() {
 		passwordSpecialCharValidation = new PasswordSpecialCharValidation();
 		passwordSpecialCharValidation.setValue(".*[!@#$%^&*()].*");
-		user = new User();
-		user.setEmail("Maryiaanda1@apple.org");
-		user.setName("Maryia Anda");
-		user.setPassword("Anda@11111");
-		user.setRole("Student");
+		params = new ValidationParams();
+		params.setEmail("Maryiaanda1@apple.org");
+		params.setName("Maryia Anda");
+		params.setPassword("Anda@11111");
+		params.setRole("Student");
 	}
 	
 	@Test
 	public void testIsValid() {
-		assertTrue(passwordSpecialCharValidation.isValid(user, "Anda@11111"));
+		assertTrue(passwordSpecialCharValidation.isValid(params));
 		
-		user.setPassword("Anda11111");
-		assertFalse(passwordSpecialCharValidation.isValid(user, "Anda11111"));
+		params.setPassword("Anda11111");
+		assertFalse(passwordSpecialCharValidation.isValid(params));
 	}
 	
 	@Test

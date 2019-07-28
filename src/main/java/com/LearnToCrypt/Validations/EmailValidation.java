@@ -6,8 +6,6 @@ import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.LearnToCrypt.BusinessModels.User;
-
 public class EmailValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(EmailValidation.class);
@@ -20,14 +18,15 @@ public class EmailValidation implements IValidation {
 	}
 	
 	@Override
-	public boolean isValid(User user, String confirmPassword) {
+	public boolean isValid(IValidationParams params) {
 		// Reference for Email validation Regx -
 		// https://stackoverflow.com/questions/8204680/java-regex-email
+		String email = params.getEmail();
 		Pattern validEmailRegx = Pattern.compile(this.ruleValue, Pattern.CASE_INSENSITIVE);
-		Matcher emailMatcher = validEmailRegx.matcher(user.getEmail());
+		Matcher emailMatcher = validEmailRegx.matcher(email);
 		
 		boolean result = emailMatcher.find();
-		logger.info("Email validation for user : " + user.getEmail() + ". Result : " + result);
+		logger.info("Email validation for : " + email + ". Result : " + result);
 		return result;
 	}
 

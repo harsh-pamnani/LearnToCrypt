@@ -1,20 +1,17 @@
 package com.LearnToCrypt.Profile;
 
-import com.LearnToCrypt.BusinessModels.User;
-import com.LearnToCrypt.DAO.DAOAbstractFactory;
+import com.LearnToCrypt.BusinessModels.IUser;
 import com.LearnToCrypt.DAO.IDAOAbstractFactory;
 import com.LearnToCrypt.DAO.IUserDAO;
 
+import java.sql.SQLException;
+
 public class UserProfile implements IUserProfileBridge {
 
-    IDAOAbstractFactory abstractFactory;
-    IUserDAO userDAO;
-    User user;
+    IUser user;
 
-    UserProfile(String email) {
-        abstractFactory = new DAOAbstractFactory();
-        userDAO = abstractFactory.createUserDAO();
-        user = new User();
+    UserProfile(String email, IDAOAbstractFactory abstractFactory) throws SQLException {
+        IUserDAO userDAO = abstractFactory.createUserDAO();
         user = userDAO.getUser(email);
     }
 
@@ -34,7 +31,8 @@ public class UserProfile implements IUserProfileBridge {
     }
 
     @Override
-    public User getUser() {
-        return user;
+    public String getHashedPassword() {
+        return user.getPassword();
     }
+
 }
