@@ -21,12 +21,10 @@ public class DashboardController implements WebMvcConfigurer {
     public static final String INSTRUCTOR_ROLE = "Instructor";
 
     AuthenticationManager authenticationManager;
-	DAOAbstractFactory daoAbstractFactory;
     DashboardAlgorithms dashboardAlgorithms;
 
     public DashboardController() {
 		authenticationManager = AuthenticationManager.instance();
-		daoAbstractFactory = new DAOAbstractFactory();
         dashboardAlgorithms = new DashboardAlgorithms();
 	}
 	
@@ -37,7 +35,7 @@ public class DashboardController implements WebMvcConfigurer {
 			return "redirect:/login";
 		} else {
 			String email = authenticationManager.getEmail(httpSession);
-			String role = daoAbstractFactory.createUserDAO().getUserRole(email);
+			String role =authenticationManager.getUserRole(httpSession);
 			String username = authenticationManager.getUsername(httpSession);
 			model.put("username", username);
 
