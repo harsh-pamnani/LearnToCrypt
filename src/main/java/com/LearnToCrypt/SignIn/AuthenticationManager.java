@@ -56,6 +56,14 @@ public class AuthenticationManager {
 		return userName;
 	}
 
+	public String getUserRole(HttpSession httpSession) {
+		IUserDAO userDAO = daoAbstractFactory.createUserDAO();
+		String role = userDAO.getUserRole(authenticatedUsers.get(httpSession.getId()));
+		logger.info("Getting role from http session for user");
+
+		return role;
+	}
+
 	public String getEmail(HttpSession httpSession) {
 		String email = authenticatedUsers.get(httpSession.getId());
 		
