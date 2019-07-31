@@ -50,7 +50,7 @@ public class AlgorithmController implements WebMvcConfigurer {
 		username = authenticationManager.getUsername(httpSession);
 
 		Algorithm algorithm = manageAlgorithm.getAlgorithm(alg);
-		logger.info("user \"" + username + "\" accessed " + algorithm.getName());
+
 		if (algorithm.getName() == null) {
 			setModelAttributes(model);
 			return "dashboard";

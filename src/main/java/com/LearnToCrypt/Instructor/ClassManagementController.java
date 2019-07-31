@@ -126,7 +126,7 @@ public class ClassManagementController {
     }
 
     @PostMapping("/classManagement/addStudent")
-    public String addStudents(HttpSession httpSession, ModelMap model,
+    public String addStudents(HttpSession httpSession,Toooooooony
                               @RequestParam("studentList") MultipartFile file,
                               @RequestParam("classID") String className){
         boolean isUserAuthenticated = authenticationManager.isUserAuthenticated(httpSession);
