@@ -11,31 +11,31 @@ import com.LearnToCrypt.BusinessModels.User;
 
 public class RoleValidationTest {
 
-	User user;
 	IValidation roleValidation;
+	IValidationParams params;
 	
 	public RoleValidationTest() {
 		roleValidation = new RoleValidation();
 		roleValidation.setValue("Student Instructor");
-		user = new User();
-		user.setEmail("Orfeomarta@abc.org");
-		user.setName("Orfeo Marta");
-		user.setPassword("Marta@53452");
-		user.setRole("Instructor");
+		params = new ValidationParams();
+		params.setEmail("Orfeomarta@abc.org");
+		params.setName("Orfeo Marta");
+		params.setPassword("Marta@53452");
+		params.setRole("Instructor");
 	}
 	
 	@Test
 	public void testIsValid() {
-		assertTrue(roleValidation.isValid(user, "Marta@53452"));
+		assertTrue(roleValidation.isValid(params));
 		
-		user.setRole("Student");
-		assertTrue(roleValidation.isValid(user, "Marta@53452"));
+		params.setRole("Student");
+		assertTrue(roleValidation.isValid(params));
 		
-		user.setRole("");
-		assertFalse(roleValidation.isValid(user, "Marta@53452"));
+		params.setRole("");
+		assertFalse(roleValidation.isValid(params));
 		
-		user.setRole("XYZ");
-		assertFalse(roleValidation.isValid(user, "Marta@53452"));
+		params.setRole("XYZ");
+		assertFalse(roleValidation.isValid(params));
 	}
 	
 	@Test

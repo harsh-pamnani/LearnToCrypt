@@ -10,10 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.LearnToCrypt.BusinessModels.Algorithm;
 import com.LearnToCrypt.DAO.DAOAbstractFactory;
-import com.LearnToCrypt.DAO.IAlgorithmDAO;
-import com.LearnToCrypt.DAO.IUserDAO;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
 
 import java.util.List;
@@ -21,13 +18,14 @@ import java.util.List;
 @Controller
 public class DashboardController implements WebMvcConfigurer {
     private static final Logger logger = LogManager.getLogger(DashboardController.class);
-	
-	AuthenticationManager authenticationManager;
-	DAOAbstractFactory daoAbstractFactory;
-	
-	public DashboardController() {
+    public static final String INSTRUCTOR_ROLE = "Instructor";
+
+    AuthenticationManager authenticationManager;
+    DashboardAlgorithms dashboardAlgorithms;
+
+    public DashboardController() {
 		authenticationManager = AuthenticationManager.instance();
-		daoAbstractFactory = new DAOAbstractFactory();
+        dashboardAlgorithms = new DashboardAlgorithms();
 	}
 	
 	@GetMapping("/dashboard")
@@ -37,35 +35,15 @@ public class DashboardController implements WebMvcConfigurer {
 			return "redirect:/login";
 		} else {
 			String email = authenticationManager.getEmail(httpSession);
-			String role = daoAbstractFactory.createUserDAO().getUserRole(email);
+			String role =authenticationManager.getUserRole(httpSession);
 			String username = authenticationManager.getUsername(httpSession);
 			model.put("username", username);
 
-			if(role.equals("Instructor")) {
+			if(role.equals(INSTRUCTOR_ROLE)) {
 				return "instructorDashboard";
 			}
-			
-			IAlgorithmDAO algorithmDAO = daoAbstractFactory.createAlgorithmDAO();
-			IUserDAO userDAO = daoAbstractFactory.createUserDAO();
-			String className = userDAO.getUserClass(email);
 
-			List<Algorithm> basicAlgorithm = algorithmDAO.getAlgorithmByLevelAndClass(1,className);
-			List<Algorithm> intermediateAlgorithm = algorithmDAO.getAlgorithmByLevelAndClass(2,className);
-
-			if(!(basicAlgorithm == null) && basicAlgorithm.size()>=1){
-				model.addAttribute("subtitle1","Basic encryption algorithm");
-				model.addAttribute("basic",basicAlgorithm);
-			}
-
-			if(!(intermediateAlgorithm == null) && intermediateAlgorithm.size()>=1){
-				model.addAttribute("subtitle2","Intermediate encryption algorithm");
-				model.addAttribute("intermediate",intermediateAlgorithm);
-			}
-
-			if(userDAO.getUserClass(email) == null){
-				model.addAttribute("subtitle1","You have not been assigned to any class yet.");
-			}
-
+			dashboardAlgorithms.addAlgorithmsToDashboard(email, model);
 			logger.info("user \"" + username + "\" accessed dashboard!");
 	        return "dashboard";
 		}

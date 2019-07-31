@@ -3,13 +3,14 @@ package com.LearnToCrypt.ConfigurationLoader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class DBConfigLoader {
-	private HashMap<String, String> dbCredentialsMap;
+	private Map<String, String> dbCredentialsMap;
 
 	private static DBConfigLoader configurationUniqueInstance = null;
 	private static final Logger logger = LogManager.getLogger(DBConfigLoader.class);

@@ -56,33 +56,61 @@ public class PlayFairCipherStrategyTest {
     
     @Test
     public void tesKeyPlainTextValidation() {
-    	userInput.setKey("");
-    	assertEquals("Key can't be empty", playFairCipher.keyPlainTextValidation(userInput));
-    	assertNotEquals("Some other error message", playFairCipher.keyPlainTextValidation(userInput));
-    	
-    	userInput.setKey("different #!%");
-    	assertEquals("Enter only A-Z charachters in key.", playFairCipher.keyPlainTextValidation(userInput));
-    	assertNotEquals("Some other error message", playFairCipher.keyPlainTextValidation(userInput));
-    	
-    	userInput.setKey("123");
-    	assertEquals("Enter only A-Z charachters in key.", playFairCipher.keyPlainTextValidation(userInput));
-    	assertNotEquals("Some other error message", playFairCipher.keyPlainTextValidation(userInput));
-    	
-    	userInput.setKey("Secure");
-    	userInput.setPlaintext("");
-    	assertEquals("Plain text can't be empty", playFairCipher.keyPlainTextValidation(userInput));
-    	assertNotEquals("Some other error message", playFairCipher.keyPlainTextValidation(userInput));
-    	
-    	userInput.setPlaintext("This is great 123");
-    	assertEquals("Enter only A-Z charachters in plain text.", playFairCipher.keyPlainTextValidation(userInput));
-    	assertNotEquals("Some other error message", playFairCipher.keyPlainTextValidation(userInput));
-    	
-    	userInput.setPlaintext("Some text @#!^");
-    	assertEquals("Enter only A-Z charachters in plain text.", playFairCipher.keyPlainTextValidation(userInput));
-    	assertNotEquals("Some other error message", playFairCipher.keyPlainTextValidation(userInput));
-    	
-    	userInput.setPlaintext("We can only say that it is a part of");
-    	assertEquals(null, playFairCipher.keyPlainTextValidation(userInput));
-    	assertNotEquals("Plain text can't be empty", playFairCipher.keyPlainTextValidation(userInput));	
-    }
+		try {
+			userInput.setKey("");
+			playFairCipher.keyPlainTextValidation(userInput);
+		} catch (KeyPlaintextFailureException e) {
+				assertEquals("Key can't be empty", e.getMessage());
+			assertNotEquals("Some other error message", e.getMessage());
+		}
+
+		try {
+			userInput.setKey("different #!%");
+			playFairCipher.keyPlainTextValidation(userInput);
+		} catch (KeyPlaintextFailureException e) {
+			assertEquals("Enter only A-Z charachters in key.", e.getMessage());
+			assertNotEquals("Some other error message", e.getMessage());
+		}
+
+		try {
+			userInput.setKey("123");
+			playFairCipher.keyPlainTextValidation(userInput);
+		} catch (KeyPlaintextFailureException e) {
+			assertEquals("Enter only A-Z charachters in key.", e.getMessage());
+			assertNotEquals("Some other error message", e.getMessage());
+		}
+
+		try {
+			userInput.setKey("Secure");
+			userInput.setPlaintext("");
+			playFairCipher.keyPlainTextValidation(userInput);
+		} catch (KeyPlaintextFailureException e) {
+			assertEquals("Plain text can't be empty", e.getMessage());
+			assertNotEquals("Some other error message", e.getMessage());
+		}
+
+		try {
+			userInput.setPlaintext("This is great 123");
+			playFairCipher.keyPlainTextValidation(userInput);
+		} catch (KeyPlaintextFailureException e) {
+			assertEquals("Enter only A-Z charachters in plain text.", e.getMessage());
+			assertNotEquals("Some other error message", e.getMessage());
+		}
+
+		try {
+			userInput.setPlaintext("Some text @#!^");
+			playFairCipher.keyPlainTextValidation(userInput);
+		} catch (KeyPlaintextFailureException e) {
+			assertEquals("Enter only A-Z charachters in plain text.", e.getMessage());
+			assertNotEquals("Some other error message", e.getMessage());
+		}
+
+		try {
+			userInput.setPlaintext("We can only say that it is a part of");
+			playFairCipher.keyPlainTextValidation(userInput);
+		} catch (KeyPlaintextFailureException e) {
+			assertEquals(null, e.getMessage());
+			assertNotEquals("Plain text can't be empty", e.getMessage());
+		}
+	}
 }

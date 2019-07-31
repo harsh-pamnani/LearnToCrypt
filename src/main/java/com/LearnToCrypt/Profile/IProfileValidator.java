@@ -1,6 +1,8 @@
 package com.LearnToCrypt.Profile;
 
+import javax.xml.bind.ValidationException;
+
 public interface IProfileValidator {
-	String isNameValid(String name);
-	String isPasswordValid(String Password, String confirmPassword);
+	void validateName(String name) throws ValidationException;
+	void validatePassword(String Password, String confirmPassword) throws ValidationException;
 }

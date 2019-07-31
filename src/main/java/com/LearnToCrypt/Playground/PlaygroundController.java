@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpSession;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 @Controller
@@ -34,6 +35,7 @@ public class PlaygroundController implements WebMvcConfigurer {
 	private IComparisonParameters comparisonParameters;
 	private ICompare compare;
 	private IComparisonResultSet comparisonResultSet;
+	private IManageComparison comparisonManager;
 
 	public PlaygroundController() {
 		authenticationManager = AuthenticationManager.instance();
@@ -44,6 +46,7 @@ public class PlaygroundController implements WebMvcConfigurer {
 		fileToString = new FileToString();
 		comparisonParameters = new ComparisonParameters();
 		compare = new Compare();
+		comparisonManager = new ComparisonManager(comparisonParameters, algorithmList, fileToString, compare);
 	}
 
 	@GetMapping("/playground")
@@ -55,6 +58,7 @@ public class PlaygroundController implements WebMvcConfigurer {
 			logger.error("User is not logged in. Redirecting to Login page");
 			return "redirect:/login";
 		} else {
+			logger.info("User authenticated successfully");
 			String username = authenticationManager.getUsername(httpSession);
 			model.put("username", username);
 			model.put("leftAlgorithms", algorithms);
@@ -77,40 +81,19 @@ public class PlaygroundController implements WebMvcConfigurer {
 								@RequestParam String keyRight) {
 
 		logger.info("Starting comparison of algorithms");
-		if (null == firstAlgo ||
-				null == file ||
-				null == keyLeft ||
-				null == secondAlgo ||
-				null == keyRight ||
-				firstAlgo.length() <= 0 ||
-				keyLeft.length() <=0 ||
-				secondAlgo.length() <= 0 ||
-				keyRight.length() <= 0 ||
-				file.isEmpty()) {
-			logger.error("Empty Input Parameter(s)");
-			return "redirect:/playground?errorText=Empty Input Parameter(s)";
-		}
 		logger.info("Received parameters: firstAlgo = " + firstAlgo +
 				"; keyLeft = " + keyLeft +
 				"; secondAlgo = " + secondAlgo +
 				"; keyRight = " + keyRight);
-		if (firstAlgo.equals(secondAlgo)) {
-			logger.error("Same algorithms selected for comparison");
-			return "redirect:/playground?errorText=Both algorithms can not be same";
-		}
-		String fileString = fileToString.getStringFromFile(file);
-		comparisonParameters.clearInputParams();
-		comparisonParameters.setPlaintext(fileString);
-		IEncryptionAlgorithmStrategy firstAlgorithm = algorithmList.getAlgorithmWithName(firstAlgo);
-		IEncryptionAlgorithmStrategy secondAlgorithm = algorithmList.getAlgorithmWithName(secondAlgo);
-		comparisonParameters.addAlgorithm(firstAlgorithm, keyLeft, firstAlgo);
-		comparisonParameters.addAlgorithm(secondAlgorithm, keyRight, secondAlgo);
 
-		if (comparisonResultSet != null) {
-			comparisonResultSet.clearResultSet();
+		try {
+			comparisonManager.validateAndSetInputParameters(firstAlgo, secondAlgo, keyLeft, keyRight, file);
+		} catch (InvalidParameterException e) {
+			logger.error(e.getMessage());
+			return ("redirect:/playground?errorText=" + e.getMessage());
 		}
 		
-		comparisonResultSet = compare.compareAlgorithms(comparisonParameters);
+		comparisonResultSet = comparisonManager.manage();
 		while (comparisonResultSet.hasNextResult()) {
 			IComparisonResult result = comparisonResultSet.getNextResult();
 			if (result.hasError()) {

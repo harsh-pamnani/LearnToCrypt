@@ -51,26 +51,46 @@ public class RailFenceCipherStrategyTest {
     }
     
     @Test
-    public void tesKeyPlainTextValidation() {
-    	userInput.setKey("");
-    	assertEquals("Key can't be empty", railFenceCipher.keyPlainTextValidation(userInput));
-    	assertNotEquals("Some other error message", railFenceCipher.keyPlainTextValidation(userInput));
-    	
-    	userInput.setKey("surrounded");
-    	assertEquals("Enter only digits in the key", railFenceCipher.keyPlainTextValidation(userInput));
-    	assertNotEquals("Some other error message", railFenceCipher.keyPlainTextValidation(userInput));
-    	
-    	userInput.setKey("!@#$%#");
-    	assertEquals("Enter only digits in the key", railFenceCipher.keyPlainTextValidation(userInput));
-    	assertNotEquals("Some other error message", railFenceCipher.keyPlainTextValidation(userInput));
-    	
-    	userInput.setKey("6");
-    	userInput.setPlaintext("");
-    	assertEquals("Plain text can't be empty", railFenceCipher.keyPlainTextValidation(userInput));
-    	assertNotEquals("Some other error messagess", railFenceCipher.keyPlainTextValidation(userInput));
-    	
-    	userInput.setPlaintext("Life is hard");
-    	assertEquals(null, railFenceCipher.keyPlainTextValidation(userInput));
-    	assertNotEquals("Plain text can't be empty", railFenceCipher.keyPlainTextValidation(userInput));	
+    public void tesKeyPlainTextValidation() throws KeyPlaintextFailureException {
+		try {
+			userInput.setKey("");
+			railFenceCipher.keyPlainTextValidation(userInput);
+		} catch (KeyPlaintextFailureException e) {
+			assertEquals("Key can't be empty", e.getMessage());
+			assertNotEquals("Some other error message", e.getMessage());
+		}
+
+		try {
+			userInput.setKey("surrounded");
+			railFenceCipher.keyPlainTextValidation(userInput);
+		} catch (KeyPlaintextFailureException e) {
+			assertEquals("Enter only digits in the key", e.getMessage());
+			assertNotEquals("Some other error message", e.getMessage());
+		}
+
+		try {
+			userInput.setKey("!@#$%#");
+			railFenceCipher.keyPlainTextValidation(userInput);
+		} catch (KeyPlaintextFailureException e) {
+			assertEquals("Enter only digits in the key", e.getMessage());
+			assertNotEquals("Some other error message", e.getMessage());
+		}
+
+		try {
+			userInput.setKey("6");
+			userInput.setPlaintext("");
+			railFenceCipher.keyPlainTextValidation(userInput);
+		} catch (KeyPlaintextFailureException e) {
+			assertEquals("Plain text can't be empty", e.getMessage());
+			assertNotEquals("Some other error messagess", e.getMessage());
+		}
+
+		try {
+			userInput.setPlaintext("Life is hard");
+			railFenceCipher.keyPlainTextValidation(userInput);
+		} catch (KeyPlaintextFailureException e) {
+			assertEquals(null, e.getMessage());
+			assertNotEquals("Plain text can't be empty", e.getMessage());
+		}
     }
 }

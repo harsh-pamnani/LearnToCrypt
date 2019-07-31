@@ -11,28 +11,29 @@ import com.LearnToCrypt.BusinessModels.User;
 
 public class ConfirmPasswordValidationTest {
 
-	User user;
+	IValidationParams params;
 	IValidation confrimPasswordValidation;
 	
 	public ConfirmPasswordValidationTest() {
 		confrimPasswordValidation = new ConfirmPasswordValidation();
-		
-		user = new User();
-		user.setEmail("Aman@gmail.com");
-		user.setName("Aman Arya");
-		user.setPassword("Aman!123");
-		user.setRole("Student");
+
+		params = new ValidationParams();
+		params.setEmail("Aman@gmail.com");
+		params.setName("Aman Arya");
+		params.setPassword("Aman!12345");
+		params.setRole("Student");
 	}
 	
 	@Test
 	public void testIsValid() {
-		assertTrue(confrimPasswordValidation.isValid(user, "Aman!123"));
+		params.setConfirmPassword(params.getPassword());
+		assertTrue(confrimPasswordValidation.isValid(params));
+		params.setConfirmPassword("abc");
+		assertFalse(confrimPasswordValidation.isValid(params));
+		// TODO: Validation tests are missing
+		assertFalse(confrimPasswordValidation.isValid(params));
 		
-		assertFalse(confrimPasswordValidation.isValid(user, "Qwe#1612"));
-		
-		assertFalse(confrimPasswordValidation.isValid(user, ""));
-		
-		assertFalse(confrimPasswordValidation.isValid(user, null));
+		assertFalse(confrimPasswordValidation.isValid(params));
 	}
 	
 	@Test

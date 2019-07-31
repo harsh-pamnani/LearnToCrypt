@@ -83,7 +83,7 @@ public class CaesarCipherStrategy implements IEncryptionAlgorithmStrategy {
     }
 
 	@Override
-    public String keyPlainTextValidation(UserInput userInput) {
+    public void keyPlainTextValidation(UserInput userInput) throws KeyPlaintextFailureException {
         String formError = null;
 
         if(userInput.getKey().isEmpty()) {
@@ -99,12 +99,11 @@ public class CaesarCipherStrategy implements IEncryptionAlgorithmStrategy {
         }
 
         if (formError == null) {
-            logger.info("Caesar Cipher: Key Validated Successfully");
+            logger.info("Key Validated Successfully");
         } else {
-            logger.error("Caesar Cipher: Key Validation Error: " + formError);
+            logger.error("Key Validation Error: " + formError);
+            throw new KeyPlaintextFailureException(formError);
         }
-
-        return formError;
     }
 }
 

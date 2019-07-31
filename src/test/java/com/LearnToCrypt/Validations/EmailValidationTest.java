@@ -11,37 +11,37 @@ import com.LearnToCrypt.BusinessModels.User;
 
 public class EmailValidationTest {
 
-	User user;
 	IValidation emailValidation;
+	IValidationParams params;
 	
 	public EmailValidationTest() {
 		emailValidation = new EmailValidation();
 		emailValidation.setValue("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$");
-		user = new User();
-		user.setEmail("Harsh@gmail.com");
-		user.setName("Harsh Pamnani");
-		user.setPassword("Hars@123");
-		user.setRole("Instructor");
+		params = new ValidationParams();
+		params.setEmail("Harsh@gmail.com");
+		params.setName("Harsh Pamnani");
+		params.setPassword("Hars@123");
+		params.setRole("Instructor");
 	}
 	
 	@Test
 	public void testIsValid() {
-		assertTrue(emailValidation.isValid(user, "Hars@123"));
+		assertTrue(emailValidation.isValid(params));
 		
-		user.setEmail("harsh@gmail");
-		assertFalse(emailValidation.isValid(user, "Hars@123"));
+		params.setEmail("harsh@gmail");
+		assertFalse(emailValidation.isValid(params));
 		
-		user.setEmail("harsh@");
-		assertFalse(emailValidation.isValid(user, "Hars@123"));
+		params.setEmail("harsh@");
+		assertFalse(emailValidation.isValid(params));
 		
-		user.setEmail("harshgmail.com");
-		assertFalse(emailValidation.isValid(user, "Hars@123"));
+		params.setEmail("harshgmail.com");
+		assertFalse(emailValidation.isValid(params));
 		
-		user.setEmail("harsh pam@gmail.com");
-		assertFalse(emailValidation.isValid(user, "Hars@123"));
+		params.setEmail("harsh pam@gmail.com");
+		assertFalse(emailValidation.isValid(params));
 		
-		user.setEmail("harsh@gmail.");
-		assertFalse(emailValidation.isValid(user, "Hars@123"));	
+		params.setEmail("harsh@gmail.");
+		assertFalse(emailValidation.isValid(params));
 	}
 	
 	@Test

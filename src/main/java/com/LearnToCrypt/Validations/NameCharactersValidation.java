@@ -3,11 +3,10 @@ package com.LearnToCrypt.Validations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.LearnToCrypt.BusinessModels.User;
-
 public class NameCharactersValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(NameCharactersValidation.class);
+	public static final String ERROR = "Name can not contain any digits or special characters.";
 	private String ruleValue;
 	
 	@Override
@@ -16,15 +15,16 @@ public class NameCharactersValidation implements IValidation {
 	}
 	
 	@Override
-	public boolean isValid(User user, String confirmPassword) {
-		boolean result = user.getName().matches(this.ruleValue);
-		logger.info("Name characters validation for user : " + user.getEmail() + ". Name : " + user.getName()
+	public boolean isValid(IValidationParams params) {
+		String name = params.getName();
+		boolean result = name.matches(this.ruleValue);
+		logger.info("Name characters validation for Name : " + name
 				+ ". Result : " + result);
 		return result;
 	}
 
 	@Override
 	public String getError() {
-		return "Name can not contain any digits or special characters.";
+		return ERROR;
 	}
 }

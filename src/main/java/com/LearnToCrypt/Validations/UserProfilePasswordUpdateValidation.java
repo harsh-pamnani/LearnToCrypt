@@ -41,18 +41,14 @@ public class UserProfilePasswordUpdateValidation {
 
 		List<String> rules = profilePasswordUpdateValidationRulesDAO.getRules();
 
-		try {
-			for(String rule: rules) {
-				IValidation validationRule = rulesMap.get(rule);
+		for(String rule: rules) {
+			IValidation validationRule = rulesMap.get(rule);
 
-				IValidationRulesDAO profilePasswordRuleValueDAO = daoAbstractFactory.createProfilePasswordUpdateValidationRulesDAO();
-				String ruleValue = profilePasswordRuleValueDAO.getRulesValue(rule);
-				validationRule.setValue(ruleValue);
-				
-				validationRules.add(validationRule);
-			}
-		} catch (NullPointerException e) {
-			logger.error("Error in creating the profile update password validation rules. ", e);
+			IValidationRulesDAO profilePasswordRuleValueDAO = daoAbstractFactory.createProfilePasswordUpdateValidationRulesDAO();
+			String ruleValue = profilePasswordRuleValueDAO.getRulesValue(rule);
+			validationRule.setValue(ruleValue);
+
+			validationRules.add(validationRule);
 		}
 
 		logger.info("User profile password update validation rules created.");

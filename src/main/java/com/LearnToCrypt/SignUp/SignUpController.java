@@ -23,6 +23,8 @@ import com.LearnToCrypt.SignIn.AuthenticationManager;
 @Controller
 public class SignUpController implements WebMvcConfigurer {
 
+	public static final String ERROR_ALREADY_REGISTERED = "Email id is already registered. Registration Failed.";
+	public static final String ERROR_REGISTRATION_FAILED = " Registration Failed.";
 	IDAOAbstractFactory daoAbstractFactory;
 	ValidateSignUpForm validateSignUpForm;
 	IBusinessModelAbstractFactory businessModelAbstractFactory;
@@ -52,34 +54,24 @@ public class SignUpController implements WebMvcConfigurer {
 	@PostMapping("/signup")
 	public String showDashboard(ModelMap model, User user, @RequestParam String confirmPassword,
 			RedirectAttributes redirectAttributes) {
+		try {
+			validateSignUpForm.validateFormDetails(user, confirmPassword);
 
-		String formError = validateSignUpForm.validateFormDetails(user, confirmPassword);
-
-		if (formError.equals("")) {
-			IUserDAO userDAOValidation = daoAbstractFactory.createUserDAO();
-			boolean isUserRegistered = userDAOValidation.isUserRegistered(user.getEmail());
-
-			if (isUserRegistered) {
-				model.put("invalidSignup", "Email id is already registered. Registration Failed.");
+			IUserDAO userDAO = daoAbstractFactory.createUserDAO();
+			if (userDAO.isUserRegistered(user.getEmail())) {
+				model.put("invalidSignup", ERROR_ALREADY_REGISTERED);
 				logger.error("Email id \"" + user.getEmail() + "\" is already registered. Registration Failed.");
 				return "registration.html";
 			} else {
-				IUserDAO userDAORegistration = daoAbstractFactory.createUserDAO();
-				userDAORegistration.createUser(user);
+				userDAO.createUser(user);
 				logger.info(user.getEmail() + " registration success.");
 			}
-		} else {
-			model.put("invalidSignup", formError + " Registration Failed.");
-			logger.error(formError + " Registration Failed.");
+
+			return "redirect:/login";
+		} catch (SignUpFailureException e) {
+			model.put("invalidSignup", e.getMessage() + ERROR_REGISTRATION_FAILED);
+			logger.error(e.getMessage() + ERROR_REGISTRATION_FAILED);
 			return "registration.html";
 		}
-
-		IUserDAO userDAOName = daoAbstractFactory.createUserDAO();
-		String userName = userDAOName.getUserName(user.getEmail());
-
-		// This logic will be updated to get the user's name from database.
-		redirectAttributes.addFlashAttribute("username", userName);
-
-		return "redirect:/dashboard";
 	}
 }

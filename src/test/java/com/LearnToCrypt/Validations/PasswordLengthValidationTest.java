@@ -7,29 +7,27 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.LearnToCrypt.BusinessModels.User;
-
 public class PasswordLengthValidationTest {
 
-	User user;
+	IValidationParams params;
 	IValidation passwordLengthValidation;
 	
 	public PasswordLengthValidationTest() {
 		passwordLengthValidation = new PasswordLengthValidation();
 		passwordLengthValidation.setValue("8");
-		user = new User();
-		user.setEmail("Shiva@gmail.com");
-		user.setName("Shiva Armel");
-		user.setPassword("Armel@87633");
-		user.setRole("Instructor");
+		params = new ValidationParams();
+		params.setEmail("Shiva@gmail.com");
+		params.setName("Shiva Armel");
+		params.setPassword("Armel@87633");
+		params.setRole("Instructor");
 	}
 	
 	@Test
 	public void testIsValid() {
-		assertTrue(passwordLengthValidation.isValid(user, "Armel@87633"));
+		assertTrue(passwordLengthValidation.isValid(params));
 		
-		user.setPassword("Armel@4");
-		assertFalse(passwordLengthValidation.isValid(user, "Armel@4"));
+		params.setPassword("Armel@4");
+		assertFalse(passwordLengthValidation.isValid(params));
 	}
 	
 	@Test

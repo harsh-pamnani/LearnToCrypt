@@ -10,28 +10,29 @@ import org.junit.Test;
 import com.LearnToCrypt.BusinessModels.User;
 
 public class NameCharactersValidationTest {
-	User user;
 	IValidation nameCharactersValidation;
+	IValidationParams params;
 	
 	public NameCharactersValidationTest() {
 		nameCharactersValidation = new NameCharactersValidation();
+		params = new ValidationParams();
 		nameCharactersValidation.setValue("[a-zA-Z ]+");
-		user = new User();
-		user.setEmail("linus@gmail.com");
-		user.setName("Avgust Linus");
-		user.setPassword("Linus@666");
-		user.setRole("Student");
+		params = new ValidationParams();
+		params.setEmail("linus@gmail.com");
+		params.setName("Avgust Linus");
+		params.setPassword("Linus@666");
+		params.setRole("Student");
 	}
 	
 	@Test
 	public void testIsValid() {		
-		assertTrue(nameCharactersValidation.isValid(user, "Linus@666"));
-		
-		user.setName("Avgust Linus 1");
-		assertFalse(nameCharactersValidation.isValid(user, "Linus@666"));
-		
-		user.setName("Avgust Linus @");
-		assertFalse(nameCharactersValidation.isValid(user, "Linus@666"));
+		assertTrue(nameCharactersValidation.isValid(params));
+
+		params.setName("Avgust Linus 1");
+		assertFalse(nameCharactersValidation.isValid(params));
+
+		params.setName("Avgust Linus @");
+		assertFalse(nameCharactersValidation.isValid(params));
 	}
 	
 	@Test

@@ -2,6 +2,7 @@ package com.LearnToCrypt.Algorithm.EncryptionAlgorithm;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,7 +17,7 @@ public class PlayFairCipherStrategy implements IEncryptionAlgorithmStrategy {
 	private String result = "Cipher Text: ";
 	private String steps = "Steps:\nMatrix created from the key is:\n";
 	private String plaintext = "Plain Text: ";
-	private HashMap<String, String> repeatedCharacters;
+	private Map<String, String> repeatedCharacters;
 	private char[][] keyMatrix;
 	private static final Logger logger = LogManager.getLogger(PlayFairCipherStrategy.class);
 	private static final String ALGORITHM_NAME = "Playfair Cipher";
@@ -75,28 +76,27 @@ public class PlayFairCipherStrategy implements IEncryptionAlgorithmStrategy {
 	}
 
 	@Override
-	public String keyPlainTextValidation(UserInput userInput) {
+	public void keyPlainTextValidation(UserInput userInput) throws KeyPlaintextFailureException {
 		String formError = null;
     	
     	if(userInput.getKey().isEmpty()) {
-    		formError ="Key can't be empty";
+    		formError = ERROR_KEY_EMPTY;
     	} else if(!userInput.getKey().matches("[A-Za-z ]+")) {
-    		formError = "Enter only A-Z charachters in key.";
+    		formError = ERROR_KEY_ONLY_A_TO_Z;
     	} else if(userInput.getPlaintext().isEmpty()) {
-    		formError = "Plain text can't be empty";
+    		formError = ERROR_PLAIN_TEXT_EMPTY;
     	} else if(!userInput.getPlaintext().matches("[A-Za-z ]+")) {
-    		formError = "Enter only A-Z charachters in plain text.";
+    		formError = ERROR_PLAIN_TEXT_A_TO_Z;
     	}
-    	
-    	if (formError == null) {
-			logger.info("Playfair Cipher: Key Validated Successfully");
+
+		if (formError == null) {
+			logger.info("Key Validated Successfully");
 		} else {
-			logger.error("Playfair Cipher: Key Validation Error: " + formError);
+			logger.error("Key Validation Error: " + formError);
+			throw new KeyPlaintextFailureException(formError);
 		}
-    	
-    	return formError;
 	}
-	
+
 	// Method to generate the key matrix from the provided key
 	private void generateKeyMatrixFromKey(String key) {
 		key = key.toUpperCase().replaceAll(" ", "") + ALL_CHARS;
