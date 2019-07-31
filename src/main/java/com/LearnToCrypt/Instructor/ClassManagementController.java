@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
+import com.LearnToCrypt.DAO.IDAOAbstractFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -30,17 +31,16 @@ public class ClassManagementController {
     private static final Logger logger = LogManager.getLogger(ClassManagementController.class);
 
     private AuthenticationManager authenticationManager;
-    private DAOAbstractFactory daoAbstractFactory;
     private IBusinessModelAbstractFactory businessModelAbstractFactory;
-    private DAOAbstractFactory abstractFactory;
-    private IClassDAO classDAO;
+    private ManageStudent manageStudent;
+    private ManageClass manageClass;
+
 
     public ClassManagementController() {
         authenticationManager = AuthenticationManager.instance();
-        daoAbstractFactory = new DAOAbstractFactory();
         businessModelAbstractFactory = new BusinessModelAbstractFactory();
-        abstractFactory = new DAOAbstractFactory();
-        classDAO = abstractFactory.createClassDAO();
+        manageStudent = new ManageStudent();
+        manageClass = new ManageClass();
     }
 
     @GetMapping("/classManagement")
@@ -50,16 +50,16 @@ public class ClassManagementController {
             return "redirect:/login";
         } else {
             String email = authenticationManager.getEmail(httpSession);
-            String role = daoAbstractFactory.createUserDAO().getUserRole(email);
+            String role = authenticationManager.getUserRole(httpSession);
+            String username = authenticationManager.getUsername(httpSession);
             if(!role.equals("Instructor")) {
                 return "dashboard";
             }
-            String username = authenticationManager.getUsername(httpSession);
+
             model.put("username", username);
 
-            IAlgorithmDAO algorithmDAO = abstractFactory.createAlgorithmDAO();
-            model.addAttribute("classes",classDAO.getClass(email));
-            model.addAttribute("algorithms",algorithmDAO.getAllAvailableAlgorithm());
+            model.addAttribute("classes",manageClass.getClasses(email));
+            model.addAttribute("algorithms",manageClass.getAllAvaiableAlgorithmForClass());
 
             model.addAttribute("myNewClass", businessModelAbstractFactory.createMyClass());
             logger.info("Instructor \"" + username + "\" accessed class management!");
@@ -75,15 +75,13 @@ public class ClassManagementController {
         if(!isUserAuthenticated) {
             return "redirect:/login";
         } else {
-            String email = authenticationManager.getEmail(httpSession);
-            String role = daoAbstractFactory.createUserDAO().getUserRole(email);
+            String role = authenticationManager.getUserRole(httpSession);
+            String username = authenticationManager.getUsername(httpSession);
             if(!role.equals("Instructor")) {
                 return "dashboard";
             }
-            classDAO.deleteStudentFromClass(emailID);
+            manageStudent.deleteStudentFromClass(emailID,username);
         }
-        String username = authenticationManager.getUsername(httpSession);
-        logger.info("Instructor \"" + username + "\" deleted a student!");
         return "redirect:/classManagement";
     }
 
@@ -94,15 +92,15 @@ public class ClassManagementController {
         if(!isUserAuthenticated) {
             return "redirect:/login";
         } else {
-            String email = authenticationManager.getEmail(httpSession);
-            String role = daoAbstractFactory.createUserDAO().getUserRole(email);
+            String role = authenticationManager.getUserRole(httpSession);
+            String username = authenticationManager.getUsername(httpSession);
             if(!role.equals("Instructor")) {
                 return "dashboard";
             }
-            classDAO.deleteClass(className);
+            manageClass.deleteClass(className,username);
         }
-        String username = authenticationManager.getUsername(httpSession);
-        logger.info("Instructor \"" + username + "\" deleted a class!");
+
+
         return "redirect:/classManagement";
     }
 
@@ -116,59 +114,36 @@ public class ClassManagementController {
             return "redirect:/login";
         } else {
             String email = authenticationManager.getEmail(httpSession);
-            String role = daoAbstractFactory.createUserDAO().getUserRole(email);
+            String role = authenticationManager.getUserRole(httpSession);
             if(!role.equals("Instructor")) {
                 return "dashboard";
             }
-            String alg = "";
-            if(classAlg != null) {
-                for (String s: classAlg
-                ) {
-                    alg += s+",";
-                }
-            }
-            classDAO.createClass(new MyClass(myNewClass.getClassName(),email,alg));
+
+            manageClass.addClass(myNewClass.getClassName(),email,classAlg);
         }
-        String username = authenticationManager.getUsername(httpSession);
-        logger.info("Instructor \"" + username + "\" added a class!");
+
         return "redirect:/classManagement";
     }
 
     @PostMapping("/classManagement/addStudent")
-    public String addStudents(HttpSession httpSession, ModelMap model,
+    public String addStudents(HttpSession httpSession,
                               @RequestParam("studentList") MultipartFile file,
                               @RequestParam("classID") String className){
         boolean isUserAuthenticated = authenticationManager.isUserAuthenticated(httpSession);
         if(!isUserAuthenticated) {
             return "redirect:/login";
         } else {
-            String email = authenticationManager.getEmail(httpSession);
-            String role = daoAbstractFactory.createUserDAO().getUserRole(email);
+            String role = authenticationManager.getUserRole(httpSession);
+            String username = authenticationManager.getUsername(httpSession);
             if(!role.equals("Instructor")) {
                 return "dashboard";
             }
             if (!file.isEmpty()){
-                ArrayList<String> studentList = readStudentList(file);
-                classDAO.addStudentToClass(studentList,className);
+                manageStudent.addStudentToClass(file,className,username);
             }
         }
-        String username = authenticationManager.getUsername(httpSession);
-        logger.info("Instructor \"" + username + "\" added a list of to class "+className);
-        return "redirect:/classManagement";
-    }
 
-    private ArrayList<String> readStudentList(MultipartFile file){
-        ArrayList<String> result = new ArrayList<>();
-        try {
-            String line;
-            BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
-            while ((line = br.readLine()) != null) {
-                result.add(line.split(",")[0]);
-            }
-        } catch (IOException e) {
-            logger.info(e.getMessage());
-        }
-        return result;
+        return "redirect:/classManagement";
     }
 }
 
