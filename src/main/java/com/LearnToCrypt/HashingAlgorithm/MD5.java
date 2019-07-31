@@ -6,12 +6,13 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class MD5 {
+public class MD5 implements IHash {
 
 	private static final String ALGORITHM = "MD5";
     private static final Logger logger = LogManager.getLogger(MD5.class);
 
-	public String generateMD5HashValue(String password) {
+	@Override
+	public String generateHashValue(String password) {
 		String hashedPassword = "";
 
 		try {
@@ -26,7 +27,6 @@ public class MD5 {
 			}
 
 			hashedPassword = stringBuilder.toString();
-
 		} catch (NoSuchAlgorithmException e) {
 			logger.error("Error in generating the hash value of password using MD5 algorithm.", e);
 		}

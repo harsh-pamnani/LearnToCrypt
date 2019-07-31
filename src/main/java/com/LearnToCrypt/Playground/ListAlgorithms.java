@@ -1,15 +1,15 @@
 package com.LearnToCrypt.Playground;
 
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IAlgorithmFactory;
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithmStrategy;
-import com.LearnToCrypt.DAO.IAlgorithmDAO;
-import com.LearnToCrypt.app.LearnToCryptApplication;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IAlgorithmFactory;
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithmStrategy;
+import com.LearnToCrypt.DAO.IAlgorithmDAO;
 
 public class ListAlgorithms implements IListAlgorithms {
 

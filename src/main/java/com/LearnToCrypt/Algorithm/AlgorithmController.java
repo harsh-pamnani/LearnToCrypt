@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmContext;
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmFactory;
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.AlgorithmAbstractFactory;
 import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithmStrategy;
 import com.LearnToCrypt.BusinessModels.Algorithm;
-import com.LearnToCrypt.DAO.DAOAbstractFactory;
-import com.LearnToCrypt.DAO.IAlgorithmDAO;
 import com.LearnToCrypt.SignIn.AuthenticationManager;
 
 @Controller
@@ -28,8 +26,7 @@ public class AlgorithmController implements WebMvcConfigurer {
 	private static final Logger logger = LogManager.getLogger(AlgorithmController.class);
 
 	private AuthenticationManager authenticationManager;
-	private DAOAbstractFactory abstractFactory;
-	private IAlgorithmDAO algorithmDAO;
+	private ManageAlgorithm manageAlgorithm;
 
 	private String username;
 	private String useremail;
@@ -39,8 +36,7 @@ public class AlgorithmController implements WebMvcConfigurer {
 
 	public AlgorithmController() {
 		authenticationManager = AuthenticationManager.instance();
-		abstractFactory = new DAOAbstractFactory();
-		algorithmDAO = abstractFactory.createAlgorithmDAO();
+		manageAlgorithm = new ManageAlgorithm();
 	}
 
 	@GetMapping("/algorithm")
@@ -53,8 +49,8 @@ public class AlgorithmController implements WebMvcConfigurer {
 		}
 		username = authenticationManager.getUsername(httpSession);
 
-		Algorithm algorithm = algorithmDAO.getAlgorithm(alg);
-		logger.info("user \"" + username + "\" accessed " + algorithm.getName());
+		Algorithm algorithm = manageAlgorithm.getAlgorithm(alg);
+
 		if (algorithm.getName() == null) {
 			setModelAttributes(model);
 			return "dashboard";
@@ -79,9 +75,10 @@ public class AlgorithmController implements WebMvcConfigurer {
 		useremail = authenticationManager.getEmail(httpSession);
 		setModelAttributes(model);
 
-		AlgorithmFactory algorithmFactory = new AlgorithmFactory();
+		AlgorithmAbstractFactory algorithmFactory = new AlgorithmAbstractFactory();
 		IEncryptionAlgorithmStrategy cipherStrategy;
 
+		String pageToDisplay;
 		try {
 			cipherStrategy = algorithmFactory.createAlgorithm(algorithmName);
 
@@ -89,12 +86,13 @@ public class AlgorithmController implements WebMvcConfigurer {
 			algorithmContext.executeStrategy(userInput, useremail, model);
 
 			logger.info("user \"" + username + "\" tested " + algorithmName);
-			return "algorithm";
+			pageToDisplay =  "algorithm";
 		} catch (NoSuchAlgorithmException e) {
+			pageToDisplay = "redirect:/dashboard";
 			logger.error("Unknown algorithm request : " + algorithmName);
 		}
 
-		return "redirect:/dashboard";
+		return pageToDisplay;
 	}
 
 	private void setModelAttributes(Model model) {

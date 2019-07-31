@@ -7,29 +7,27 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.LearnToCrypt.BusinessModels.User;
-
 public class PasswordLowerCaseValidationTest {
 
-	User user;
+	IValidationParams params;
 	IValidation passwordLowerCaseValidation;
 	
 	public PasswordLowerCaseValidationTest() {
 		passwordLowerCaseValidation = new PasswordLowerCaseValidation();
-		
-		user = new User();
-		user.setEmail("Balbinoeleonora@abc.org");
-		user.setName("Balbino Eleonora");
-		user.setPassword("Balbino@76543");
-		user.setRole("Instructor");
+		passwordLowerCaseValidation.setValue(".*[a-z].*");
+		params = new ValidationParams();
+		params.setEmail("Balbinoeleonora@abc.org");
+		params.setName("Balbino Eleonora");
+		params.setPassword("Balbino@76543");
+		params.setRole("Instructor");
 	}
 	
 	@Test
 	public void testIsValid() {
-		assertTrue(passwordLowerCaseValidation.isValid(user, "Balbino@76543"));
+		assertTrue(passwordLowerCaseValidation.isValid(params));
 		
-		user.setPassword("BALBINO@76543");
-		assertFalse(passwordLowerCaseValidation.isValid(user, "BALBINO@76543"));
+		params.setPassword("BALBINO@76543");
+		assertFalse(passwordLowerCaseValidation.isValid(params));
 	}
 	
 	@Test

@@ -14,6 +14,7 @@ import com.LearnToCrypt.HashingAlgorithm.MD5;
 
 public class UserDAO implements IUserDAO {
 
+	public static final String ROLE_STUDENT = "Student";
 	DBConnection dbConnectionInstance = null;
 	Connection dbConnection = null;
 	private PreparedStatement statement;
@@ -29,9 +30,9 @@ public class UserDAO implements IUserDAO {
 	
 	@Override
 	public void createUser(User user) {
-		int role = ( user.getRole().equals("Student") ) ? 1 : 2;
+		int role = ( user.getRole().equals(ROLE_STUDENT) ) ? 1 : 2;
 		
-		String hashedPassword = md5Algorithm.generateMD5HashValue(user.getPassword());
+		String hashedPassword = md5Algorithm.generateHashValue(user.getPassword());
 		String query = "CALL create_user(\""+user.getEmail()+"\", \""+ user.getName() + "\", \"" + hashedPassword + "\", "+ role + ");";
 		
 		try {
@@ -52,7 +53,7 @@ public class UserDAO implements IUserDAO {
 		
 		boolean isValid = false;
 		
-		String hashedPassword = md5Algorithm.generateMD5HashValue(user.getPassword());
+		String hashedPassword = md5Algorithm.generateHashValue(user.getPassword());
 		String query = "CALL count_user(\""+ user.getEmail() + "\",\"" + hashedPassword + "\");";
 		
 		try {
@@ -181,7 +182,7 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public String getUserClass(String email) {
 		String userClass = "";
-		String query = "call CSCI5308_7_TEST.get_user_class('"+email+"');";
+		String query = "call get_user_class('"+email+"');";
 		try {
 			dbConnection = dbConnectionInstance.getConnection();
 			statement = dbConnection.prepareStatement(query);
@@ -252,7 +253,7 @@ public class UserDAO implements IUserDAO {
 	}
 
 	@Override
-	public User getUser(String email) {
+	public User getUser(String email) throws SQLException {
 		User user = new User();
 		int roleNum;
 		String role;
@@ -277,7 +278,8 @@ public class UserDAO implements IUserDAO {
 				user.setRole(role);
 			}
 		} catch (SQLException e) {
-			logger.error("Error in generating user object for user : " + email, e);
+			logger.error("Error in getting user from database : " + email, e);
+			throw new SQLException(e);
 		} finally {
 			dbConnectionInstance.closeConnection();
 		}

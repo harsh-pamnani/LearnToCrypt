@@ -40,29 +40,53 @@ public class CaesarCipherStrategyTest {
 
     @Test
     public void tesKeyPlainTextValidation() {
-        userInput.setKey("");
-        assertEquals("Key can't be empty", caesarCipher.keyPlainTextValidation(userInput));
-        assertNotEquals("Some other error message", caesarCipher.keyPlainTextValidation(userInput));
+        try {
+            userInput.setKey("");
+            caesarCipher.keyPlainTextValidation(userInput);
+        } catch (KeyPlaintextFailureException e) {
+            assertEquals("Key can't be empty", e.getMessage());
+            assertNotEquals("Some other error message", e.getMessage());
+        }
 
-        userInput.setKey("aaa");
-        assertEquals("Enter only numbers in key.", caesarCipher.keyPlainTextValidation(userInput));
-        assertNotEquals("Some other error message", caesarCipher.keyPlainTextValidation(userInput));
+        try {
+            userInput.setKey("aaa");
+            caesarCipher.keyPlainTextValidation(userInput);
+        } catch (KeyPlaintextFailureException e) {
+            assertEquals("Enter only numbers in key.", e.getMessage());
+            assertNotEquals("Some other error message", e.getMessage());
+        }
 
-        userInput.setKey("5");
-        userInput.setPlaintext("");
-        assertEquals("Plain text can't be empty", caesarCipher.keyPlainTextValidation(userInput));
-        assertNotEquals("Some other error message", caesarCipher.keyPlainTextValidation(userInput));
+        try {
+            userInput.setKey("5");
+            userInput.setPlaintext("");
+            caesarCipher.keyPlainTextValidation(userInput);
+        } catch (KeyPlaintextFailureException e) {
+            assertEquals("Plain text can't be empty", e.getMessage());
+            assertNotEquals("Some other error message", e.getMessage());
+        }
 
-        userInput.setPlaintext("This is great 123");
-        assertEquals("Enter only A-Z in plain text.", caesarCipher.keyPlainTextValidation(userInput));
-        assertNotEquals("Some other error message", caesarCipher.keyPlainTextValidation(userInput));
+        try {
+            userInput.setPlaintext("This is great 123");
+            caesarCipher.keyPlainTextValidation(userInput);
+        } catch (KeyPlaintextFailureException e) {
+            assertEquals("Enter only A-Z in plain text.", e.getMessage());
+            assertNotEquals("Some other error message", e.getMessage());
+        }
 
-        userInput.setPlaintext("Some text @#!^");
-        assertEquals("Enter only A-Z in plain text.", caesarCipher.keyPlainTextValidation(userInput));
-        assertNotEquals("Some other error message", caesarCipher.keyPlainTextValidation(userInput));
+        try {
+            userInput.setPlaintext("Some text @#!^");
+            caesarCipher.keyPlainTextValidation(userInput);
+        } catch (KeyPlaintextFailureException e) {
+            assertEquals("Enter only A-Z in plain text.", e.getMessage());
+            assertNotEquals("Some other error message", e.getMessage());
+        }
 
-        userInput.setPlaintext("We can only say that it is a part of");
-        assertEquals(null, caesarCipher.keyPlainTextValidation(userInput));
-        assertNotEquals("Plain text can't be empty", caesarCipher.keyPlainTextValidation(userInput));
+        try {
+            userInput.setPlaintext("We can only say that it is a part of");
+            caesarCipher.keyPlainTextValidation(userInput);
+        } catch (KeyPlaintextFailureException e) {
+            assertEquals(null, e.getMessage());
+            assertNotEquals("Plain text can't be empty", e.getMessage());
+        }
     }
 }

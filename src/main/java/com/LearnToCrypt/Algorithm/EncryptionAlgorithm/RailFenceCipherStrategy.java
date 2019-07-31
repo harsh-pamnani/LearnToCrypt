@@ -67,24 +67,23 @@ public class RailFenceCipherStrategy implements IEncryptionAlgorithmStrategy {
 	}
 
 	@Override
-	public String keyPlainTextValidation(UserInput userInput) {
+	public void keyPlainTextValidation(UserInput userInput) throws KeyPlaintextFailureException {
 		String formError = null;
 
     	if(userInput.getKey().isEmpty()) {
-    		formError ="Key can't be empty";
+    		formError = ERROR_KEY_EMPTY;
     	} else if(!userInput.getKey().matches("[0-9]+")) {
-    		formError = "Enter only digits in the key";
+    		formError = ERROR_KEY_ONLY_DIGITS;
     	} else if(userInput.getPlaintext().isEmpty()) {
-    		formError = "Plain text can't be empty";
+    		formError = ERROR_PLAIN_TEXT_EMPTY;
     	}
 
-    	if (formError == null) {
-			logger.info("Rail Fence Cipher: Key Validated Successfully");
+		if (formError == null) {
+			logger.info("Key Validated Successfully");
 		} else {
-			logger.error("Rail Fence Cipher: Key Validation Error: " + formError);
+			logger.error("Key Validation Error: " + formError);
+			throw new KeyPlaintextFailureException(formError);
 		}
-    	
-    	return formError;
 	}
 	
 	private String formatPlaintext(String plaintext, int keyToEncrypt) {

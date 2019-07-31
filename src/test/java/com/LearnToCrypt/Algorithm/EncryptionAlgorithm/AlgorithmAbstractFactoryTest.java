@@ -9,13 +9,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
-public class AlgorithmFactoryTest {
+public class AlgorithmAbstractFactoryTest {
 	
-	private static final Logger logger = LogManager.getLogger(AlgorithmFactoryTest.class);
-	AlgorithmFactory algorithmFactoryTest;
+	private static final Logger logger = LogManager.getLogger(AlgorithmAbstractFactoryTest.class);
+	AlgorithmAbstractFactory algorithmFactoryTest;
 	
-	public AlgorithmFactoryTest() {
-		algorithmFactoryTest = new AlgorithmFactory();
+	public AlgorithmAbstractFactoryTest() {
+		algorithmFactoryTest = new AlgorithmAbstractFactory();
 	}
 	
 	@Test

@@ -2,65 +2,67 @@ package com.LearnToCrypt.Profile;
 
 import java.util.List;
 
+import com.LearnToCrypt.HashingAlgorithm.IHash;
+import com.LearnToCrypt.Validations.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.LearnToCrypt.BusinessModels.User;
-import com.LearnToCrypt.HashingAlgorithm.MD5;
-import com.LearnToCrypt.Validations.IValidation;
-import com.LearnToCrypt.Validations.UserProfileNameUpdateValidation;
-import com.LearnToCrypt.Validations.UserProfilePasswordUpdateValidation;
+import javax.xml.bind.ValidationException;
 
 public class ProfileValidator implements IProfileValidator {
 
 	private static final Logger logger = LogManager.getLogger(ProfileValidator.class);
-	private UserProfileNameUpdateValidation nameValidationRules = null;
-	private UserProfilePasswordUpdateValidation passwordValidationRules = null;
-	private User user;
-	private MD5 md5;
+	private UserProfileNameUpdateValidation nameValidationRules;
+	private UserProfilePasswordUpdateValidation passwordValidationRules;
+	private IHash hash;
+	private IUserProfileBridge profile;
+	private IValidationParams params;
 
-	public ProfileValidator(IUserProfileBridge profile) {
+	public ProfileValidator(IUserProfileBridge profile, IHash hash) {
 		nameValidationRules = new UserProfileNameUpdateValidation();
 		passwordValidationRules = new UserProfilePasswordUpdateValidation();
-		user = profile.getUser();
-		md5 = new MD5();
+		params = new ValidationParams();
+		this.hash = hash;
+		this.profile = profile;
 	}
 
 	@Override
-	public String isNameValid(String name) {
+	public void validateName(String name) throws ValidationException {
 		logger.info("Validating name: " + name);
+		
+		nameValidationRules.setValidationRules();
 		List<IValidation> rules = nameValidationRules.getValidationRules();
-		String formError = null;
-		user.setName(name);
+		params.setName(name);
 		for (IValidation rule: rules) {
-			if(!rule.isValid(user, "")) {
-				formError = rule.getError();
-				break;
+			if(!rule.isValid(params)) {
+				logger.error("Name Validation Failed. Error: " + rule.getError());
+				throw new ValidationException(rule.getError());
 			}
 		}
-		logger.info("Validation Done. " + formError);
-		return formError;
+		logger.info("Validation Successful.");
 	}
 
 	@Override
-	public String isPasswordValid(String password, String confirmPassword) {
+	public void validatePassword(String password, String confirmPassword) throws ValidationException{
 		logger.info("Validating Password");
+		
+		passwordValidationRules.setValidationRules();
 		List<IValidation> rules = passwordValidationRules.getValidationRules();
-		String formError = null;
-		String hashedPassword = md5.generateMD5HashValue(password);
-		if (hashedPassword.equals(user.getPassword())) {
-			formError = "New password cannot be same as the old password";
-			logger.error("Validation Error: " + formError);
-			return formError;
+
+		String hashedPassword = hash.generateHashValue(password);
+		if (hashedPassword.equals(profile.getHashedPassword())) {
+			String error = "New password cannot be same as the old password";
+			logger.error("Password Validation Failed. Error: " + error);
+			throw new ValidationException(error);
 		}
-		user.setPassword(password);
+		params.setPassword(password);
+		params.setConfirmPassword(confirmPassword);
 		for (IValidation rule: rules) {
-			if(!rule.isValid(user, confirmPassword)) {
-				formError = rule.getError();
-				break;
+			if(!rule.isValid(params)) {
+				logger.error("Password Validation Failed. Error: " + rule.getError());
+				throw new ValidationException(rule.getError());
 			}
 		}
-		logger.info("Validation Done. " + formError);
-		return formError;
+		logger.info("Validation Successful.");
 	}
 }

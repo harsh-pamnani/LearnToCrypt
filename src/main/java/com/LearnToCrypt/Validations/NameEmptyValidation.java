@@ -3,28 +3,24 @@ package com.LearnToCrypt.Validations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.LearnToCrypt.BusinessModels.User;
-
 public class NameEmptyValidation implements IValidation {
 
 	private static final Logger logger = LogManager.getLogger(NameEmptyValidation.class);
-	private String ruleValue;
-	
+	public static final String ERROR = "Name can not be empty.";
+
 	@Override
 	public void setValue(String ruleValue) {
-		this.ruleValue = ruleValue;
+		return;
 	}
 	
 	@Override
-	public boolean isValid(User user, String confirmPassword) {
-		boolean result = true;
-		
-		if (this.ruleValue.equalsIgnoreCase("Yes")) {
-			String username = user.getName();
-			if (username != null) {
-				result = !username.equals("");
-				logger.info("Name empty validation for user : " + user.getEmail() + ". Result : " + result);
-			}
+	public boolean isValid(IValidationParams params) {
+		boolean result = false;
+
+		String username = params.getName();
+		if (username != null) {
+			result = !username.equals("");
+			logger.info("Name empty validation for Name : " + username + ". Result : " + result);
 		}
 
 		return result;
@@ -32,6 +28,6 @@ public class NameEmptyValidation implements IValidation {
 
 	@Override
 	public String getError() {
-		return "Name can not be empty.";
+		return ERROR;
 	}
 }

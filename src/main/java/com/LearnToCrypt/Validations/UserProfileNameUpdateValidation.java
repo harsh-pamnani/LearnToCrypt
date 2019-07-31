@@ -22,7 +22,6 @@ public class UserProfileNameUpdateValidation {
 		validationRules = new ArrayList<IValidation>();
 
 		setRulesMap();
-		setValidationRules();
 	}
 
 	private void setRulesMap() {
@@ -34,19 +33,19 @@ public class UserProfileNameUpdateValidation {
 		return validationRules;
 	}
 
-	private void setValidationRules() {
+	public void setValidationRules() {
 		IValidationRulesDAO profileNameUpdateValidationRulesDAO = daoAbstractFactory.createProfileNameUpdateValidationRulesDAO();
 
-		Map<String, String> rulesAndValue = profileNameUpdateValidationRulesDAO.getRulesAndValues();
+		List<String> rules = profileNameUpdateValidationRulesDAO.getRules();
 
-		try {
-			for(String key: rulesAndValue.keySet()) {
-				IValidation validationRule = rulesMap.get(key);
-				validationRule.setValue(rulesAndValue.get(key));
-				validationRules.add(validationRule);
-			}
-		} catch (NullPointerException e) {
-			logger.error("Error in creating the profile name update validation rules. ", e);
+		for(String rule: rules) {
+			IValidation validationRule = rulesMap.get(rule);
+
+			IValidationRulesDAO profileNameRuleValueDAO = daoAbstractFactory.createProfileNameUpdateValidationRulesDAO();
+			String ruleValue = profileNameRuleValueDAO.getRulesValue(rule);
+			validationRule.setValue(ruleValue);
+
+			validationRules.add(validationRule);
 		}
 
 		logger.info("User profile name update validation rules created.");

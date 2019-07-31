@@ -1,7 +1,5 @@
 package com.LearnToCrypt.Profile;
 
-import com.LearnToCrypt.BusinessModels.User;
-
 public interface IUserProfileBridge {
     String getUserName();
 
@@ -9,5 +7,5 @@ public interface IUserProfileBridge {
 
     String getRole();
 
-    User getUser();
+    String getHashedPassword();
 }

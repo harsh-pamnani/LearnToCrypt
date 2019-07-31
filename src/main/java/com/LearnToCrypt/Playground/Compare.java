@@ -1,26 +1,22 @@
 package com.LearnToCrypt.Playground;
 
-import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithmStrategy;
-import com.LearnToCrypt.Algorithm.UserInput;
+import java.time.Duration;
+import java.time.LocalDateTime;
+
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.KeyPlaintextFailureException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Period;
-import java.util.Calendar;
-import java.util.Date;
+import com.LearnToCrypt.Algorithm.UserInput;
+import com.LearnToCrypt.Algorithm.EncryptionAlgorithm.IEncryptionAlgorithmStrategy;
 
 public class Compare implements ICompare {
 
 	private static final Logger logger = LogManager.getLogger(Compare.class);
 	private IEncryptionAlgorithmStrategy algorithm;
 	private IComparisonResultSet resultSet;
-	private Calendar calendar;
 
 	public Compare() {
-		calendar = Calendar.getInstance();
 		resultSet = new ComparisonResultSet();
 	}
 
@@ -47,8 +43,10 @@ public class Compare implements ICompare {
 			result.setName(name);
 			input.setKey(key);
 			input.setPlaintext(plaintext);
-			String error = algorithm.keyPlainTextValidation(input);
-			if (error == null) {
+
+			try {
+				algorithm.keyPlainTextValidation(input);
+
 				encryptedText = algorithm.encode(key, plaintext);
 				endTime = LocalDateTime.now();
 				logger.info("Encrypting with " + name + "; end at: " + endTime);
@@ -59,11 +57,12 @@ public class Compare implements ICompare {
 				result.setPlaintextLength(plaintext.length());
 				result.setEncryptedTextLength(encryptedText.length());
 				result.setHasError(false);
-			} else {
-				logger.error("Error in key validation");
+			} catch (KeyPlaintextFailureException e) {
 				result.setHasError(true);
-				result.setErrorText(error);
+				result.setErrorText(e.getMessage());
+				logger.error("Error in key validation");
 			}
+
 			resultSet.add(result);
 		}
 		return resultSet;

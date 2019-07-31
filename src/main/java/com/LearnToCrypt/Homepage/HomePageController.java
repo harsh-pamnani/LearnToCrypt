@@ -26,9 +26,7 @@ public class HomePageController implements WebMvcConfigurer {
 		if(authenticationManager.isUserAuthenticated(httpSession)) {
 			String username = authenticationManager.getUsername(httpSession);
 			model.put("username", username);
-			
 			logger.info(username + " accessed homepage");
-			
 			return "homepageLoggedInUser.html";
 		}
 		
@@ -46,7 +44,6 @@ public class HomePageController implements WebMvcConfigurer {
     public String startLearning(HttpSession httpSession) {
 		if(authenticationManager.isUserAuthenticated(httpSession)) {
 			String username = authenticationManager.getUsername(httpSession);
-			
 			logger.info(username + "clicked on Start Learning button");
 			return "redirect:/dashboard";
 		}

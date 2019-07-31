@@ -27,7 +27,7 @@ public class ClassDAO implements IClassDAO {
 
 	@Override
 	public void createClass(MyClass myClass) {
-		String query = "call CSCI5308_7_TEST.create_class('" + myClass.getClassName() + "', '"
+		String query = "call create_class('" + myClass.getClassName() + "', '"
 				+ myClass.getInstructorID() + "', '" + myClass.getAlg() + "');";
 		try {
 			dbConnection = dbConnectionInstance.getConnection();
@@ -44,7 +44,7 @@ public class ClassDAO implements IClassDAO {
 
 	@Override
 	public List<MyClass> getClass(String instructorID) {
-		String query1 = "call CSCI5308_7_TEST.get_class('" + instructorID + "');";
+		String query1 = "call get_class('" + instructorID + "');";
 		ArrayList<MyClass> myClasses = new ArrayList<>();
 		try {
 			dbConnection = dbConnectionInstance.getConnection();
@@ -54,7 +54,7 @@ public class ClassDAO implements IClassDAO {
 
 			while (classes.next()) {
 				MyClass myClass = new MyClass(classes.getString(1), classes.getString(2), classes.getString(3));
-				String query2 = "call CSCI5308_7_TEST.get_class_student('" + classes.getString(1) + "');";
+				String query2 = "call get_class_student('" + classes.getString(1) + "');";
 				statement = dbConnection.prepareStatement(query2);
 				ResultSet students = statement.executeQuery();
 				while (students.next()) {
@@ -81,7 +81,7 @@ public class ClassDAO implements IClassDAO {
 
 	@Override
 	public void deleteStudentFromClass(String emailID) {
-		String query = "call CSCI5308_7_TEST.remove_student_from_class('" + emailID + "');";
+		String query = "call remove_student_from_class('" + emailID + "');";
 		try {
 			dbConnection = dbConnectionInstance.getConnection();
 			statement = dbConnection.prepareStatement(query);
@@ -97,7 +97,7 @@ public class ClassDAO implements IClassDAO {
 	@Override
 	public void addStudentToClass(ArrayList<String> studentList, String className) {
 		for (String student : studentList) {
-			String query = "call CSCI5308_7_TEST.add_student_to_class('" + student + "', '" + className + "');";
+			String query = "call add_student_to_class('" + student + "', '" + className + "');";
 			try {
 				dbConnection = dbConnectionInstance.getConnection();
 				statement = dbConnection.prepareStatement(query);
@@ -112,7 +112,7 @@ public class ClassDAO implements IClassDAO {
 
 	@Override
 	public void deleteClass(String className) {
-		String query = "call CSCI5308_7_TEST.delete_class('" + className + "');";
+		String query = "call delete_class('" + className + "');";
 		try {
 			dbConnection = dbConnectionInstance.getConnection();
 			statement = dbConnection.prepareStatement(query);
