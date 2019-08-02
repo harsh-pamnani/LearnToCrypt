@@ -21,7 +21,12 @@ public class ProgressParameter {
             algList = daoAbstractFactory.createAlgorithmDAO().getAlgList(userClass);
             progressList = daoAbstractFactory.createUserDAO().getProgress(email);
             total = algList.length;
-            completed = progressList.length;
+            if(progressList != null){
+                completed = progressList.length;
+            }else{
+                completed = 0;
+            }
+
         }
     }
 
